@@ -6,13 +6,15 @@ const Schema = mongoose.Schema;
 const ItemSchema = new Schema(
     {
         upTime: String,
-        stroeNAme: String,
+        storeName: String,
         dong: String,
         city: String,
         storeType: String,
         price: String,
         isParking: String,
         isMarked: Boolean,
+    }, {
+        versionKey: false   //마지막 __v 제거
     }
 );
 
