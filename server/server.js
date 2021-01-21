@@ -44,7 +44,7 @@ if(process.env.NODE_ENV === 'production') {
 }
 
 // Port Config 포트 설정
-const port = process.env.PORT || 10205;
+const port = process.env.PORT || 5000;
 
 // 서버 구동
 app.listen(port, () => console.log(`Server started on port ${port}`));

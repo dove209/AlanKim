@@ -6,6 +6,7 @@ const Item = require('../../models/Item');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
+  // Item.find({name:'kildong'})
   Item.find()
   .then(items => res.json(items))
 });
