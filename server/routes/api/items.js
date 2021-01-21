@@ -4,7 +4,7 @@ var router = express.Router();
 // Item Model
 const Item = require('../../models/Item');
 
-/* GET users listing. */
+/* GET items(item SELECT) */
 router.get('/', function(req, res, next) {
   // Item.find({name:'kildong'})
   Item.find()
@@ -12,6 +12,7 @@ router.get('/', function(req, res, next) {
     .catch(err => res.status(500).send(err));
 });
 
+/* POST items(item ADD) */
 router.post('/', function(req, res, next) {
   Item.create(req.body.addListItem)
     .then(items => res.status(200).send(true))
