@@ -12,7 +12,7 @@ export default function HomeScreen({ navigation }) {
 
     useEffect(() => {
         const getItems = () => {
-            fetch('http://192.168.7:10205/api/items',{
+            fetch('http://alt-a.iptime.org:5000/api/items',{
                 method: "GET",
                 headers: {
                     'Accept': 'application/json',

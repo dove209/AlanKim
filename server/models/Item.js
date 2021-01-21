@@ -5,7 +5,14 @@ const Schema = mongoose.Schema;
 // Create Schema
 const ItemSchema = new Schema(
     {
-        name: String,
+        upTime: String,
+        stroeNAme: String,
+        dong: String,
+        city: String,
+        storeType: String,
+        price: String,
+        isParking: String,
+        isMarked: Boolean,
     }
 );
 
