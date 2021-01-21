@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, Image, Button, Text, ScrollView, RefreshControl, FlatList } from 'react-native';
+import axios from 'axios';
 import { AntDesign, Feather, Entypo} from '@expo/vector-icons';
 import styles from '../../StyleSheet';
+import config from '../../config';
 import PickerScreen from './picker';
 
 export default function HomeScreen({ navigation }) {
@@ -11,23 +13,21 @@ export default function HomeScreen({ navigation }) {
     const [refreshing, setRefresing] = useState(false);
 
     useEffect(() => {
-        const getItems = () => {
-            fetch('http://alt-a.iptime.org:5000/api/items',{
-                method: "GET",
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-            })
-            .then((res) => res.json())
+        const getItems = async() => {
+            await axios.get(`${config.MAIN_URL}/items`)
             .then((res) => {
-                setItems(res);
+                setItems(res.data);
             })
             .catch((error) => console.error(error))
         }
-        getItems();
-        console.log('메인화면 로딩.')
-    }, [])
+        const unsubscribe = navigation.addListener('focus', () => {
+            // console.log("focus되었을때!!");
+            getItems();
+        });
+
+        return unsubscribe;
+    }, [navigation])
+
 
     const listSort = (menu) => {
         setSortMenu(menu)
@@ -44,7 +44,13 @@ export default function HomeScreen({ navigation }) {
 
     //ScrollView 다운시 새로고침
     const onRefresh = () => {
-        setRefresing(false)
+        setRefresing(true)
+        axios.get(`${config.MAIN_URL}/items`)
+        .then((res) => {
+            setItems(res.data);
+            setRefresing(false);
+        })
+        .catch((error) => console.error(error))
     }
 
 
@@ -99,7 +105,7 @@ export default function HomeScreen({ navigation }) {
                                     <Text style={styles.itemSmallText}>{item.upTime}</Text>
                                     <Text style={styles.itemStoreName}>{item.storeName}</Text>
                                     <Text style={styles.itemStoreAddress}>{item.dong} {item.city}</Text>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:10 }}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:10}}>
                                         <Text style={styles.itemSmallText}>{item.storeType}</Text>
                                         <Text style={styles.itemSmallText}>{item.price}</Text>
                                         <Text style={styles.itemSmallText}>주차{item.isParking}</Text>
@@ -110,7 +116,7 @@ export default function HomeScreen({ navigation }) {
                                         <AntDesign name="edit" size={30} color="rgba(0, 0, 0, 0.3)"  style={{marginRight:30}}/>
                                         <Feather name="trash-2" size={30}  color="rgba(0, 0, 0, 0.3)" />
                                     </View>
-                                    <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => alert('Button with adjusted color pressed')}>
+                                    <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => alert(item._id)}>
                                         <Text style={{color:'#fff'}}>시작하기</Text>
                                     </TouchableOpacity>
                                 </View>
