@@ -5,9 +5,8 @@ const Schema = mongoose.Schema;
 // Create Schema
 const ItemSchema = new Schema(
     {
-        _id : String,
         name: String,
     }
 );
 
-module.exports = Item = mongoose.model('item', ItemSchema, 'testdb');    // 'items'는 컬렉션 이름 
+module.exports = Item = mongoose.model('item', ItemSchema);  // 'item'은 컬렉션itmes의 단수 표현(자동으로 items로 변경됨) 
