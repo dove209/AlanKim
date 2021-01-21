@@ -1,11 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, Image, Text, TextInput } from 'react-native';
+import axios from 'axios';
+import moment from 'moment'; 
 import { AntDesign, Entypo } from '@expo/vector-icons';
 import styles from '../../StyleSheet';
+import config from '../../config';
 import { Picker } from '@react-native-picker/picker';
+import { add } from 'react-native-reanimated';
 
 export default function AddListScreen({ navigation }) {
     const [addListItem, setAddListItem] = useState({
+        upTime: moment().format("YYYY-MM-DD"),
         storeName: null,
         dong: null,
         city: null,
@@ -32,30 +37,35 @@ export default function AddListScreen({ navigation }) {
         })
     };
     const changeDong = (value) => {
+        inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
             dong: value,
         })
     }
     const changeCity = (value) => {
+        inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
             city: value,
         })
     }
     const selectStoreType = (value) => {
+        inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
             storeType: value,
         })
     }
     const selectStorePrice = (value) => {
+        inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
             price: value,
         })
     }
     const selectStoreParking = (value) => {
+        inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
             isParking: value,
@@ -63,8 +73,18 @@ export default function AddListScreen({ navigation }) {
     }
 
     const addListSubmit = () => {
-        console.log(addListItem);
-        navigation.navigate("HomeScreen")
+        if(addListItem.city !== null && addListItem.dong !== null && addListItem.isParking !== null && addListItem.price !== null && addListItem.storeName !== null && addListItem.storeName !== '' && addListItem.storeType !== null){
+            axios.post(`${config.MAIN_URL}/items`,{addListItem})
+            .then(res=>{
+                if(res.data){
+                    console.log('리스트 등록 완료')
+                    navigation.navigate("HomeScreen")
+                }
+            })   
+            .catch((error) => console.error(error))
+        } else {
+            alert("모두 작성 해주세요.")
+        }
     }
 
     return (
@@ -98,12 +118,12 @@ export default function AddListScreen({ navigation }) {
                     <Text style={styles.optionTitle}>위치</Text>
                     <View style={styles.addressSelect}>
                         <Text>광역시·도</Text>
-                        <Picker style={{ height: 30, width: 200 }} value={null} selectedValue={addListItem.dong} onValueChange={(val, idx) => changeDong(val)}>
-                            <Picker.Item label='선택' value='0' />
-                            {
-                                addressItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} /> })
-                            }
-                        </Picker>
+                            <Picker style={{ height: 30, width: 200 }} value={null} selectedValue={addListItem.dong} onValueChange={(val, idx) => changeDong(val)}>
+                                <Picker.Item label='선택' value='0' />
+                                {
+                                    addressItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} /> })
+                                }
+                            </Picker>
                     </View>
                     <View style={styles.addressSelect}>
                         <Text>시·군·구</Text>

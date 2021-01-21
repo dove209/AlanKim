@@ -70,6 +70,7 @@ const styles = StyleSheet.create({
     },
     itemSmallText:{
         fontSize:12,
+        marginRight: 10,
         color:'rgba(0, 0, 0, 0.25)'
     },  
     itemStoreName:{
@@ -108,11 +109,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold'
     },
     input: {
-        fontSize: width / 30,
+        fontSize: width / 20,
         height: 30,
         marginTop: 10,
-        paddingTop: 5,
-        paddingBottom: 5
     },
     bar: {
         height:1,
