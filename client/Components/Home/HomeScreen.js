@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Image, Button, Text, ScrollView, RefreshControl, FlatList } from 'react-native';
+import { View, TouchableOpacity, Image, Text, FlatList, Alert } from 'react-native';
 import axios from 'axios';
 import { AntDesign, Feather, Entypo} from '@expo/vector-icons';
 import styles from '../../StyleSheet';
@@ -14,7 +14,7 @@ export default function HomeScreen({ navigation }) {
 
     useEffect(() => {
         const getItems = async() => {
-            await axios.get(`${config.MAIN_URL}/items`)
+            await axios.get(`${config.MAIN_URL}/items?sortMenu=${sortMenu}`)
             .then((res) => {
                 setItems(res.data);
             })
@@ -24,28 +24,53 @@ export default function HomeScreen({ navigation }) {
             // console.log("focus되었을때!!");
             getItems();
         });
-
         return unsubscribe;
     }, [navigation])
-
 
     const listSort = (menu) => {
         setSortMenu(menu)
         if (menu === 3 || menu === 4 || menu === 5) {
             setIsSelectBox(true)
         } else {
-            setIsSelectBox(false)
+            axios.get(`${config.MAIN_URL}/items?sortMenu=${menu}`)
+            .then((res) => {
+                setItems(res.data);
+                setIsSelectBox(false);
+            })
+            .catch((error) => console.error(error))
         }
     }
     //남기기 클릭
     const addList = () => {
         navigation.navigate("AddListScreen")
     }
-
+    const deleteItem = (_id) => {
+        Alert.alert(
+            "삭제",
+            "삭제 하시겠습니까?",
+            [
+              {
+                text: "아니요",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
+              },
+              { text: "예", onPress: () => {
+                axios.delete(`${config.MAIN_URL}/items?_id=${_id}`)
+                .then((res) => {
+                    if(res.data) {
+                        onRefresh()
+                    }
+                })
+                .catch((error) => console.error(error))
+              }}
+            ],
+            { cancelable: false }
+          );
+    }
     //ScrollView 다운시 새로고침
     const onRefresh = () => {
         setRefresing(true)
-        axios.get(`${config.MAIN_URL}/items`)
+        axios.get(`${config.MAIN_URL}/items?sortMenu=${sortMenu}`)
         .then((res) => {
             setItems(res.data);
             setRefresing(false);
@@ -81,7 +106,7 @@ export default function HomeScreen({ navigation }) {
                 </TouchableOpacity>
             </View>
 
-            <View style={[styles.selectBox, { opacity: isSelectBox ? 1 : 0, height: isSelectBox ? 50 : 0 }]}>
+            <View style={[styles.selectBox, { opacity: isSelectBox ? 1 : 0, height: isSelectBox ? 50 : 0, marginBottom: isSelectBox ? 20 : 0 }]}>
                 <Text>{sortMenu === 3 ? '광역시·도' : sortMenu === 4 ? '업종' : '가격대별'}</Text>
                 {isSelectBox ? <PickerScreen sortMenu={sortMenu}></PickerScreen> : null}
             </View>
@@ -102,7 +127,8 @@ export default function HomeScreen({ navigation }) {
                         <View key={item.id} style={[styles.listItemWrap, { marginTop: index == 0 ? 0 : 10 }]}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <View>
-                                    <Text style={styles.itemSmallText}>{item.upTime}</Text>
+                                    {/* 등록 일(년 월 일) */}
+                                    <Text style={styles.itemSmallText}>{item.upTime.split(" ")[0]}</Text>   
                                     <Text style={styles.itemStoreName}>{item.storeName}</Text>
                                     <Text style={styles.itemStoreAddress}>{item.dong} {item.city}</Text>
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop:10}}>
@@ -114,7 +140,7 @@ export default function HomeScreen({ navigation }) {
                                 <View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
                                         <AntDesign name="edit" size={30} color="rgba(0, 0, 0, 0.3)"  style={{marginRight:30}}/>
-                                        <Feather name="trash-2" size={30}  color="rgba(0, 0, 0, 0.3)" />
+                                        <Feather onPress={()=> deleteItem(item._id)} name="trash-2" size={30}  color="rgba(0, 0, 0, 0.3)" />
                                     </View>
                                     <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => alert(item._id)}>
                                         <Text style={{color:'#fff'}}>시작하기</Text>

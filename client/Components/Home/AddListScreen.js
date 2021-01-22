@@ -10,7 +10,7 @@ import { add } from 'react-native-reanimated';
 
 export default function AddListScreen({ navigation }) {
     const [addListItem, setAddListItem] = useState({
-        upTime: moment().format("YYYY-MM-DD"),
+        upTime: moment().format("YYYY-MM-DD hh:mm:ss"),
         storeName: null,
         dong: null,
         city: null,

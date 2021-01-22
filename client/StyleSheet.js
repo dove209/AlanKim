@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
         width: width * 0.9,
     },
     mainTitleSmailText: {
-        fontSize: 12,
+        fontSize: width/28,
     },
     mainTitleBigText: {
-        fontSize: 20,
+        fontSize: width/16,
         fontWeight: 'bold'
     },
     sortMenu: {
@@ -41,11 +41,11 @@ const styles = StyleSheet.create({
     },
     homeList: {
         flex: 1,
-        marginTop:20,
+        marginTop:0,
         width: width,
         justifyContent: 'center',
         alignItems: 'center',
-    
+        paddingBottom: 10,
     },
     listEmptyTitle: {
         fontSize: 20,
