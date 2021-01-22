@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Image, Text, TextInput } from 'react-native';
+import { View, TouchableOpacity, Image, Text, TextInput, BackHandler, Alert } from 'react-native';
+import { StackActions } from '@react-navigation/native';
 import axios from 'axios';
 import moment from 'moment'; 
 import { AntDesign, Entypo } from '@expo/vector-icons';
@@ -52,10 +53,32 @@ export default function AddListScreen({ route ,navigation }) {
             })
         }
         getItem()
+
+        const backAction = () => {
+            Alert.alert("Hold on!", "Are you sure you want to go back?", [
+              {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel"
+              },
+              { text: "YES", onPress: () => BackHandler.exitApp() }
+            ]);
+            return true;
+          };
+        const backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          backAction
+        );
+      
+        return () => backHandler.remove();
+     
     },[])
 
     const goback = () => {
-        navigation.navigate("HomeScreen")
+        navigation.dispatch(
+            StackActions.replace('HomeScreen')
+        );
+        // navigation.navigate("HomeScreen")
     }
 
 
@@ -109,7 +132,9 @@ export default function AddListScreen({ route ,navigation }) {
                 .then(res=>{
                     if(res.data){
                         console.log('리스트 등록 완료')
-                        navigation.navigate("HomeScreen")
+                        navigation.dispatch(
+                            StackActions.replace('HomeScreen')
+                        );
                     }
                 })   
                 .catch((error) => console.error(error))
@@ -118,7 +143,9 @@ export default function AddListScreen({ route ,navigation }) {
                 .then(res=>{
                     if(res.data){
                         console.log('리스트 수정 완료')
-                        navigation.navigate("HomeScreen")
+                        navigation.dispatch(
+                            StackActions.replace('HomeScreen')
+                        );
                     }
                 })   
                 .catch((error) => console.error(error))
@@ -133,7 +160,7 @@ export default function AddListScreen({ route ,navigation }) {
             <View style={styles.mainTitle}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <AntDesign onPress={goback} name="arrowleft" size={24} color="rgba(0, 0, 0, 0.3)" />
-                    <Text style={{ marginLeft: 10, fontSize: 16 }}>리스트 등록</Text>
+                    <Text style={{ marginLeft: 10, fontSize: 16 }}>{setRole === '신규등록' ? '리스트 등록' : '리스트 수정'}</Text>
                 </View>
             </View>
 
@@ -266,7 +293,7 @@ export default function AddListScreen({ route ,navigation }) {
 
                 {/* 완료 */}
                 <TouchableOpacity style={[styles.submitBtn, { backgroundColor: '#00B2FF' }]} onPress={addListSubmit}>
-                    <Text style={{ color: '#fff' }}>완료</Text>
+                    <Text style={{ color: '#fff', fontSize: 17 }}>완 료</Text>
                 </TouchableOpacity>
             </View>
 

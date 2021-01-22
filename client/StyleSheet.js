@@ -5,7 +5,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#E5E5E5',
-        paddingTop: 50,
+        paddingTop: 20,
         alignItems: 'center',
     },
     mainTitle: {
@@ -29,11 +29,15 @@ const styles = StyleSheet.create({
         paddingRight: 40,
         width: width * 0.9,
     },
+    sortMenuBtn: {
+        width:width/7,
+        height:30
+    },
     selectBox: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginTop:20,
+        marginTop:10,
         width: width*0.9,
         backgroundColor: '#fff',
         borderWidth:1,
@@ -41,7 +45,6 @@ const styles = StyleSheet.create({
     },
     homeList: {
         flex: 1,
-        marginTop:0,
         width: width,
         justifyContent: 'center',
         alignItems: 'center',
@@ -95,14 +98,14 @@ const styles = StyleSheet.create({
     addListContainer:{
         flex: 1,
         alignItems: 'center',
-        paddingTop: 40,
+        paddingTop: 20,
         paddingBottom: 20,
     },
     optionsWrap: {
         flex: 1,
         justifyContent:'space-between',
-        marginTop:10,
-        width: width * 0.9,
+        marginTop:20,
+        width: width * 0.88,
     },
     optionTitle:{
         fontSize: 16,
@@ -110,13 +113,13 @@ const styles = StyleSheet.create({
     },
     input: {
         fontSize: width / 20,
-        height: 30,
+        height: 25,
         marginTop: 10,
     },
     bar: {
         height:1,
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        marginTop:20,
+        marginTop:10,
     },
     addressSelect: {
         flexDirection: 'row',

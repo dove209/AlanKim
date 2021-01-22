@@ -2,8 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
-export default function PickerScreen({ sortMenu }) {
-    const [selectVal, setSelectVal] = useState(null);
+export default function PickerScreen({ sortMenu, selectVal, onValueChange }) {
 
     let pickerItems = []
 
@@ -20,7 +19,7 @@ export default function PickerScreen({ sortMenu }) {
             style={{ height: 30, width: 150, borderWidth: 0 }}
             value={null}
             selectedValue={selectVal}
-            onValueChange={(val, idx) => setSelectVal(val) }
+            onValueChange={onValueChange}
         >
             <Picker.Item label='선택' value='0' />
             {
