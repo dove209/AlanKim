@@ -8,15 +8,27 @@ const Item = require('../../models/Item');
 router.get('/', function(req, res, next) {
   // Item.find({name:'kildong'})
   let orderIndex = req.query.sortMenu === '1' ? 'desc' : 'asc';
-  Item.find().sort({upTime: orderIndex})
-    .then(items => res.json(items))
+  Item.find({isMarked:false}).sort({upTime: orderIndex})
+    .then(items => res.status(200).json(items))
     .catch(err => res.status(500).send(err));
+});
+router.get('/:_id', function(req, res, next) {
+  let _id = req.params._id;
+  Item.find({_id :_id})
+  .then(item => res.status(200).json(item))
+  .catch(err => res.status(500).send(err));
 });
 
 /* POST items(item ADD) */
 router.post('/', function(req, res, next) {
   Item.create(req.body.addListItem)
     .then(() => res.status(200).send(true))
+    .catch(err => res.status(500).send(err));
+});
+
+router.put('/',function(req, res, next){
+  Item.updateMany({ _id: req.body._id }, { $set : req.body.addListItem })
+    .then(()=>{res.status(200).send(true)})
     .catch(err => res.status(500).send(err));
 });
 

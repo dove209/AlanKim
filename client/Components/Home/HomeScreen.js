@@ -42,8 +42,15 @@ export default function HomeScreen({ navigation }) {
     }
     //남기기 클릭
     const addList = () => {
-        navigation.navigate("AddListScreen")
+        navigation.navigate("AddListScreen",{_id:null})
     }
+
+    // 아이템 내용 수정
+    const modify = (_id) => {
+        navigation.navigate("AddListScreen",{_id:_id})
+    }
+
+    // 아이템 삭제
     const deleteItem = (_id) => {
         Alert.alert(
             "삭제",
@@ -67,6 +74,8 @@ export default function HomeScreen({ navigation }) {
             { cancelable: false }
           );
     }
+
+
     //ScrollView 다운시 새로고침
     const onRefresh = () => {
         setRefresing(true)
@@ -139,7 +148,7 @@ export default function HomeScreen({ navigation }) {
                                 </View>
                                 <View>
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                        <AntDesign name="edit" size={30} color="rgba(0, 0, 0, 0.3)"  style={{marginRight:30}}/>
+                                        <AntDesign onPress={() => modify(item._id)} name="edit" size={30} color="rgba(0, 0, 0, 0.3)"  style={{marginRight:30}}/>
                                         <Feather onPress={()=> deleteItem(item._id)} name="trash-2" size={30}  color="rgba(0, 0, 0, 0.3)" />
                                     </View>
                                     <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => alert(item._id)}>

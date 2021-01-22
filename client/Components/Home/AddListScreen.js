@@ -6,9 +6,11 @@ import { AntDesign, Entypo } from '@expo/vector-icons';
 import styles from '../../StyleSheet';
 import config from '../../config';
 import { Picker } from '@react-native-picker/picker';
-import { add } from 'react-native-reanimated';
 
-export default function AddListScreen({ navigation }) {
+export default function AddListScreen({ route ,navigation }) {
+    const _id = route.params._id
+
+    const [role, setRole] = useState(null); //컴포넌트 역할, 신규등록 or 내용수정
     const [addListItem, setAddListItem] = useState({
         upTime: moment().format("YYYY-MM-DD hh:mm:ss"),
         storeName: null,
@@ -24,6 +26,33 @@ export default function AddListScreen({ navigation }) {
     const addressItems_2 = ['중구', '영통구']
 
     const inputsRef = useRef();
+
+    useEffect(()=>{
+        const getItem = async() => {
+            await axios.get(`${config.MAIN_URL}/items/${_id}`)
+            .then((res) => {
+                if(res.status === 200){
+                    setRole('내용수정');
+                    setAddListItem({
+                        ...addListItem,
+                        storeName: res.data[0].storeName,
+                        dong: res.data[0].dong,
+                        city: res.data[0].city,
+                        storeType: res.data[0].storeType,
+                        price: res.data[0].price,
+                        isParking: res.data[0].isParking,
+                    });
+                }
+            })
+            .catch((error) => {
+                if(error.response.status === 500) {
+                    console.log('신규 등록')
+                    setRole('신규등록');
+                } 
+            })
+        }
+        getItem()
+    },[])
 
     const goback = () => {
         navigation.navigate("HomeScreen")
@@ -72,16 +101,28 @@ export default function AddListScreen({ navigation }) {
         })
     }
 
+    // 신규 아이템 등록(POST) 또는 아이템 내용 수정(PUT)
     const addListSubmit = () => {
         if(addListItem.city !== null && addListItem.dong !== null && addListItem.isParking !== null && addListItem.price !== null && addListItem.storeName !== null && addListItem.storeName !== '' && addListItem.storeType !== null){
-            axios.post(`${config.MAIN_URL}/items`,{addListItem})
-            .then(res=>{
-                if(res.data){
-                    console.log('리스트 등록 완료')
-                    navigation.navigate("HomeScreen")
-                }
-            })   
-            .catch((error) => console.error(error))
+            if(role === '신규등록'){
+                axios.post(`${config.MAIN_URL}/items`,{addListItem})
+                .then(res=>{
+                    if(res.data){
+                        console.log('리스트 등록 완료')
+                        navigation.navigate("HomeScreen")
+                    }
+                })   
+                .catch((error) => console.error(error))
+             } else if(role === '내용수정'){
+                axios.put(`${config.MAIN_URL}/items`,{addListItem,_id:_id})
+                .then(res=>{
+                    if(res.data){
+                        console.log('리스트 수정 완료')
+                        navigation.navigate("HomeScreen")
+                    }
+                })   
+                .catch((error) => console.error(error))
+             }
         } else {
             alert("모두 작성 해주세요.")
         }
