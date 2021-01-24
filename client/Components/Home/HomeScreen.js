@@ -20,6 +20,7 @@ export default function HomeScreen({ navigation }) {
         axios.get(`${config.MAIN_URL}/items?sortMenu=${sortMenu}&val=${val}`)
             .then((res) => {
                 setItems(res.data);
+                Vibration.vibrate(5)
             })
             .catch((error) => console.error(error))
     }
@@ -39,19 +40,25 @@ export default function HomeScreen({ navigation }) {
         // return unsubscribe;
     }, [])
 
+    // 정렬 기준 선택
     const listSort = (menu) => {
         Vibration.vibrate(5)
         setSortMenu(menu)
         setSelectVal(null)
         if (menu === 3 || menu === 4 || menu === 5) {
-            setIsSelectBox(true)
+            axios.get(`${config.MAIN_URL}/items?sortMenu=1`)
+            .then((res) => {
+                setItems(res.data);
+                setIsSelectBox(true);
+            })
+            .catch((error) => console.error(error))
         } else {
             axios.get(`${config.MAIN_URL}/items?sortMenu=${menu}`)
-                .then((res) => {
-                    setItems(res.data);
-                    setIsSelectBox(false);
-                })
-                .catch((error) => console.error(error))
+            .then((res) => {
+                setItems(res.data);
+                setIsSelectBox(false);
+            })
+            .catch((error) => console.error(error))
         }
     }
     //남기기 클릭
@@ -112,6 +119,7 @@ export default function HomeScreen({ navigation }) {
                 setSortMenu(1);
                 setIsSelectBox(false);
                 setRefresing(false);
+                Vibration.vibrate(5)
             })
             .catch((error) => console.error(error))
     }
@@ -181,7 +189,7 @@ export default function HomeScreen({ navigation }) {
                                         <AntDesign onPress={() => modify(item._id)} name="edit" size={30} color="rgba(0, 0, 0, 0.3)" style={{ marginRight: 30 }} />
                                         <Feather onPress={() => deleteItem(item._id)} name="trash-2" size={30} color="rgba(0, 0, 0, 0.3)" />
                                     </View>
-                                    <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => alert(item._id)}>
+                                    <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => {Vibration.vibrate(5), alert(item._id)}}>
                                         <Text style={{ color: '#fff' }}>시작하기</Text>
                                     </TouchableOpacity>
                                 </View>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Image, Text, TextInput, BackHandler, Alert } from 'react-native';
+import { View, TouchableOpacity, Image, Text, TextInput, BackHandler, Alert, Vibration} from 'react-native';
 import { StackActions } from '@react-navigation/native';
 import axios from 'axios';
 import moment from 'moment'; 
@@ -8,7 +8,7 @@ import styles from '../../StyleSheet';
 import config from '../../config';
 import { Picker } from '@react-native-picker/picker';
 
-export default function AddListScreen({ route ,navigation }) {
+export default function AddListScreen({ route, navigation }) {
     const _id = route.params._id
 
     const [role, setRole] = useState(null); //컴포넌트 역할, 신규등록 or 내용수정
@@ -22,9 +22,7 @@ export default function AddListScreen({ route ,navigation }) {
         isParking: null,
         isMarked:false
     })
-
-    const addressItems_1 = ['서울특별시', '경기도']
-    const addressItems_2 = ['중구', '영통구']
+    const [selectedDong, setSelectedDong ] = useState(null);
 
     const inputsRef = useRef();
 
@@ -83,19 +81,23 @@ export default function AddListScreen({ route ,navigation }) {
 
 
     const changeStoreName = (value) => {
+        Vibration.vibrate(5)
         setAddListItem({
             ...addListItem,
             storeName: value,
         })
     };
     const changeDong = (value) => {
+        Vibration.vibrate(5)
         inputsRef.current.blur();
+        setSelectedDong(value)
         setAddListItem({
             ...addListItem,
             dong: value,
         })
     }
     const changeCity = (value) => {
+        Vibration.vibrate(5)
         inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
@@ -103,6 +105,7 @@ export default function AddListScreen({ route ,navigation }) {
         })
     }
     const selectStoreType = (value) => {
+        Vibration.vibrate(5)
         inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
@@ -110,6 +113,7 @@ export default function AddListScreen({ route ,navigation }) {
         })
     }
     const selectStorePrice = (value) => {
+        Vibration.vibrate(5)
         inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
@@ -117,6 +121,7 @@ export default function AddListScreen({ route ,navigation }) {
         })
     }
     const selectStoreParking = (value) => {
+        Vibration.vibrate(5)
         inputsRef.current.blur();
         setAddListItem({
             ...addListItem,
@@ -160,7 +165,7 @@ export default function AddListScreen({ route ,navigation }) {
             <View style={styles.mainTitle}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <AntDesign onPress={goback} name="arrowleft" size={24} color="rgba(0, 0, 0, 0.3)" />
-                    <Text style={{ marginLeft: 10, fontSize: 16 }}>{setRole === '신규등록' ? '리스트 등록' : '리스트 수정'}</Text>
+                    <Text style={{ marginLeft: 10, fontSize: 16 }}>{role  === '신규등록' ? '리스트 등록' : '리스트 수정'}</Text>
                 </View>
             </View>
 
@@ -189,7 +194,7 @@ export default function AddListScreen({ route ,navigation }) {
                             <Picker style={{ height: 30, width: 200 }} value={null} selectedValue={addListItem.dong} onValueChange={(val, idx) => changeDong(val)}>
                                 <Picker.Item label='선택' value='0' />
                                 {
-                                    addressItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} /> })
+                                    config.Dongs.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} /> })
                                 }
                             </Picker>
                     </View>
@@ -198,7 +203,8 @@ export default function AddListScreen({ route ,navigation }) {
                         <Picker style={{ height: 30, width: 200 }} value={null} selectedValue={addListItem.city} onValueChange={(val, idx) => changeCity(val)}>
                             <Picker.Item label='선택' value='0' />
                             {
-                                addressItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} /> })
+                               selectedDong === '서울특별시' ? config.cityItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})  
+                               : config.cityItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
                             }
                         </Picker>
                     </View>
@@ -209,39 +215,39 @@ export default function AddListScreen({ route ,navigation }) {
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.optionTitle}>업종</Text>
                     <View style={[styles.selectBtnWrap, { marginTop: 10 }]}>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '한식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('한식')}>
-                            <Text style={{ color: addListItem.storeType === '한식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>한식</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[0]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[0]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[0]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[0]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '중식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('중식')}>
-                            <Text style={{ color: addListItem.storeType === '중식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>중식</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[1]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[1]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[1]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[1]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '일식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('일식')}>
-                            <Text style={{ color: addListItem.storeType === '일식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>일식</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[2]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[2]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[2]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[2]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '양식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('양식')}>
-                            <Text style={{ color: addListItem.storeType === '양식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>양식</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={[styles.selectBtnWrap, { marginTop: 5 }]}>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '분식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('분식')}>
-                            <Text style={{ color: addListItem.storeType === '분식' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>분식</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '해외' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('해외')}>
-                            <Text style={{ color: addListItem.storeType === '해외' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>해외</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '뷔페' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('뷔페')}>
-                            <Text style={{ color: addListItem.storeType === '뷔페' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>뷔페</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '카페' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('카페')}>
-                            <Text style={{ color: addListItem.storeType === '카페' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>카페</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[3]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[3]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[3]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[3]}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={[styles.selectBtnWrap, { marginTop: 5 }]}>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '주점' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('주점')}>
-                            <Text style={{ color: addListItem.storeType === '주점' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>주점</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[4]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[4]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[4]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[4]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === '기타' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType('기타')}>
-                            <Text style={{ color: addListItem.storeType === '기타' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>기타</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[5]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[5]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[5]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[5]}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[6]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[6]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[6]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[6]}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[7]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[7]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[7]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[7]}</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={[styles.selectBtnWrap, { marginTop: 5 }]}>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[8]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[8]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[8]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[8]}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.storeType === `${config.storeType[9]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreType(`${config.storeType[9]}`)}>
+                            <Text style={{ color: addListItem.storeType === `${config.storeType[9]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.storeType[9]}</Text>
                         </TouchableOpacity>
                         <View style={[styles.selectBtn, { opacity: 0 }]}>
                         </View>
@@ -255,20 +261,20 @@ export default function AddListScreen({ route ,navigation }) {
                 <View style={{ marginTop: 10 }}>
                     <View style={{ flexDirection: 'row', alignItems: 'flex-end' }}>
                         <Text style={styles.optionTitle}>가격</Text>
-                        <Text style={{ fontSize: 13, marginLeft: 5, color: 'rgba(0, 0, 0, 0.4)' }}>*1인분 기준</Text>
+                        <Text style={{ fontSize: 13, marginLeft: 10, color: 'rgba(0, 0, 0, 0.4)' }}>*1인분 기준</Text>
                     </View>
                     <View style={[styles.selectBtnWrap, { marginTop: 10 }]}>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === '만원이하' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('만원이하')}>
-                            <Text style={{ color: addListItem.price === '만원이하' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>만원이하</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === `${config.price[0]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('만원이하')}>
+                            <Text style={{ color: addListItem.price === `${config.price[0]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.price[0]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === '1만원대' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('1만원대')}>
-                            <Text style={{ color: addListItem.price === '1만원대' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>1만원대</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === `${config.price[1]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('1만원대')}>
+                            <Text style={{ color: addListItem.price === `${config.price[1]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.price[1]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === '2만원대' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('2만원대')}>
-                            <Text style={{ color: addListItem.price === '2만원대' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>2만원대</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === `${config.price[2]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('2만원대')}>
+                            <Text style={{ color: addListItem.price === `${config.price[2]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.price[2]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === '3만원이상' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('3만원이상')}>
-                            <Text style={{ color: addListItem.price === '3만원이상' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>3만원이상</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.price === `${config.price[3]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStorePrice('3만원이상')}>
+                            <Text style={{ color: addListItem.price === `${config.price[3]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.price[3]}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -278,11 +284,11 @@ export default function AddListScreen({ route ,navigation }) {
                 <View style={{ marginTop: 10 }}>
                     <Text style={styles.optionTitle}>주차</Text>
                     <View style={[styles.selectBtnWrap, { marginTop: 10 }]}>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.isParking === '가능' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreParking('가능')}>
-                            <Text style={{ color: addListItem.isParking === '가능' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>가능</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.isParking === `${config.parking[0]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreParking('가능')}>
+                            <Text style={{ color: addListItem.isParking === `${config.parking[0]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.parking[0]}</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.isParking === '불가능' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreParking('불가능')}>
-                            <Text style={{ color: addListItem.isParking === '불가능' ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>불가능</Text>
+                        <TouchableOpacity style={[styles.selectBtn, { borderColor: addListItem.isParking === `${config.parking[1]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }]} onPress={() => selectStoreParking('불가능')}>
+                            <Text style={{ color: addListItem.isParking === `${config.parking[1]}` ? '#00B2FF' : 'rgba(0, 0, 0, 0.4)' }}>{config.parking[1]}</Text>
                         </TouchableOpacity>
                         <View style={[styles.selectBtn, { opacity: 0 }]}>
                         </View>
