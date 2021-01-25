@@ -53,20 +53,12 @@ export default function AddListScreen({ route, navigation }) {
         getItem()
 
         const backAction = () => {
-            Alert.alert("Hold on!", "Are you sure you want to go back?", [
-              {
-                text: "Cancel",
-                onPress: () => null,
-                style: "cancel"
-              },
-              { text: "YES", onPress: () => BackHandler.exitApp() }
-            ]);
+            navigation.dispatch(
+                StackActions.replace('HomeScreen')
+            );
             return true;
-          };
-        const backHandler = BackHandler.addEventListener(
-          "hardwareBackPress",
-          backAction
-        );
+        };
+        const backHandler = BackHandler.addEventListener("hardwareBackPress",backAction);
       
         return () => backHandler.remove();
      

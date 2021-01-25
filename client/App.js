@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import AuthLoading from './Components/AuthLoading';
 import HomeScreen from './Components/Home/HomeScreen';
 import AddListScreen from './Components/Home/AddListScreen';
-
+import Scoring_1 from './Components/Home/Score/Scoring_1';
 
 
 function MarkScreen() {
@@ -90,6 +90,7 @@ function MainStack() {
       {/* 로그인 추가? */}
       <Stack.Screen name="HomeScreen" component={MainTabs} />
       <Stack.Screen name="AddListScreen" component={AddListScreen} />
+      <Stack.Screen name="Scoring_1" component={Scoring_1} />
     </Stack.Navigator>
   )
 }

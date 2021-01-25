@@ -7,6 +7,7 @@ import styles from '../../StyleSheet';
 import config from '../../config';
 import PickerScreen from './picker';
 
+
 export default function HomeScreen({ navigation }) {
     const [items, setItems] = useState([]);
     const [sortMenu, setSortMenu] = useState(1);    //1:최신순, 2:과거순, 3:위치별, 4:업종별, 5:가격대별
@@ -109,6 +110,15 @@ export default function HomeScreen({ navigation }) {
         );
     }
 
+    //아이템 질문 남기기
+    const scoring = (_id) => {
+        Vibration.vibrate(5)
+        navigation.dispatch(
+            StackActions.replace('Scoring_1', {
+                _id: _id,
+            })
+        );
+    };
 
     //ScrollView 다운시 새로고침
     const onRefresh = () => {
@@ -189,7 +199,7 @@ export default function HomeScreen({ navigation }) {
                                         <AntDesign onPress={() => modify(item._id)} name="edit" size={30} color="rgba(0, 0, 0, 0.3)" style={{ marginRight: 30 }} />
                                         <Feather onPress={() => deleteItem(item._id)} name="trash-2" size={30} color="rgba(0, 0, 0, 0.3)" />
                                     </View>
-                                    <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => {Vibration.vibrate(5), alert(item._id)}}>
+                                    <TouchableOpacity style={styles.itemMarkStartBtn} onPress={() => scoring(item._id)}>
                                         <Text style={{ color: '#fff' }}>시작하기</Text>
                                     </TouchableOpacity>
                                 </View>

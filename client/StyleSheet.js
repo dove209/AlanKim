@@ -152,7 +152,75 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         borderRadius:30,
         marginTop:30,
+    },
+
+    //아이템 점수 메기기
+    addScoreContainer:{
+        flex: 1,
+        alignItems: 'center',
+        paddingTop: 20,
+    },
+    orderNum: {
+        color: 'rgba(0, 0, 0, 0.6)',
+    },
+    questionsTitle:{
+        fontWeight:'bold',
+        fontSize: width/16,
+        marginTop:10,
+    },
+    questionsContent:{
+        marginTop: 5,
+        fontSize: width/28,
+        color: 'rgba(0, 0, 0, 0.5)',
+    },
+    starWrap: {
+        borderRadius:10,
+        backgroundColor:"#fff",
+        height:height*0.22,
+        marginTop:10,
+        alignItems:'center'
+    },
+    stars: {
+        width:"90%",
+        justifyContent:'space-around',
+        flexDirection: 'row',
+        marginTop: 30,
+    },
+    StarImage: {
+        width: width/15,
+        height: width/15,
+        resizeMode: 'cover',
+    },
+    scoreText: {
+        fontWeight:'bold',
+        fontSize: width/10,
+    },
+    AddWrap: {
+        height:height*0.15,
+        marginTop:5,
+        paddingTop:10,
+        borderTopWidth:1,
+        borderTopColor:'rgba(0, 0, 0, 0.3)',
+        alignItems:'center'
+    },
+    btnWrap: {
+        height:height*0.1,
+        marginTop:5,
+        paddingTop:10,
+        borderTopWidth:1,
+        borderTopColor:'rgba(0, 0, 0, 0.3)',
+        alignItems:'center'
+    },
+    prevNextBtn:{
+        width:"48%",
+        height:50,
+        borderRadius:30,
+        alignItems:'center',
+        justifyContent:'center'
     }
+    
+    
 })
+
 
 export default styles;
