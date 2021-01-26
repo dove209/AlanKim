@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, Text, TextInput, Vibration } from 'react-native';
 
-export default function EditComment({ comment, isEditComment, cancelEditComment, submitEditComment, changeComment}) {
+export default function EditComment({ comment, cancelEditComment, submitEditComment, changeComment}) {
     const inputRef = useRef()
 
     const submit = () => {
@@ -10,7 +10,7 @@ export default function EditComment({ comment, isEditComment, cancelEditComment,
     }
 
     return(
-    <View style={{backgroundColor:"#E5E5E5", alignItems:"center", opacity : isEditComment ? 1 : 0, width: isEditComment ? "100%" : 0, position:'absolute', height: isEditComment ? "120%" : 0, zIndex: 9}}>
+    <View style={{flex:1, backgroundColor:"#E5E5E5", alignItems:"center", width:"100%", height: "100%"}}>
         <View style={{flexDirection:'row', width:'90%', alignItems:'center', justifyContent:"space-between", paddingTop:30}}>
             <Text style={{fontSize:18}}>코멘트</Text>
             <View style={{flexDirection:'row'}}>

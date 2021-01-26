@@ -159,6 +159,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 20,
+        backgroundColor:'#E5E5E5'
     },
     orderNum: {
         color: 'rgba(0, 0, 0, 0.6)',
@@ -202,6 +203,27 @@ const styles = StyleSheet.create({
         borderTopWidth:1,
         borderTopColor:'rgba(0, 0, 0, 0.3)',
         alignItems:'center'
+    },
+    width90per:{
+        width:"95%",
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:"space-between"
+    },
+    addImageBtn:{
+        width:90,
+        height:90,
+        borderRadius:10,
+        borderWidth:1,
+        borderStyle:'dashed',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    thumbnail: {
+        width: 90,
+        height: 90,
+        borderRadius:10,
+        resizeMode: "stretch"
     },
     btnWrap: {
         height:height*0.1,
