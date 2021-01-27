@@ -32,8 +32,7 @@ export default function Scoring_1({ route, navigation }) {
         (async () => {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                const { status_camera } = await ImagePicker.requestCameraPermissionsAsync();
-                if (status !== 'granted' && status_camera !== 'granted') {
+                if (status !== 'granted' ) {
                     alert('카메라 및 앨범 접근을 혀용해 주세요.');
                 }
             }
@@ -63,6 +62,7 @@ export default function Scoring_1({ route, navigation }) {
         if(isNext){
             console.log(questions)
             console.log('다음 화면 이동')
+            setIsNext(!isNext)
         }
     },[isNext])
 
@@ -130,8 +130,11 @@ export default function Scoring_1({ route, navigation }) {
     //이미지 제거
     const deleteImage = () => {
         Vibration.vibrate(5)
+        if(images.length > 0) {
+            setImagesBase64([...imagesBase64.slice(0, selectImageIdx-1 ), ...imagesBase64.slice(selectImageIdx, imagesBase64.length)])
+            setImages(images.filter(image => image !== images[selectImageIdx - 1]));
+        }
         setSelectImageIdx(null)
-        setImages(images.filter(image => image !== images[selectImageIdx - 1]));
     }
 
 
@@ -176,7 +179,11 @@ export default function Scoring_1({ route, navigation }) {
             'Q_imges': imagesBase64,
             'Q_comment': comment
         }
-        setQuestions([...questions, Q1])
+        if(questions.length === 0){
+            setQuestions([...questions, Q1])
+        } else {
+            setQuestions([Q1])
+        }
         setIsNext(true)
     }
 
