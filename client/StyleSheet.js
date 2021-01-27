@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
         width:90,
         height:90,
         borderRadius:10,
-        borderWidth:1,
+        borderWidth:2,
         borderStyle:'dashed',
         justifyContent:'center',
         alignItems:'center'
@@ -239,7 +239,45 @@ const styles = StyleSheet.create({
         borderRadius:30,
         alignItems:'center',
         justifyContent:'center'
-    }
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+      },
+      modalView: {
+        margin: 20,
+        width:width*0.5,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 20,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+      },
+      openButton: {
+        backgroundColor: "#F194FF",
+        borderRadius: 20,
+        width:"100%",
+        padding: 10,
+        elevation: 2,
+      },
+      textStyle: {
+        color: "white",
+        fontWeight: "bold",
+        textAlign: "center"
+      },
+      modalText: {
+        marginBottom: 15,
+        textAlign: "center"
+      }
     
     
 })
