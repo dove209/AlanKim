@@ -12,6 +12,8 @@ import AuthLoading from './Components/AuthLoading';
 import HomeScreen from './Components/Home/HomeScreen';
 import AddListScreen from './Components/Home/AddListScreen';
 import Scoring_1 from './Components/Home/Score/Scoring_1';
+import Scoring_2 from './Components/Home/Score/Scoring_2';
+import Scoring_16 from './Components/Home/Score/Scoring_16';
 
 
 function MarkScreen() {
@@ -91,6 +93,8 @@ function MainStack() {
       <Stack.Screen name="HomeScreen" component={MainTabs} />
       <Stack.Screen name="AddListScreen" component={AddListScreen} />
       <Stack.Screen name="Scoring_1" component={Scoring_1} />
+      <Stack.Screen name="Scoring_2" component={Scoring_2} />
+      <Stack.Screen name="Scoring_16" component={Scoring_16} />
     </Stack.Navigator>
   )
 }

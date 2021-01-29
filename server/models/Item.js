@@ -12,7 +12,8 @@ const ItemSchema = new Schema(
         storeType: String,
         price: String,
         isParking: String,
-        isMarked: Boolean,
+        isScore: Boolean,
+        QArr: Array,
     }, {
         versionKey: false   //마지막 __v 제거
     }

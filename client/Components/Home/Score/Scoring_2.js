@@ -11,8 +11,10 @@ import styles from '../../../StyleSheet';
 
 export default function Scoring_1({ route, navigation }) {
     const _id = route.params._id;
-    const [Q1, setQ1] = useState({
-        Q_num: 1,
+    const QArr = route.params.QArr;
+
+    const [Q2, setQ2] = useState({
+        Q_num: 2,
         Q_score: 1,
         Q_imgBase64: [],
         Q_comment:''
@@ -66,26 +68,25 @@ export default function Scoring_1({ route, navigation }) {
             },
             { text: "예", onPress: () =>  navigation.navigate("HomeScreen")}
         ]);
-       
     }
 
     //별점 +1
     const onIncrease = () => {
         Vibration.vibrate(5)
-        if (Q1.Q_score < maxRating) {
-            setQ1({
-                ...Q1,
-                Q_score: Q1.Q_score + 1
+        if (Q2.Q_score < maxRating) {
+            setQ2({
+                ...Q2,
+                Q_score: Q2.Q_score + 1
             })
         }
     }
     //별점 -1
     const onDecrease = () => {
         Vibration.vibrate(5)
-        if(Q1.Q_score > 1) {
-            setQ1({
-                ...Q1,
-                Q_score: Q1.Q_score - 1
+        if(Q2.Q_score > 1) {
+            setQ2({
+                ...Q2,
+                Q_score: Q2.Q_score - 1
             })
         }
     }
@@ -93,8 +94,8 @@ export default function Scoring_1({ route, navigation }) {
     //별점 선택
     const UpdateRating = (key) => {
         Vibration.vibrate(5)
-        setQ1({
-            ...Q1,
+        setQ2({
+            ...Q2,
             Q_score:key
         })
     }
@@ -126,9 +127,9 @@ export default function Scoring_1({ route, navigation }) {
             }
             if (!image.cancelled) {
                 setImages([...images, image.uri]);
-                setQ1({
-                    ...Q1,
-                    Q_imgBase64 :[...Q1.Q_imgBase64, image.base64]
+                setQ2({
+                    ...Q2,
+                    Q_imgBase64 :[...Q2.Q_imgBase64, image.base64]
                 })
               }
         } else {
@@ -140,9 +141,9 @@ export default function Scoring_1({ route, navigation }) {
     const deleteImage = () => {
         Vibration.vibrate(5)
         if(images.length > 0) {
-            setQ1({
-                ...Q1,
-                Q_imgBase64:[...Q1.Q_imgBase64.slice(0, selectImageIdx-1 ), ...Q1.Q_imgBase64.slice(selectImageIdx, Q1.Q_imgBase64.length)]
+            setQ2({
+                ...Q2,
+                Q_imgBase64:[...Q2.Q_imgBase64.slice(0, selectImageIdx-1 ), ...Q2.Q_imgBase64.slice(selectImageIdx, Q2.Q_imgBase64.length)]
             })
             setImages(images.filter(image => image !== images[selectImageIdx - 1]));
         }
@@ -158,8 +159,8 @@ export default function Scoring_1({ route, navigation }) {
 
     //코멘트 TextInput 값 수정
     const changeComment = (val) => {
-        setQ1({
-            ...Q1,
+        setQ2({
+            ...Q2,
             Q_comment : val
         })
     }
@@ -176,8 +177,8 @@ export default function Scoring_1({ route, navigation }) {
         Vibration.vibrate(5)
         Keyboard.dismiss()
         setIsEditComment(false)
-        setQ1({
-            ...Q1,
+        setQ2({
+            ...Q2,
             Q_comment : text
         })
     }
@@ -185,8 +186,8 @@ export default function Scoring_1({ route, navigation }) {
     //코멘트 삭제 
     const deleteComment = () => {
         Vibration.vibrate(5)
-        setQ1({
-            ...Q1,
+        setQ2({
+            ...Q2,
             Q_comment : ''
         })
     }
@@ -194,9 +195,23 @@ export default function Scoring_1({ route, navigation }) {
     //다음 질문으로 넘어가기
     const nextQuestion = () => {
         Vibration.vibrate(5)
-        navigation.navigate('Scoring_2',{
-            _id: _id, QArr: [Q1]
+        navigation.navigate("Scoring_16", {
+            _id: _id, QArr: [...QArr, Q2]
         })
+    }
+
+    //이전 질문으로 넘거가기
+    const prevQuestion = () => {
+        Vibration.vibrate(5)
+        Alert.alert("해당 질문은 저장되지 않습니다.",
+        "그래도 이전으로 이동하시겠습니까?", [
+            {
+                text: "아니요",
+                onPress: () => null,
+                style: "cancel"
+            },
+            { text: "예", onPress: () => navigation.navigate("Scoring_1") }
+        ]);
     }
 
     let thumbnail = [];
@@ -211,7 +226,7 @@ export default function Scoring_1({ route, navigation }) {
 
     if (isEditComment) {
         return (
-            <EditComment comment={Q1.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
+            <EditComment comment={Q2.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
         )
     } else {
         return (
@@ -226,15 +241,15 @@ export default function Scoring_1({ route, navigation }) {
                     {/* 질문 순서 및 카테고리 */}
                     <View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={styles.orderNum}>{`${Q1.Q_num}/16`}</Text>
+                            <Text style={styles.orderNum}>{`${Q2.Q_num}/16`}</Text>
                             <Text style={{ color: '#0094FF', fontWeight: 'bold' }}>상권</Text>
                         </View>
-                        <Text style={styles.questionsTitle}>매장 상권 어때?</Text>
-                        <Text style={styles.questionsContent}>특급 / 도심상권,역세권 / 대학가,아파트단지 / 동네상권</Text>
+                        <Text style={styles.questionsTitle}>주차 시설 어때?</Text>
+                        <Text style={styles.questionsContent}>크기 / 위치 / 구조 / 차량수</Text>
                     </View>
 
                     {/* 별점 */}
-                    <StarRating defaultRating={Q1.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
+                    <StarRating defaultRating={Q2.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
 
                     {/* 이미지 추가 */}
                     <View style={styles.AddWrap}>
@@ -294,13 +309,13 @@ export default function Scoring_1({ route, navigation }) {
                             </View>
                         </View>
                         <Text style={{ width: "95%", marginTop: 10, color: 'rgba(0, 0, 0, 0.3)' }} numberOfLines={4} ellipsizeMode="tail">
-                            {Q1.Q_comment}
+                            {Q2.Q_comment}
                         </Text>
                     </View>
                     {/* 이전/다음 버튼 */}
                     <View style={styles.btnWrap}>
                         <View style={styles.width90per}>
-                            <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: 'rgba(196, 196, 196, 0.3)' }]} onPress={goback}>
+                            <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: 'rgba(196, 196, 196, 0.3)' }]} onPress={prevQuestion}>
                                 <Text style={{ color: 'rgba(0, 0, 0, 0.6)', fontSize: 18 }}>이전</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: '#00B2FF' }]} onPress={nextQuestion}>

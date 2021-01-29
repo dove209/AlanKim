@@ -2,27 +2,30 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, Keyboard, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import * as ImagePicker from 'expo-image-picker';
+import axios from 'axios';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import StarRating from './StarRating';
 import EditComment from './EditComment';
 import styles from '../../../StyleSheet';
-
+import config from '../../../config';
 
 
 export default function Scoring_1({ route, navigation }) {
     const _id = route.params._id;
-    const [Q1, setQ1] = useState({
-        Q_num: 1,
+    const QArr = route.params.QArr;
+
+    const [Q16, setQ16] = useState({
+        Q_num: 16,
         Q_score: 1,
         Q_imgBase64: [],
         Q_comment:''
     })
+
     const [images, setImages] = useState([]);                   //이미지 경로
     const maxRating = 10;
 
     const [isModalVisible, setModalVisible] = useState(false);  //모달창 열림 여부
     const [selectImageIdx, setSelectImageIdx] = useState(null); //썸네일 이미지 선택 번호
-
     const [isEditComment, setIsEditComment] = useState(false);  //코멘트 편집 창 열림 여부
 
 
@@ -66,26 +69,25 @@ export default function Scoring_1({ route, navigation }) {
             },
             { text: "예", onPress: () =>  navigation.navigate("HomeScreen")}
         ]);
-       
     }
 
     //별점 +1
     const onIncrease = () => {
         Vibration.vibrate(5)
-        if (Q1.Q_score < maxRating) {
-            setQ1({
-                ...Q1,
-                Q_score: Q1.Q_score + 1
+        if (Q16.Q_score < maxRating) {
+            setQ16({
+                ...Q16,
+                Q_score: Q16.Q_score + 1
             })
         }
     }
     //별점 -1
     const onDecrease = () => {
         Vibration.vibrate(5)
-        if(Q1.Q_score > 1) {
-            setQ1({
-                ...Q1,
-                Q_score: Q1.Q_score - 1
+        if(Q16.Q_score > 1) {
+            setQ16({
+                ...Q16,
+                Q_score: Q16.Q_score - 1
             })
         }
     }
@@ -93,8 +95,8 @@ export default function Scoring_1({ route, navigation }) {
     //별점 선택
     const UpdateRating = (key) => {
         Vibration.vibrate(5)
-        setQ1({
-            ...Q1,
+        setQ16({
+            ...Q16,
             Q_score:key
         })
     }
@@ -126,9 +128,9 @@ export default function Scoring_1({ route, navigation }) {
             }
             if (!image.cancelled) {
                 setImages([...images, image.uri]);
-                setQ1({
-                    ...Q1,
-                    Q_imgBase64 :[...Q1.Q_imgBase64, image.base64]
+                setQ16({
+                    ...Q16,
+                    Q_imgBase64 :[...Q16.Q_imgBase64, image.base64]
                 })
               }
         } else {
@@ -140,9 +142,9 @@ export default function Scoring_1({ route, navigation }) {
     const deleteImage = () => {
         Vibration.vibrate(5)
         if(images.length > 0) {
-            setQ1({
-                ...Q1,
-                Q_imgBase64:[...Q1.Q_imgBase64.slice(0, selectImageIdx-1 ), ...Q1.Q_imgBase64.slice(selectImageIdx, Q1.Q_imgBase64.length)]
+            setQ16({
+                ...Q16,
+                Q_imgBase64:[...Q16.Q_imgBase64.slice(0, selectImageIdx-1 ), ...Q16.Q_imgBase64.slice(selectImageIdx, Q16.Q_imgBase64.length)]
             })
             setImages(images.filter(image => image !== images[selectImageIdx - 1]));
         }
@@ -158,8 +160,8 @@ export default function Scoring_1({ route, navigation }) {
 
     //코멘트 TextInput 값 수정
     const changeComment = (val) => {
-        setQ1({
-            ...Q1,
+        setQ16({
+            ...Q16,
             Q_comment : val
         })
     }
@@ -176,8 +178,8 @@ export default function Scoring_1({ route, navigation }) {
         Vibration.vibrate(5)
         Keyboard.dismiss()
         setIsEditComment(false)
-        setQ1({
-            ...Q1,
+        setQ16({
+            ...Q16,
             Q_comment : text
         })
     }
@@ -185,20 +187,29 @@ export default function Scoring_1({ route, navigation }) {
     //코멘트 삭제 
     const deleteComment = () => {
         Vibration.vibrate(5)
-        setQ1({
-            ...Q1,
+        setQ16({
+            ...Q16,
             Q_comment : ''
         })
     }
 
-    //다음 질문으로 넘어가기
-    const nextQuestion = () => {
+    //질문 모음 제출하기
+    const submitQuestion = () => {
         Vibration.vibrate(5)
-        navigation.navigate('Scoring_2',{
-            _id: _id, QArr: [Q1]
-        })
+        axios.put(`${config.MAIN_URL}/items/score`,{_id:_id, QArr:[...QArr, Q16]})
+        .then(res=>{
+            if(res.data){
+                console.log('제출 완료')
+            }
+        })   
+        .catch((error) => console.error(error))
     }
 
+    //이전 질문으로 넘거가기
+    const prevQuestion = () => {
+        Vibration.vibrate(5)
+        navigation.navigate("Scoring_2")
+    }
     let thumbnail = [];
     for (let i = 0; i < images.length; i++) {
         thumbnail.push(
@@ -211,7 +222,7 @@ export default function Scoring_1({ route, navigation }) {
 
     if (isEditComment) {
         return (
-            <EditComment comment={Q1.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
+            <EditComment comment={Q16.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
         )
     } else {
         return (
@@ -226,15 +237,15 @@ export default function Scoring_1({ route, navigation }) {
                     {/* 질문 순서 및 카테고리 */}
                     <View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={styles.orderNum}>{`${Q1.Q_num}/16`}</Text>
+                            <Text style={styles.orderNum}>{`${Q16.Q_num}/16`}</Text>
                             <Text style={{ color: '#0094FF', fontWeight: 'bold' }}>상권</Text>
                         </View>
-                        <Text style={styles.questionsTitle}>매장 상권 어때?</Text>
-                        <Text style={styles.questionsContent}>특급 / 도심상권,역세권 / 대학가,아파트단지 / 동네상권</Text>
+                        <Text style={styles.questionsTitle}>매장 건물 어때?</Text>
+                        <Text style={styles.questionsContent}>몇층 / 한 걸물 / 외정요소</Text>
                     </View>
 
                     {/* 별점 */}
-                    <StarRating defaultRating={Q1.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
+                    <StarRating defaultRating={Q16.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
 
                     {/* 이미지 추가 */}
                     <View style={styles.AddWrap}>
@@ -294,17 +305,17 @@ export default function Scoring_1({ route, navigation }) {
                             </View>
                         </View>
                         <Text style={{ width: "95%", marginTop: 10, color: 'rgba(0, 0, 0, 0.3)' }} numberOfLines={4} ellipsizeMode="tail">
-                            {Q1.Q_comment}
+                            {Q16.Q_comment}
                         </Text>
                     </View>
                     {/* 이전/다음 버튼 */}
                     <View style={styles.btnWrap}>
                         <View style={styles.width90per}>
-                            <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: 'rgba(196, 196, 196, 0.3)' }]} onPress={goback}>
+                            <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: 'rgba(196, 196, 196, 0.3)' }]} onPress={prevQuestion}>
                                 <Text style={{ color: 'rgba(0, 0, 0, 0.6)', fontSize: 18 }}>이전</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: '#00B2FF' }]} onPress={nextQuestion}>
-                                <Text style={{ color: '#fff', fontSize: 18 }}>다음</Text>
+                            <TouchableOpacity style={[styles.prevNextBtn, { backgroundColor: '#00B2FF' }]} onPress={submitQuestion}>
+                                <Text style={{ color: '#fff', fontSize: 18 }}>제출하기</Text>
                             </TouchableOpacity>
                         </View>
                     </View>

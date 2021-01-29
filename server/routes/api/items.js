@@ -10,19 +10,19 @@ router.get('/', function(req, res, next) {
   let sorttVal = req.query.val;
   let orderIndex = sortMenu === 2 ? 'asc' : 'desc';
   if(sortMenu === 3) {  //위치별
-    Item.find({ isMarked:false, dong: sorttVal}).sort({upTime: orderIndex})
+    Item.find({ isScore:false, dong: sorttVal}).sort({upTime: orderIndex})
     .then(items => res.status(200).json(items))
     .catch(err => res.status(500).send(err));
   } else if(sortMenu === 4){  //업종별
-    Item.find({ isMarked:false, storeType: sorttVal }).sort({upTime: orderIndex})
+    Item.find({ isScore:false, storeType: sorttVal }).sort({upTime: orderIndex})
     .then(items => res.status(200).json(items))
     .catch(err => res.status(500).send(err));
   } else if (sortMenu === 5) {  //가격대별
-    Item.find({ isMarked:false, price: sorttVal }).sort({upTime: orderIndex})
+    Item.find({ isScore:false, price: sorttVal }).sort({upTime: orderIndex})
     .then(items => res.status(200).json(items))
     .catch(err => res.status(500).send(err));
   } else {                      //최신순 or 과거순
-    Item.find({ isMarked:false}).sort({upTime: orderIndex})
+    Item.find({isScore:false}).sort({upTime: orderIndex})
     .then(items => res.status(200).json(items))
     .catch(err => res.status(500).send(err));
   }
@@ -48,11 +48,17 @@ router.put('/',function(req, res, next){
     .then(()=>{res.status(200).send(true)})
     .catch(err => res.status(500).send(err));
 });
+/* PUT item 점수 등록 */ 
+router.put('/score',function(req, res, next){
+  Item.updateMany({ _id: req.body._id }, { $set :{ QArr : req.body.QArr, isScore : true} })
+    .then(()=>{res.status(200).send(true)})
+    .catch(err => res.status(500).send(err));
+});
 
 /* DELETE items(item delete) */
 router.delete('/',function(req, res, next){
   let id = req.query._id;
-  Item.remove({ _id: id })
+  Item.deleteOne({ _id: id })
     .then(()=>{res.status(200).send(true)})
     .catch(err => res.status(500).send(err));
 });

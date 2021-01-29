@@ -20,7 +20,8 @@ export default function AddListScreen({ route, navigation }) {
         storeType: null,
         price: null,
         isParking: null,
-        isMarked:false
+        isScore:false,
+        QArr:[]
     })
     const [selectedDong, setSelectedDong ] = useState(null);
 
@@ -41,6 +42,7 @@ export default function AddListScreen({ route, navigation }) {
                         price: res.data[0].price,
                         isParking: res.data[0].isParking,
                     });
+                    setSelectedDong(res.data[0].dong);
                 }
             })
             .catch((error) => {
@@ -68,9 +70,7 @@ export default function AddListScreen({ route, navigation }) {
         navigation.dispatch(
             StackActions.replace('HomeScreen')
         );
-        // navigation.navigate("HomeScreen")
     }
-
 
     const changeStoreName = (value) => {
         Vibration.vibrate(5)
@@ -86,8 +86,10 @@ export default function AddListScreen({ route, navigation }) {
         setAddListItem({
             ...addListItem,
             dong: value,
+            city: null
         })
     }
+
     const changeCity = (value) => {
         Vibration.vibrate(5)
         inputsRef.current.blur();
@@ -184,7 +186,7 @@ export default function AddListScreen({ route, navigation }) {
                     <View style={styles.addressSelect}>
                         <Text>광역시·도</Text>
                             <Picker style={{ height: 30, width: 200 }} value={null} selectedValue={addListItem.dong} onValueChange={(val, idx) => changeDong(val)}>
-                                <Picker.Item label='선택' value='0' />
+                                <Picker.Item label='선택' value='선택' />
                                 {
                                     config.Dongs.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} /> })
                                 }
@@ -193,9 +195,11 @@ export default function AddListScreen({ route, navigation }) {
                     <View style={styles.addressSelect}>
                         <Text>시·군·구</Text>
                         <Picker style={{ height: 30, width: 200 }} value={null} selectedValue={addListItem.city} onValueChange={(val, idx) => changeCity(val)}>
-                            <Picker.Item label='선택' value='0' />
+                            <Picker.Item label='선택' value='선택' />
                             {
-                               selectedDong === '서울특별시' ? config.cityItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})  
+                               selectedDong === null ? null 
+                               : selectedDong === '선택' ? null
+                               : selectedDong === '서울특별시' ? config.cityItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})  
                                : config.cityItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
                             }
                         </Picker>
