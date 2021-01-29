@@ -11,22 +11,23 @@ import styles from '../../../StyleSheet';
 
 
 export default function Scoring_1({ route, navigation }) {
-    const _id = route.params._id
-    const questionNum = 1;
+    const _id = route.params._id;
+    const [Q1, setQ1] = useState({
+        Q_num: 1,
+        Q_score: 1,
+        Q_imgBase64: [],
+        Q_comment:''
+    })
+    const [images, setImages] = useState([]);                   //이미지 경로
+    const maxRating = 10;
 
-    const [questions, setQuestions] = useState([]);
     const [isNext, setIsNext] = useState(false);                //다음 질문으로 이동
 
     const [isModalVisible, setModalVisible] = useState(false);  //모달창 열림 여부
-    const [defaultRating, setDefaultRating] = useState(1);      //별점
-    const maxRating = 10;
-
-    const [images, setImages] = useState([]);                   //이미지 경로
-    const [imagesBase64, setImagesBase64] = useState([]);       //base64 이미지
     const [selectImageIdx, setSelectImageIdx] = useState(null); //썸네일 이미지 선택 번호
 
     const [isEditComment, setIsEditComment] = useState(false);  //코멘트 편집 창 열림 여부
-    const [comment, setComment] = useState('');                 //코멘트 내용
+
 
     useEffect(() => {
         (async () => {
@@ -58,14 +59,6 @@ export default function Scoring_1({ route, navigation }) {
 
     }, [])
 
-    useEffect(()=>{
-        if(isNext){
-            console.log(questions)
-            console.log('다음 화면 이동')
-            setIsNext(!isNext)
-        }
-    },[isNext])
-
     const goback = () => {
         navigation.dispatch(
             StackActions.replace('HomeScreen')
@@ -75,22 +68,31 @@ export default function Scoring_1({ route, navigation }) {
     //별점 +1
     const onIncrease = () => {
         Vibration.vibrate(5)
-        if (defaultRating < maxRating) {
-            setDefaultRating(defaultRating + 1);
+        if (Q1.Q_score < maxRating) {
+            setQ1({
+                ...Q1,
+                Q_score: Q1.Q_score + 1
+            })
         }
     }
     //별점 -1
     const onDecrease = () => {
         Vibration.vibrate(5)
-        if (defaultRating > 1) {
-            setDefaultRating(defaultRating - 1);
+        if(Q1.Q_score > 1) {
+            setQ1({
+                ...Q1,
+                Q_score: Q1.Q_score - 1
+            })
         }
     }
 
     //별점 선택
     const UpdateRating = (key) => {
         Vibration.vibrate(5)
-        setDefaultRating(key);
+        setQ1({
+            ...Q1,
+            Q_score:key
+        })
     }
 
     //이미지 추가 
@@ -120,7 +122,11 @@ export default function Scoring_1({ route, navigation }) {
             }
             if (!image.cancelled) {
                 setImages([...images, image.uri]);
-                setImagesBase64([...imagesBase64, image.base64]);
+                setQ1({
+                    ...Q1,
+                    Q_imgBase64 :[...Q1.Q_imgBase64, image.base64]
+                })
+                // setImagesBase64([...imagesBase64, image.base64]);
               }
         } else {
             alert('이미지 추가는 최대 2장입니다.')
@@ -131,7 +137,11 @@ export default function Scoring_1({ route, navigation }) {
     const deleteImage = () => {
         Vibration.vibrate(5)
         if(images.length > 0) {
-            setImagesBase64([...imagesBase64.slice(0, selectImageIdx-1 ), ...imagesBase64.slice(selectImageIdx, imagesBase64.length)])
+            setQ1({
+                ...Q1,
+                Q_imgBase64:[...Q1.Q_imgBase64.slice(0, selectImageIdx-1 ), ...Q1.Q_imgBase64.slice(selectImageIdx, Q1.Q_imgBase64.length)]
+            })
+            // setImagesBase64([...imagesBase64.slice(0, selectImageIdx-1 ), ...imagesBase64.slice(selectImageIdx, imagesBase64.length)])
             setImages(images.filter(image => image !== images[selectImageIdx - 1]));
         }
         setSelectImageIdx(null)
@@ -146,7 +156,10 @@ export default function Scoring_1({ route, navigation }) {
 
     //코멘트 TextInput 값 수정
     const changeComment = (val) => {
-        setComment(val)
+        setQ1({
+            ...Q1,
+            Q_comment : val
+        })
     }
 
     //코멘트 작성 취소
@@ -161,30 +174,26 @@ export default function Scoring_1({ route, navigation }) {
         Vibration.vibrate(5)
         Keyboard.dismiss()
         setIsEditComment(false)
-        setComment(text)
+        setQ1({
+            ...Q1,
+            Q_comment : text
+        })
     }
 
     //코멘트 삭제 
     const deleteComment = () => {
         Vibration.vibrate(5)
-        setComment('')
+        setQ1({
+            ...Q1,
+            Q_comment : ''
+        })
     }
 
     //다음 질문으로 넘어가기
     const nextQuestion = () => {
         Vibration.vibrate(5)
-        let Q1 = {
-            'Q_num': questionNum,
-            'Q_score': defaultRating,
-            'Q_imges': imagesBase64,
-            'Q_comment': comment
-        }
-        if(questions.length === 0){
-            setQuestions([...questions, Q1])
-        } else {
-            setQuestions([Q1])
-        }
-        setIsNext(true)
+
+        console.log(Q1)
     }
 
     let thumbnail = [];
@@ -199,7 +208,7 @@ export default function Scoring_1({ route, navigation }) {
 
     if (isEditComment) {
         return (
-            <EditComment comment={comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
+            <EditComment comment={Q1.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
         )
     } else {
         return (
@@ -214,7 +223,7 @@ export default function Scoring_1({ route, navigation }) {
                     {/* 질문 순서 및 카테고리 */}
                     <View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={styles.orderNum}>{`${questionNum}/16`}</Text>
+                            <Text style={styles.orderNum}>{`${Q1.Q_num}/16`}</Text>
                             <Text style={{ color: '#0094FF', fontWeight: 'bold' }}>상권</Text>
                         </View>
                         <Text style={styles.questionsTitle}>매장 상권 어때?</Text>
@@ -222,7 +231,7 @@ export default function Scoring_1({ route, navigation }) {
                     </View>
 
                     {/* 별점 */}
-                    <StarRating defaultRating={defaultRating} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
+                    <StarRating defaultRating={Q1.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
 
                     {/* 이미지 추가 */}
                     <View style={styles.AddWrap}>
@@ -282,7 +291,7 @@ export default function Scoring_1({ route, navigation }) {
                             </View>
                         </View>
                         <Text style={{ width: "95%", marginTop: 10, color: 'rgba(0, 0, 0, 0.3)' }} numberOfLines={4} ellipsizeMode="tail">
-                            {comment}
+                            {Q1.Q_comment}
                         </Text>
                     </View>
                     {/* 이전/다음 버튼 */}
