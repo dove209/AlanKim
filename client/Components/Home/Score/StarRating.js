@@ -5,9 +5,8 @@ import { AntDesign } from '@expo/vector-icons';
 import styles from '../../../StyleSheet';
 
 
-export default function StarRaing({defaultRating, maxRating, onIncrease, onDecrease, UpdateRating}) {
-
-
+export default function StarRaing({defaultRating, onIncrease, onDecrease, updateRating}) {
+    const maxRating = 10
     const scoreComment = ['너무 너무 최악!', '너무 최악!', '최악!', '그럭저럭...', ' 보통. 그럭저럭 괜찮네.', '괜찮네~', '좋아요~~!', '아주 좋아요~!', '최고야!아주 멋져.', '궁극. 완벽! 펄풱!'];
     const Star = require('../../../assets/imges/star_filled.png');
     const Star_With_Border = require('../../../assets/imges/star_corner.png');
@@ -21,7 +20,7 @@ export default function StarRaing({defaultRating, maxRating, onIncrease, onDecre
           <TouchableOpacity
             activeOpacity={0.7}
             key={i}
-            onPress={UpdateRating.bind(this, i)}>
+            onPress={updateRating.bind(this, i)}>
             <Image
               style={styles.StarImage}
               source={i <= defaultRating ? Star : Star_With_Border}

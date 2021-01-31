@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+
 import { AntDesign } from '@expo/vector-icons';
 
 import 'react-native-gesture-handler';
@@ -8,12 +8,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import AuthLoading from './Components/AuthLoading';
 import HomeScreen from './Components/Home/HomeScreen';
 import AddListScreen from './Components/Home/AddListScreen';
 import Scoring_1 from './Components/Home/Score/Scoring_1';
 import Scoring_2 from './Components/Home/Score/Scoring_2';
 import Scoring_16 from './Components/Home/Score/Scoring_16';
+import Scoring_finish from './Components/Home/Score/Scoring_finish';
 
 
 function MarkScreen() {
@@ -88,13 +88,12 @@ function MainTabs() {
 function MainStack() {
   return (
     <Stack.Navigator initialRouteName="HomeScreen" screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="AuthLoading" component={AuthLoading} />
-      {/* 로그인 추가? */}
       <Stack.Screen name="HomeScreen" component={MainTabs} />
       <Stack.Screen name="AddListScreen" component={AddListScreen} />
       <Stack.Screen name="Scoring_1" component={Scoring_1} />
       <Stack.Screen name="Scoring_2" component={Scoring_2} />
       <Stack.Screen name="Scoring_16" component={Scoring_16} />
+      <Stack.Screen name="Scoring_finish" component={Scoring_finish} />
     </Stack.Navigator>
   )
 }

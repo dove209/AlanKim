@@ -113,9 +113,11 @@ export default function HomeScreen({ navigation }) {
     //아이템 질문 남기기
     const scoring = (_id) => {
         Vibration.vibrate(5)
-        navigation.navigate('Scoring_1', {
-            _id: _id,
-        })
+        navigation.dispatch(
+            StackActions.replace('Scoring_1', {
+                _id: _id,
+            })
+        );
     };
 
     //ScrollView 다운시 새로고침

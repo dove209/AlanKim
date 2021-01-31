@@ -277,9 +277,57 @@ const styles = StyleSheet.create({
       modalText: {
         marginBottom: 15,
         textAlign: "center"
-      }
-    
-    
+      },
+
+       //아이템 점수 메기기 완료
+       finishTitle: {
+        fontWeight:'bold',
+        fontSize:width/15
+       },
+       finishsmall: {
+        fontSize:width/25,
+        color: 'rgba(0,0,0,0.5)'
+       },
+       scoreBox:{
+           backgroundColor:"#fff",
+           borderWidth:1,
+           borderColor:"#dedede",
+           width:width*0.85,
+           paddingLeft:20,
+           paddingRight:20,
+           paddingTop:40,
+           paddingBottom:40,
+           borderRadius:20,
+           marginTop:30,
+           alignItems:'center',
+           justifyContent:'center'
+       },
+       scoreSmallBox:{
+        alignItems:'center',
+        backgroundColor:'rgba(0, 0, 0, 0.02)',
+        padding:10,
+        width:'23%'
+       },
+       smallBoxTitle:{
+        fontSize:12  
+       },
+       smallBoxText:{
+        fontSize:13,
+        marginTop:5        
+       },
+       smallBoxScore:{
+        fontSize:15
+       },
+       toHome: {
+        backgroundColor:"#fff",
+        width:width*0.85,
+        borderWidth:1,
+        borderColor:"#dedede",
+        height:50,
+        borderRadius:30,
+        alignItems:'center',
+        justifyContent:'center'
+       }
 })
 
 

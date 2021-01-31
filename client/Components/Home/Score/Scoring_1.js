@@ -14,15 +14,14 @@ export default function Scoring_1({ route, navigation }) {
     const [Q1, setQ1] = useState({
         Q_num: 1,
         Q_score: 1,
-        Q_imgBase64: [],
+        Q_imges: [],
         Q_comment:''
     })
-    const [images, setImages] = useState([]);                   //이미지 경로
+
     const maxRating = 10;
 
     const [isModalVisible, setModalVisible] = useState(false);  //모달창 열림 여부
     const [selectImageIdx, setSelectImageIdx] = useState(null); //썸네일 이미지 선택 번호
-
     const [isEditComment, setIsEditComment] = useState(false);  //코멘트 편집 창 열림 여부
 
 
@@ -91,7 +90,7 @@ export default function Scoring_1({ route, navigation }) {
     }
 
     //별점 선택
-    const UpdateRating = (key) => {
+    const updateRating = (key) => {
         Vibration.vibrate(5)
         setQ1({
             ...Q1,
@@ -115,21 +114,19 @@ export default function Scoring_1({ route, navigation }) {
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
-            base64: true
         };
         let image = null;
-        if(images.length < 2){
+        if(Q1.Q_imges.length < 2){
             if(menu === 'camera'){
                 image = await ImagePicker.launchCameraAsync(option);
             } else if(menu === 'library'){
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
             if (!image.cancelled) {
-                setImages([...images, image.uri]);
                 setQ1({
                     ...Q1,
-                    Q_imgBase64 :[...Q1.Q_imgBase64, image.base64]
-                })
+                    Q_imges:[...Q1.Q_imges, image.uri]
+                });
               }
         } else {
             alert('이미지 추가는 최대 2장입니다.')
@@ -139,12 +136,11 @@ export default function Scoring_1({ route, navigation }) {
     //이미지 제거
     const deleteImage = () => {
         Vibration.vibrate(5)
-        if(images.length > 0) {
+        if(Q1.Q_imges.length > 0) {
             setQ1({
                 ...Q1,
-                Q_imgBase64:[...Q1.Q_imgBase64.slice(0, selectImageIdx-1 ), ...Q1.Q_imgBase64.slice(selectImageIdx, Q1.Q_imgBase64.length)]
-            })
-            setImages(images.filter(image => image !== images[selectImageIdx - 1]));
+                Q_imges: Q1.Q_imges.filter(image => image !== Q1.Q_imges[selectImageIdx - 1])
+            });
         }
         setSelectImageIdx(null)
     }
@@ -200,10 +196,10 @@ export default function Scoring_1({ route, navigation }) {
     }
 
     let thumbnail = [];
-    for (let i = 0; i < images.length; i++) {
+    for (let i = 0; i < Q1.Q_imges.length; i++) {
         thumbnail.push(
             <TouchableOpacity key={i} onPress={() => setSelectImageIdx(i + 1)} style={{ marginLeft: 10, borderRadius: 10, borderWidth: 2, borderColor: selectImageIdx === (i + 1) ? '#00B2FF' : '#E5E5E5' }}>
-                <Image style={styles.thumbnail} source={{ uri: images[i] }}>
+                <Image style={styles.thumbnail} source={{ uri: Q1.Q_imges[i] }}>
                 </Image>
             </TouchableOpacity>)
     }
@@ -234,7 +230,7 @@ export default function Scoring_1({ route, navigation }) {
                     </View>
 
                     {/* 별점 */}
-                    <StarRating defaultRating={Q1.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} UpdateRating={UpdateRating} />
+                    <StarRating defaultRating={Q1.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} updateRating={updateRating} />
 
                     {/* 이미지 추가 */}
                     <View style={styles.AddWrap}>

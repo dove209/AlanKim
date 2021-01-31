@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { View, TouchableOpacity, Text, TextInput, Vibration } from 'react-native';
 
 export default function EditComment({ comment, cancelEditComment, submitEditComment, changeComment}) {
