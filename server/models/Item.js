@@ -14,6 +14,8 @@ const ItemSchema = new Schema(
         isParking: String,
         isScore: Boolean,
         QArr: Array,
+        totalScore: Number,
+        categoryScore: Array,
     }, {
         versionKey: false   //마지막 __v 제거
     }
