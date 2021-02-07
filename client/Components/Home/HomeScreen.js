@@ -17,18 +17,18 @@ export default function HomeScreen({ navigation }) {
     const [selectVal, setSelectVal] = useState(null);   //위치별 업종별 가격대별 선택 옶션
 
     const onValueChange = (val) => {
+        Vibration.vibrate(5)
         setSelectVal(val)
-        axios.get(`${config.MAIN_URL}/items?sortMenu=${sortMenu}&val=${val}`)
+        axios.get(`${config.MAIN_URL}/items?isScore=false&sortMenu=${sortMenu}&val=${val}`)
             .then((res) => {
                 setItems(res.data);
-                Vibration.vibrate(5)
             })
             .catch((error) => console.error(error))
     }
 
     useEffect(() => {
         const getItems = async () => {
-            await axios.get(`${config.MAIN_URL}/items?sortMenu=1`)
+            await axios.get(`${config.MAIN_URL}/items?isScore=false&sortMenu=1`)
                 .then((res) => {
                     setItems(res.data);
                 })
@@ -47,14 +47,14 @@ export default function HomeScreen({ navigation }) {
         setSortMenu(menu)
         setSelectVal(null)
         if (menu === 3 || menu === 4 || menu === 5) {
-            axios.get(`${config.MAIN_URL}/items?sortMenu=1`)
+            axios.get(`${config.MAIN_URL}/items?isScore=false&sortMenu=1`)
             .then((res) => {
                 setItems(res.data);
                 setIsSelectBox(true);
             })
             .catch((error) => console.error(error))
         } else {
-            axios.get(`${config.MAIN_URL}/items?sortMenu=${menu}`)
+            axios.get(`${config.MAIN_URL}/items?isScore=false&sortMenu=${menu}`)
             .then((res) => {
                 setItems(res.data);
                 setIsSelectBox(false);
@@ -62,24 +62,17 @@ export default function HomeScreen({ navigation }) {
             .catch((error) => console.error(error))
         }
     }
+    
     //남기기 클릭
     const addList = () => {
         Vibration.vibrate(5)
-        navigation.dispatch(
-            StackActions.replace('AddListScreen', {
-                _id: null,
-            })
-        );
+        navigation.navigate('AddListScreen', {_id:null})
     }
 
     // 아이템 내용 수정
     const modify = (_id) => {
         Vibration.vibrate(5)
-        navigation.dispatch(
-            StackActions.replace('AddListScreen', {
-                _id: _id,
-            })
-        );
+        navigation.navigate('AddListScreen', {_id:_id})
     }
 
     // 아이템 삭제
@@ -113,23 +106,19 @@ export default function HomeScreen({ navigation }) {
     //아이템 질문 남기기
     const scoring = (_id) => {
         Vibration.vibrate(5)
-        navigation.dispatch(
-            StackActions.replace('Scoring_1', {
-                _id: _id,
-            })
-        );
+        navigation.navigate('Scoring_1', {_id: _id, QArr: []})
     };
 
     //ScrollView 다운시 새로고침
     const onRefresh = () => {
+        Vibration.vibrate(5)
         setRefresing(true)
-        axios.get(`${config.MAIN_URL}/items?sortMenu=1`)
+        axios.get(`${config.MAIN_URL}/items?isScore=false&sortMenu=1`)
             .then((res) => {
                 setItems(res.data);
                 setSortMenu(1);
                 setIsSelectBox(false);
                 setRefresing(false);
-                Vibration.vibrate(5)
             })
             .catch((error) => console.error(error))
     }

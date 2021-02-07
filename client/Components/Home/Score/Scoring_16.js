@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, Keyboard, Platform, ActivityIndicator, StatusBar} from 'react-native';
 import Modal from 'react-native-modal';
+import { StackActions } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
 import { AntDesign, Feather } from '@expo/vector-icons';
@@ -48,7 +49,7 @@ export default function Scoring_1({ route, navigation }) {
                     onPress: () => null,
                     style: "cancel"
                 },
-                { text: "예", onPress: () =>  navigation.navigate("HomeScreen")}
+                { text: "예", onPress: () => navigation.popToTop() }
             ]);
             return true;
         };
@@ -67,7 +68,7 @@ export default function Scoring_1({ route, navigation }) {
                 onPress: () => null,
                 style: "cancel"
             },
-            { text: "예", onPress: () =>  navigation.navigate("HomeScreen")}
+            { text: "예", onPress: () => navigation.popToTop() }
         ]);
     }
 
@@ -242,11 +243,12 @@ export default function Scoring_1({ route, navigation }) {
                 .then(res=>{
                     if(res.data){
                         console.log('최종 제출 완료')
+                        setIsLoading(false)
                         //최종 점수 페이지로 이동..
                         navigation.navigate("Scoring_finish", {
                             _id: _id
                         })
-                        setIsLoading(false)
+         
                     }
                 })   
                 .catch((error) => console.error(error))
@@ -265,7 +267,7 @@ export default function Scoring_1({ route, navigation }) {
                 onPress: () => null,
                 style: "cancel"
             },
-            { text: "예", onPress: () => navigation.navigate("Scoring_2") }
+            { text: "예", onPress: () => navigation.navigate("Scoring_3") }
         ]);
     }
 

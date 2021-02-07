@@ -12,17 +12,15 @@ import HomeScreen from './Components/Home/HomeScreen';
 import AddListScreen from './Components/Home/AddListScreen';
 import Scoring_1 from './Components/Home/Score/Scoring_1';
 import Scoring_2 from './Components/Home/Score/Scoring_2';
+import Scoring_3 from './Components/Home/Score/Scoring_3';
 import Scoring_16 from './Components/Home/Score/Scoring_16';
 import Scoring_finish from './Components/Home/Score/Scoring_finish';
 
 
-function MarkScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Mark!</Text>
-    </View>
-  );
-}
+import ScoreListHome from './Components/ScoreList/ScoreListHome';
+import ScoreDetail from './Components/ScoreList/ScoreDetail';
+
+
 
 function PictureScreen() {
   return (
@@ -52,7 +50,7 @@ function MainTabs() {
 
           if (route.name === 'home') {
             iconName = focused ? 'edit' : 'edit';
-          } else if (route.name === 'mark') {
+          } else if (route.name === 'score') {
             iconName = focused ? 'bars' : 'bars';
           } else if (route.name === 'picture') {
             iconName = focused ? 'picture' : 'picture';
@@ -77,7 +75,7 @@ function MainTabs() {
       }}
     >
       <Tab.Screen name="home" component={HomeScreen} />
-      <Tab.Screen name="mark" component={MarkScreen} />
+      <Tab.Screen name="score" component={ScoreListHome} />
       <Tab.Screen name="picture" component={PictureScreen} />
       <Tab.Screen name="etc" component={EtcScreen} />
     </Tab.Navigator>
@@ -92,11 +90,16 @@ function MainStack() {
       <Stack.Screen name="AddListScreen" component={AddListScreen} />
       <Stack.Screen name="Scoring_1" component={Scoring_1} />
       <Stack.Screen name="Scoring_2" component={Scoring_2} />
+      <Stack.Screen name="Scoring_3" component={Scoring_3} />
       <Stack.Screen name="Scoring_16" component={Scoring_16} />
       <Stack.Screen name="Scoring_finish" component={Scoring_finish} />
+      <Stack.Screen name="ScoreListHome" component={ScoreListHome} />
+      <Stack.Screen name="ScoreDetail" component={ScoreDetail} />
     </Stack.Navigator>
   )
 }
+
+
 
 export default function App() {
   return (

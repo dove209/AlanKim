@@ -21,7 +21,9 @@ export default function AddListScreen({ route, navigation }) {
         price: null,
         isParking: null,
         isScore:false,
-        QArr:[]
+        QArr:[],
+        totalScore:0,
+        categoryScore:[],
     })
     const [selectedDong, setSelectedDong ] = useState(null);
 
@@ -55,9 +57,7 @@ export default function AddListScreen({ route, navigation }) {
         getItem()
 
         const backAction = () => {
-            navigation.dispatch(
-                StackActions.replace('HomeScreen')
-            );
+            navigation.popToTop()
             return true;
         };
         const backHandler = BackHandler.addEventListener("hardwareBackPress",backAction);
@@ -67,9 +67,7 @@ export default function AddListScreen({ route, navigation }) {
     },[])
 
     const goback = () => {
-        navigation.dispatch(
-            StackActions.replace('HomeScreen')
-        );
+        navigation.popToTop()
     }
 
     const changeStoreName = (value) => {

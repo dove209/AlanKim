@@ -11,6 +11,7 @@ import styles from '../../../StyleSheet';
 
 export default function Scoring_1({ route, navigation }) {
     const _id = route.params._id;
+    const QArr = route.params.QArr;
     const [Q1, setQ1] = useState({
         Q_num: 1,
         Q_score: 1,
@@ -44,7 +45,7 @@ export default function Scoring_1({ route, navigation }) {
                     onPress: () => null,
                     style: "cancel"
                 },
-                { text: "예", onPress: () =>  navigation.navigate("HomeScreen")}
+                { text: "예", onPress: () => navigation.popToTop() }
             ]);
             return true;
         };
@@ -63,7 +64,7 @@ export default function Scoring_1({ route, navigation }) {
                 onPress: () => null,
                 style: "cancel"
             },
-            { text: "예", onPress: () =>  navigation.navigate("HomeScreen")}
+            { text: "예", onPress: () => navigation.popToTop() }
         ]);
        
     }
@@ -190,8 +191,8 @@ export default function Scoring_1({ route, navigation }) {
     //다음 질문으로 넘어가기
     const nextQuestion = () => {
         Vibration.vibrate(5)
-        navigation.navigate('Scoring_2',{
-            _id: _id, QArr: [Q1]
+        navigation.navigate("Scoring_2", {
+            _id: _id, QArr: [...QArr, Q1]
         })
     }
 

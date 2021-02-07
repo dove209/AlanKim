@@ -15,10 +15,10 @@ const styles = StyleSheet.create({
         width: width * 0.9,
     },
     mainTitleSmailText: {
-        fontSize: width/28,
+        fontSize: width / 28,
     },
     mainTitleBigText: {
-        fontSize: width/16,
+        fontSize: width / 16,
         fontWeight: 'bold'
     },
     sortMenu: {
@@ -30,18 +30,18 @@ const styles = StyleSheet.create({
         width: width * 0.9,
     },
     sortMenuBtn: {
-        width:width/7,
-        height:30
+        width: width / 7,
+        height: 30
     },
     selectBox: {
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
-        marginTop:10,
-        width: width*0.9,
+        marginTop: 10,
+        width: width * 0.9,
         backgroundColor: '#fff',
-        borderWidth:1,
-        borderRadius:10
+        borderWidth: 1,
+        borderRadius: 10
     },
     homeList: {
         flex: 1,
@@ -52,50 +52,49 @@ const styles = StyleSheet.create({
     },
     listEmptyTitle: {
         fontSize: 20,
-        marginTop:15,
+        marginTop: 15,
     },
-    listEmptySub:{
+    listEmptySub: {
         fontSize: 12,
         color: 'rgba(0, 0, 0, 0.2)',
         marginTop: 5,
     },
-    listScrollViewWrap:{
-        width:'100%',
+    listScrollViewWrap: {
+        width: '100%',
     },
-    listItemWrap:{
-        width:'100%',
-        paddingLeft:'5%',
-        paddingRight:'7%',
-        paddingTop:10,
-        paddingBottom:10,
-        alignSelf:'center',
-        backgroundColor:'#fff'
+    listItemWrap: {
+        width: '100%',
+        paddingLeft: '5%',
+        paddingRight: '5%',
+        paddingTop: 10,
+        paddingBottom: 10,
+        backgroundColor: '#fff'
     },
-    itemSmallText:{
-        fontSize:12,
+    itemSmallText: {
+        fontSize: 12,
         marginRight: 10,
-        color:'rgba(0, 0, 0, 0.25)'
-    },  
-    itemStoreName:{
-        fontSize:18,
-        fontWeight:'500',
-    },  
-    itemStoreAddress:{
-        fontSize:13,
+        color: 'rgba(0, 0, 0, 0.25)'
     },
-    itemMarkStartBtn:{
+    itemStoreName: {
+        fontSize: 18,
+        fontWeight: '500',
+    },
+    itemStoreAddress: {
+        fontSize: 13,
+    },
+    itemMarkStartBtn: {
         backgroundColor: "#00B2FF",
-        width:110,
-        height:40,
-        marginTop:15,
-        borderRadius:10,
-        alignItems:'center',
-        justifyContent:'center',
+        width: 110,
+        height: 40,
+        marginTop: 15,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 
 
     // 리스트 등록 화면
-    addListContainer:{
+    addListContainer: {
         flex: 1,
         alignItems: 'center',
         paddingTop: 20,
@@ -103,11 +102,11 @@ const styles = StyleSheet.create({
     },
     optionsWrap: {
         flex: 1,
-        justifyContent:'space-between',
-        marginTop:20,
+        justifyContent: 'space-between',
+        marginTop: 20,
         width: width * 0.88,
     },
-    optionTitle:{
+    optionTitle: {
         fontSize: 16,
         fontWeight: 'bold'
     },
@@ -117,16 +116,16 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
     bar: {
-        height:1,
+        height: 1,
         backgroundColor: 'rgba(0, 0, 0, 0.2)',
-        marginTop:10,
+        marginTop: 10,
     },
     addressSelect: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginTop:10,
-        paddingRight:50,
+        marginTop: 10,
+        paddingRight: 50,
     },
     selectBtnWrap: {
         flexDirection: 'row',
@@ -138,196 +137,216 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start',
         alignItems: 'center',
     },
-    selectBtn:{
-        borderWidth:1,
-        width:width*0.21,
-        height:40,
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:20,
-    }, 
-    submitBtn:{
-        height:50,
-        alignItems:'center',
-        justifyContent:'center',
-        borderRadius:30,
-        marginTop:30,
+    selectBtn: {
+        borderWidth: 1,
+        width: width * 0.21,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 20,
+    },
+    submitBtn: {
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 30,
+        marginTop: 30,
     },
 
     //아이템 점수 메기기
-    addScoreContainer:{
+    addScoreContainer: {
         flex: 1,
         alignItems: 'center',
         paddingTop: 20,
-        backgroundColor:'#E5E5E5'
+        backgroundColor: '#E5E5E5'
     },
     orderNum: {
         color: 'rgba(0, 0, 0, 0.6)',
     },
-    questionsTitle:{
-        fontWeight:'bold',
-        fontSize: width/16,
-        marginTop:10,
+    questionsTitle: {
+        fontWeight: 'bold',
+        fontSize: width / 16,
+        marginTop: 10,
     },
-    questionsContent:{
+    questionsContent: {
         marginTop: 5,
-        fontSize: width/28,
+        fontSize: width / 28,
         color: 'rgba(0, 0, 0, 0.5)',
     },
     starWrap: {
-        borderRadius:10,
-        backgroundColor:"#fff",
-        height:height*0.22,
-        marginTop:10,
-        alignItems:'center'
+        borderRadius: 10,
+        backgroundColor: "#fff",
+        height: height * 0.22,
+        marginTop: 10,
+        alignItems: 'center'
     },
     stars: {
-        width:"90%",
-        justifyContent:'space-around',
+        width: "90%",
+        justifyContent: 'space-around',
         flexDirection: 'row',
         marginTop: 30,
     },
     StarImage: {
-        width: width/15,
-        height: width/15,
+        width: width / 15,
+        height: width / 15,
         resizeMode: 'cover',
     },
     scoreText: {
-        fontWeight:'bold',
-        fontSize: width/10,
+        fontWeight: 'bold',
+        fontSize: width / 10,
     },
     AddWrap: {
-        height:height*0.15,
-        marginTop:5,
-        paddingTop:10,
-        borderTopWidth:1,
-        borderTopColor:'rgba(0, 0, 0, 0.3)',
-        alignItems:'center'
+        height: height * 0.15,
+        marginTop: 5,
+        paddingTop: 10,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(0, 0, 0, 0.3)',
+        alignItems: 'center'
     },
-    width90per:{
-        width:"95%",
-        flexDirection:'row',
-        alignItems:'center',
-        justifyContent:"space-between"
+    width90per: {
+        width: "95%",
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: "space-between"
     },
-    addImageBtn:{
-        width:90,
-        height:90,
-        borderRadius:10,
-        borderWidth:2,
-        borderStyle:'dashed',
-        justifyContent:'center',
-        alignItems:'center'
+    addImageBtn: {
+        width: 90,
+        height: 90,
+        borderRadius: 10,
+        borderWidth: 2,
+        borderStyle: 'dashed',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     thumbnail: {
         width: 90,
         height: 90,
-        borderRadius:10,
+        borderRadius: 10,
         resizeMode: "stretch"
     },
     btnWrap: {
-        height:height*0.1,
-        marginTop:5,
-        paddingTop:10,
-        borderTopWidth:1,
-        borderTopColor:'rgba(0, 0, 0, 0.3)',
-        alignItems:'center'
+        height: height * 0.1,
+        marginTop: 5,
+        paddingTop: 10,
+        borderTopWidth: 1,
+        borderTopColor: 'rgba(0, 0, 0, 0.3)',
+        alignItems: 'center'
     },
-    prevNextBtn:{
-        width:"48%",
-        height:50,
-        borderRadius:30,
-        alignItems:'center',
-        justifyContent:'center'
+    prevNextBtn: {
+        width: "48%",
+        height: 50,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     centeredView: {
         flex: 1,
         justifyContent: "center",
         alignItems: "center",
         marginTop: 22,
-      },
-      modalView: {
+    },
+    modalView: {
         margin: 20,
-        width:width*0.5,
+        width: width * 0.5,
         backgroundColor: "white",
         borderRadius: 20,
         padding: 20,
         alignItems: "center",
         shadowColor: "#000",
         shadowOffset: {
-          width: 0,
-          height: 2
+            width: 0,
+            height: 2
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5
-      },
-      openButton: {
+    },
+    openButton: {
         backgroundColor: "#F194FF",
         borderRadius: 20,
-        width:"100%",
+        width: "100%",
         padding: 10,
         elevation: 2,
-      },
-      textStyle: {
+    },
+    textStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
-      },
-      modalText: {
+    },
+    modalText: {
         marginBottom: 15,
         textAlign: "center"
-      },
+    },
 
-       //아이템 점수 메기기 완료
-       finishTitle: {
-        fontWeight:'bold',
-        fontSize:width/15
-       },
-       finishsmall: {
-        fontSize:width/25,
+    //아이템 점수 메기기 완료
+    finishTitle: {
+        fontWeight: 'bold',
+        fontSize: width / 15
+    },
+    finishsmall: {
+        fontSize: width / 25,
         color: 'rgba(0,0,0,0.5)'
-       },
-       scoreBox:{
-           backgroundColor:"#fff",
-           borderWidth:1,
-           borderColor:"#dedede",
-           width:width*0.85,
-           paddingLeft:20,
-           paddingRight:20,
-           paddingTop:40,
-           paddingBottom:40,
-           borderRadius:20,
-           marginTop:30,
-           alignItems:'center',
-           justifyContent:'center'
-       },
-       scoreSmallBox:{
-        alignItems:'center',
-        backgroundColor:'rgba(0, 0, 0, 0.02)',
-        padding:10,
-        width:'23%'
-       },
-       smallBoxTitle:{
-        fontSize:12  
-       },
-       smallBoxText:{
-        fontSize:13,
-        marginTop:5        
-       },
-       smallBoxScore:{
-        fontSize:15
-       },
-       toHome: {
-        backgroundColor:"#fff",
-        width:width*0.85,
+    },
+    scoreBox: {
+        backgroundColor: "#fff",
+        borderWidth: 1,
+        borderColor: "#dedede",
+        width: width * 0.85,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingTop: 40,
+        paddingBottom: 40,
+        borderRadius: 20,
+        marginTop: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    scoreSmallBox: {
+        alignItems: 'center',
+        backgroundColor: 'rgba(0, 0, 0, 0.02)',
+        padding: 10,
+        width: '23%'
+    },
+    smallBoxTitle: {
+        fontSize: 12
+    },
+    smallBoxText: {
+        fontSize: 13,
+        marginTop: 5
+    },
+    smallBoxScore: {
+        fontSize: 15
+    },
+    toHome: {
+        backgroundColor: "#fff",
+        width: width * 0.85,
+        borderWidth: 1,
+        borderColor: "#dedede",
+        height: 50,
+        borderRadius: 30,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+
+    //아이템 점수 상세 보기 페이지
+    whiteBox :{
+        marginTop:20,
+        backgroundColor:'#fff',
+        padding:20,
+        borderRadius:10,
         borderWidth:1,
-        borderColor:"#dedede",
-        height:50,
-        borderRadius:30,
+        borderColor: 'rgba(0, 0, 0, 0.3)',
+    },
+    totalScoreBox : {
         alignItems:'center',
-        justifyContent:'center'
-       }
+        borderWidth:1,
+        borderRadius:10,
+        paddingTop:5,
+        paddingBottom:5,
+        paddingLeft:10,
+        paddingRight:10,
+        borderColor:'rgba(0, 0, 0, 0.3)'
+    }
 })
 
 

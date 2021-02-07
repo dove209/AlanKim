@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, ActivityIndicator, StatusBar} from 'react-native';
 import axios from 'axios';
+import { StackActions } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import styles from '../../../StyleSheet';
 import config from '../../../config';
@@ -109,29 +110,29 @@ export default function Scoring_finish({ route, navigation }) {
                     <View style={{...styles.stars, width:"45%", marginTop:0}}>{RatingBar}</View>
                     <Text style={{fontSize:23, fontWeight:'bold', marginTop:20}}>{finishInfo.storeName}</Text>
                     <Text style={{fontSize:15, color: 'rgba(0,0,0,0.5)'}}>{finishInfo.dong} {finishInfo.city}</Text>
-                    <Text style={{fontSize:50, fontWeight:'bold', marginTop:20}}>66.4</Text>
+                    <Text style={{fontSize:50, fontWeight:'bold', marginTop:20}}>{finishInfo.totalScore}</Text>
                     <Text style={{fontSize:15, color: 'rgba(0,0,0,0.5)'}}>{scoreComment[defaultRating - 1]}</Text>
 
                     <View style={{flexDirection:'row', justifyContent:'space-between', width:'100%', marginTop:30}}>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>상권</Text>
                             <Text style={styles.smallBoxText}>보통</Text>
-                            <Text style={styles.smallBoxScore}>50</Text>
+                            <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[0]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>인테리어</Text>
                             <Text style={styles.smallBoxText}>보통</Text>
-                            <Text style={styles.smallBoxScore}>50</Text>
+                            <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[1]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>서비스</Text>
                             <Text style={styles.smallBoxText}>보통</Text>
-                            <Text style={styles.smallBoxScore}>50</Text>
+                            <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[2]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>맛</Text>
                             <Text style={styles.smallBoxText}>보통</Text>
-                            <Text style={styles.smallBoxScore}>50</Text>
+                            <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[3]}</Text>
                         </View>
                     </View>
                 </View>

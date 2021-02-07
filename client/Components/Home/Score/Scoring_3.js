@@ -10,12 +10,12 @@ import styles from '../../../StyleSheet';
 
 
 
-export default function Scoring_2({ route, navigation }) {
+export default function Scoring_3({ route, navigation }) {
     const _id = route.params._id;
     const QArr = route.params.QArr;
 
-    const [Q2, setQ2] = useState({
-        Q_num: 2,
+    const [Q3, setQ3] = useState({
+        Q_num: 3,
         Q_score: 1,
         Q_imges: [],
         Q_comment:''
@@ -73,20 +73,20 @@ export default function Scoring_2({ route, navigation }) {
     //별점 +1
     const onIncrease = () => {
         Vibration.vibrate(5)
-        if (Q2.Q_score < maxRating) {
-            setQ2({
-                ...Q2,
-                Q_score: Q2.Q_score + 1
+        if (Q3.Q_score < maxRating) {
+            setQ3({
+                ...Q3,
+                Q_score: Q3.Q_score + 1
             })
         }
     }
     //별점 -1
     const onDecrease = () => {
         Vibration.vibrate(5)
-        if(Q2.Q_score > 1) {
-            setQ2({
-                ...Q2,
-                Q_score: Q2.Q_score - 1
+        if(Q3.Q_score > 1) {
+            setQ3({
+                ...Q3,
+                Q_score: Q3.Q_score - 1
             })
         }
     }
@@ -94,8 +94,8 @@ export default function Scoring_2({ route, navigation }) {
     //별점 선택
     const updateRating = (key) => {
         Vibration.vibrate(5)
-        setQ2({
-            ...Q2,
+        setQ3({
+            ...Q3,
             Q_score:key
         })
     }
@@ -118,16 +118,16 @@ export default function Scoring_2({ route, navigation }) {
             quality: 1,
         };
         let image = null;
-        if(Q2.Q_imges.length < 2){
+        if(Q3.Q_imges.length < 2){
             if(menu === 'camera'){
                 image = await ImagePicker.launchCameraAsync(option);
             } else if(menu === 'library'){
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
             if (!image.cancelled) {
-                setQ2({
-                    ...Q2,
-                    Q_imges:[...Q2.Q_imges, image.uri]
+                setQ3({
+                    ...Q3,
+                    Q_imges:[...Q3.Q_imges, image.uri]
                 });
               }
         } else {
@@ -138,10 +138,10 @@ export default function Scoring_2({ route, navigation }) {
     //이미지 제거
     const deleteImage = () => {
         Vibration.vibrate(5)
-        if(Q2.Q_imges.length > 0) {
-            setQ2({
-                ...Q2,
-                Q_imges: Q2.Q_imges.filter(image => image !== Q2.Q_imges[selectImageIdx - 1])
+        if(Q3.Q_imges.length > 0) {
+            setQ3({
+                ...Q3,
+                Q_imges: Q3.Q_imges.filter(image => image !== Q3.Q_imges[selectImageIdx - 1])
             });
         }
         setSelectImageIdx(null)
@@ -156,8 +156,8 @@ export default function Scoring_2({ route, navigation }) {
 
     //코멘트 TextInput 값 수정
     const changeComment = (val) => {
-        setQ2({
-            ...Q2,
+        setQ3({
+            ...Q3,
             Q_comment : val
         })
     }
@@ -174,8 +174,8 @@ export default function Scoring_2({ route, navigation }) {
         Vibration.vibrate(5)
         Keyboard.dismiss()
         setIsEditComment(false)
-        setQ2({
-            ...Q2,
+        setQ3({
+            ...Q3,
             Q_comment : text
         })
     }
@@ -183,8 +183,8 @@ export default function Scoring_2({ route, navigation }) {
     //코멘트 삭제 
     const deleteComment = () => {
         Vibration.vibrate(5)
-        setQ2({
-            ...Q2,
+        setQ3({
+            ...Q3,
             Q_comment : ''
         })
     }
@@ -192,8 +192,8 @@ export default function Scoring_2({ route, navigation }) {
     //다음 질문으로 넘어가기
     const nextQuestion = () => {
         Vibration.vibrate(5)
-        navigation.navigate("Scoring_3", {
-            _id: _id, QArr: [...QArr, Q2]
+        navigation.navigate("Scoring_16", {
+            _id: _id, QArr: [...QArr, Q3]
         })
     }
 
@@ -207,15 +207,15 @@ export default function Scoring_2({ route, navigation }) {
                 onPress: () => null,
                 style: "cancel"
             },
-            { text: "예", onPress: () => navigation.navigate("Scoring_1") }
+            { text: "예", onPress: () => navigation.navigate("Scoring_2") }
         ]);
     }
 
     let thumbnail = [];
-    for (let i = 0; i < Q2.Q_imges.length; i++) {
+    for (let i = 0; i < Q3.Q_imges.length; i++) {
         thumbnail.push(
             <TouchableOpacity key={i} onPress={() => setSelectImageIdx(i + 1)} style={{ marginLeft: 10, borderRadius: 10, borderWidth: 2, borderColor: selectImageIdx === (i + 1) ? '#00B2FF' : '#E5E5E5' }}>
-                <Image style={styles.thumbnail} source={{ uri: Q2.Q_imges[i] }}>
+                <Image style={styles.thumbnail} source={{ uri: Q3.Q_imges[i] }}>
                 </Image>
             </TouchableOpacity>)
     }
@@ -223,7 +223,7 @@ export default function Scoring_2({ route, navigation }) {
 
     if (isEditComment) {
         return (
-            <EditComment comment={Q2.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
+            <EditComment comment={Q3.Q_comment} cancelEditComment={cancelEditComment} submitEditComment={submitEditComment} changeComment={changeComment} />
         )
     } else {
         return (
@@ -238,15 +238,15 @@ export default function Scoring_2({ route, navigation }) {
                     {/* 질문 순서 및 카테고리 */}
                     <View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <Text style={styles.orderNum}>{`${Q2.Q_num}/16`}</Text>
+                            <Text style={styles.orderNum}>{`${Q3.Q_num}/16`}</Text>
                             <Text style={{ color: '#0094FF', fontWeight: 'bold' }}>상권</Text>
                         </View>
-                        <Text style={styles.questionsTitle}>주차 시설 어때?</Text>
-                        <Text style={styles.questionsContent}>크기 / 위치 / 구조 / 차량수</Text>
+                        <Text style={styles.questionsTitle}>매장 건물 어때?</Text>
+                        <Text style={styles.questionsContent}>몇층 / 한 걸물 / 외적요소 등</Text>
                     </View>
 
                     {/* 별점 */}
-                    <StarRating defaultRating={Q2.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} updateRating={updateRating} />
+                    <StarRating defaultRating={Q3.Q_score} maxRating={maxRating} onIncrease={onIncrease} onDecrease={onDecrease} updateRating={updateRating} />
 
                     {/* 이미지 추가 */}
                     <View style={styles.AddWrap}>
@@ -306,7 +306,7 @@ export default function Scoring_2({ route, navigation }) {
                             </View>
                         </View>
                         <Text style={{ width: "95%", marginTop: 10, color: 'rgba(0, 0, 0, 0.3)' }} numberOfLines={4} ellipsizeMode="tail">
-                            {Q2.Q_comment}
+                            {Q3.Q_comment}
                         </Text>
                     </View>
                     {/* 이전/다음 버튼 */}
