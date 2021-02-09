@@ -44,10 +44,10 @@ export default class RadarCahrt extends React.Component {
       <View style={styles.container}>
         <VictoryChart polar
           theme={VictoryTheme.grayscale}
-          domain={{ y: [ 0, 1.2 ] }}
+          domain={{ y: [ 0, 1 ] }}
         >
-          <VictoryGroup colorScale={["#00B2FF", "rgba(0, 178, 255, 0.2)"]}
-            style={{ data: { fillOpacity: 0.1, strokeWidth: 2 } }}
+          <VictoryGroup colorScale={["#00B2FF", "#fff"]}
+            style={{ data: { fillOpacity: 0.1, strokeWidth: 1.5 } }}
           >
             {this.state.data.map((data, i) => {
               return <VictoryArea key={i} data={data} />;
@@ -58,9 +58,9 @@ export default class RadarCahrt extends React.Component {
             return (
               <VictoryPolarAxis key={i} dependentAxis
                 style={{
-                  axisLabel: { padding:0},
+                  axisLabel: { padding:8},
                   axis: { stroke: "none" },
-                  grid: { stroke: "none", strokeWidth: 0.1, opacity: 0.5 }
+                  grid: { stroke: "grey", strokeWidth: 0.1, opacity: 0.5 }
                 }}
                 labelPlacement="vertical"
                 axisValue={i + 1} label={key}
