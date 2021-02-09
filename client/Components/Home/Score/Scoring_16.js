@@ -310,7 +310,7 @@ export default function Scoring_1({ route, navigation }) {
                                 <Text style={styles.orderNum}>{`${Q16.Q_num}/16`}</Text>
                                 <Text style={{ color: '#F11D00', fontWeight: 'bold' }}>맛</Text>
                             </View>
-                            <Text style={styles.questionsTitle}>음식 양 어때?</Text>
+                            <Text style={styles.questionsTitle}>{config.question[15]}</Text>
                             <Text style={styles.questionsContent}>객관적인 양</Text>
                         </View>
     

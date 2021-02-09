@@ -2,6 +2,11 @@ import { StyleSheet, Dimensions } from 'react-native';
 const { width, height } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
+    row: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    },
     container: {
         flex: 1,
         backgroundColor: '#E5E5E5',
@@ -346,6 +351,10 @@ const styles = StyleSheet.create({
         paddingLeft:10,
         paddingRight:10,
         borderColor:'rgba(0, 0, 0, 0.3)'
+    },
+    grayColor:{
+       color: 'rgba(0, 0, 0, 0.3)',
+       textAlign:'center',
     }
 })
 

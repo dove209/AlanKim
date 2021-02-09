@@ -19,6 +19,7 @@ import Scoring_finish from './Components/Home/Score/Scoring_finish';
 
 import ScoreListHome from './Components/ScoreList/ScoreListHome';
 import ScoreDetail from './Components/ScoreList/ScoreDetail';
+import ScoreDetailInfo from './Components/ScoreList/ScoreDetailInfo';
 
 
 
@@ -95,6 +96,7 @@ function MainStack() {
       <Stack.Screen name="Scoring_finish" component={Scoring_finish} />
       <Stack.Screen name="ScoreListHome" component={ScoreListHome} />
       <Stack.Screen name="ScoreDetail" component={ScoreDetail} />
+      <Stack.Screen name="ScoreDetailInfo" component={ScoreDetailInfo} />
     </Stack.Navigator>
   )
 }

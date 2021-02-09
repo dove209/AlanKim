@@ -1,13 +1,11 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { View, TouchableOpacity, Image, Text, FlatList, Alert, StatusBar, Vibration } from 'react-native';
 import axios from 'axios';
-import { StackActions } from '@react-navigation/native';
 import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import styles from '../../StyleSheet';
 import config from '../../config';
 import PickerScreen from './picker';
 import StarRating from './StarRating';
-import { colors } from 'react-native-elements';
 
 
 export default function ScoreListHome({ navigation }) {
@@ -142,9 +140,9 @@ export default function ScoreListHome({ navigation }) {
 
 
     //점수 상세 보기
-    const goToDetail = (_id) => {
+    const goToDetail = (item) => {
         Vibration.vibrate(5)
-        navigation.navigate('ScoreDetail', {_id:_id})
+        navigation.navigate('ScoreDetail', {item:item})
     }
 
     return (
@@ -205,7 +203,7 @@ export default function ScoreListHome({ navigation }) {
                     refreshing={refreshing}
                     onRefresh={onRefresh}
                     renderItem={({ item, index }) => (
-                        <TouchableOpacity key={item.id} style={[styles.listItemWrap, { marginTop: index == 0 ? 0 : 10 }]} onPress={() => goToDetail(item._id)}>
+                        <TouchableOpacity key={item.id} style={[styles.listItemWrap, { marginTop: index == 0 ? 0 : 10 }]} onPress={() => goToDetail(item)}>
                             <View style={{ flexDirection: 'row', justifyContent:'space-between' }}>
                                 <View>
                                     {/* 등록 일(년 월 일) */}

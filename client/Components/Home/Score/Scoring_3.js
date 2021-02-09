@@ -7,6 +7,7 @@ import { AntDesign, Feather } from '@expo/vector-icons';
 import StarRating from './StarRating';
 import EditComment from './EditComment';
 import styles from '../../../StyleSheet';
+import config from '../../../config';
 
 
 
@@ -241,7 +242,7 @@ export default function Scoring_3({ route, navigation }) {
                             <Text style={styles.orderNum}>{`${Q3.Q_num}/16`}</Text>
                             <Text style={{ color: '#0094FF', fontWeight: 'bold' }}>상권</Text>
                         </View>
-                        <Text style={styles.questionsTitle}>매장 건물 어때?</Text>
+                        <Text style={styles.questionsTitle}>{config.question[2]}</Text>
                         <Text style={styles.questionsContent}>몇층 / 한 걸물 / 외적요소 등</Text>
                     </View>
 
