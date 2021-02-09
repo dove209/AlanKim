@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, ActivityIndicator, StatusBar} from 'react-native';
+import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, ActivityIndicator, StatusBar } from 'react-native';
 import axios from 'axios';
 import { StackActions } from '@react-navigation/native';
 import { AntDesign, Feather } from '@expo/vector-icons';
@@ -21,32 +21,40 @@ export default function Scoring_finish({ route, navigation }) {
 
 
     useEffect(() => {
-        const getScore = async() => {
+        const getScore = async () => {
             await axios.get(`${config.MAIN_URL}/items/${_id}`)
-            .then((res) => {
-                if(res.status === 200){
-                    setFinishInfo(res.data[0])
-                    setIsLoading(false)
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                .then((res) => {
+                    if (res.status === 200) {
+                        setFinishInfo(res.data[0])
+                        let defaultRating = res.data[0].totalScore >= 0 && res.data[0].totalScore <= 20 ? 1
+                            : res.data[0].totalScore > 20 && res.data[0].totalScore <= 40 ? 2
+                                : res.data[0].totalScore > 40 && res.data[0].totalScore <= 60 ? 3
+                                    : res.data[0].totalScore > 60 && res.data[0].totalScore <= 80 ? 4
+                                        : 5
+                        setDefaultRating(defaultRating)
+                        setIsLoading(false)
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
         }
         getScore()
 
         const backAction = () => {
-            Vibration.vibrate(5) 
+            Vibration.vibrate(5)
             Alert.alert("평가 완료!",
-            "홈으로 나가시겠습니까?", [
+                "홈으로 나가시겠습니까?", [
                 {
                     text: "아니요",
                     onPress: () => null,
                     style: "cancel"
                 },
-                { text: "예", onPress: () => navigation.dispatch(
-                    StackActions.replace('HomeScreen')
-                )}
+                {
+                    text: "예", onPress: () => navigation.dispatch(
+                        StackActions.replace('HomeScreen')
+                    )
+                }
             ]);
             return true;
         };
@@ -57,17 +65,19 @@ export default function Scoring_finish({ route, navigation }) {
     }, [])
 
     const goback = () => {
-        Vibration.vibrate(5) 
+        Vibration.vibrate(5)
         Alert.alert("평가 완료!",
-        "홈으로 나가시겠습니까?", [
+            "홈으로 나가시겠습니까?", [
             {
                 text: "아니요",
                 onPress: () => null,
                 style: "cancel"
             },
-            { text: "예", onPress: () => navigation.dispatch(
-                StackActions.replace('HomeScreen')
-            )}
+            {
+                text: "예", onPress: () => navigation.dispatch(
+                    StackActions.replace('HomeScreen')
+                )
+            }
         ]);
         return true;
     }
@@ -76,62 +86,90 @@ export default function Scoring_finish({ route, navigation }) {
     let RatingBar = [];
     for (var i = 1; i <= maxRating; i++) {
         RatingBar.push(
-          <View
-            activeOpacity={0.7}
-            key={i}
-          >
-            <Image
-              style={{...styles.StarImage, width:20, height:20}}
-              source={i <= defaultRating ? Star : Star_With_Border}
-            />
-          </View>
+            <View
+                activeOpacity={0.7}
+                key={i}
+            >
+                <Image
+                    style={{ ...styles.StarImage, width: 20, height: 20 }}
+                    source={i <= defaultRating ? Star : Star_With_Border}
+                />
+            </View>
         );
-    } 
+    }
 
-   
-    if(isLoading){
-        return(
-        <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-             <StatusBar barStyle="default"/>
-            <ActivityIndicator size="large" color="#00bdff" />
-          </View>
+
+    if (isLoading) {
+        return (
+            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <StatusBar barStyle="default" />
+                <ActivityIndicator size="large" color="#00bdff" />
+            </View>
         )
     }
     else {
         return (
-            <View style={{flex:1, justifyContent:'space-between', alignItems:'center', paddingTop:50, paddingBottom:30}}>
-                <View style={{alignItems:"center"}}>
+            <View style={{ flex: 1, justifyContent: 'space-between', alignItems: 'center', paddingTop: 50, paddingBottom: 30 }}>
+                <View style={{ alignItems: "center" }}>
                     <Text style={styles.finishTitle}>평가를 완료하였습니다.</Text>
                     <Text style={styles.finishsmall}>수고하셨습니다.</Text>
                 </View>
 
-                
-                <View style={styles.scoreBox}>
-                    <View style={{...styles.stars, width:"45%", marginTop:0}}>{RatingBar}</View>
-                    <Text style={{fontSize:23, fontWeight:'bold', marginTop:20}}>{finishInfo.storeName}</Text>
-                    <Text style={{fontSize:15, color: 'rgba(0,0,0,0.5)'}}>{finishInfo.dong} {finishInfo.city}</Text>
-                    <Text style={{fontSize:50, fontWeight:'bold', marginTop:20}}>{finishInfo.totalScore}</Text>
-                    <Text style={{fontSize:15, color: 'rgba(0,0,0,0.5)'}}>{scoreComment[defaultRating - 1]}</Text>
 
-                    <View style={{flexDirection:'row', justifyContent:'space-between', width:'100%', marginTop:30}}>
+                <View style={styles.scoreBox}>
+                    <View style={{ ...styles.stars, width: "45%", marginTop: 0 }}>{RatingBar}</View>
+                    <Text style={{ fontSize: 23, fontWeight: 'bold', marginTop: 20 }}>{finishInfo.storeName}</Text>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>{finishInfo.dong} {finishInfo.city}</Text>
+                    <Text style={{ fontSize: 50, fontWeight: 'bold', marginTop: 20 }}>{finishInfo.totalScore}</Text>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>{scoreComment[defaultRating - 1]}</Text>
+
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 30 }}>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>상권</Text>
-                            <Text style={styles.smallBoxText}>보통</Text>
+                            <Text style={{...styles.smallBoxText, color:finishInfo.categoryScore[0] <= 60 ? '#A4A4A4' : '#18AD00'}}>
+                                {finishInfo.categoryScore[0] >= 0 && finishInfo.categoryScore[0] <= 20 ? '최악'
+                                    : finishInfo.categoryScore[0] > 20 && finishInfo.categoryScore[0] <= 40 ? '별로'
+                                        : finishInfo.categoryScore[0] > 40 && finishInfo.categoryScore[0] <= 60 ? '보통'
+                                            : finishInfo.categoryScore[0] > 60 && finishInfo.categoryScore[0] <= 80 ? '좋아'
+                                                : '최고'
+                                }
+                            </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[0]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>인테리어</Text>
-                            <Text style={styles.smallBoxText}>보통</Text>
+                            <Text style={{...styles.smallBoxText, color:finishInfo.categoryScore[1] <= 60 ? '#A4A4A4' : '#18AD00'}}>
+                                {finishInfo.categoryScore[1] >= 0 && finishInfo.categoryScore[1] <= 20 ? '최악'
+                                    : finishInfo.categoryScore[1] > 20 && finishInfo.categoryScore[1] <= 40 ? '별로'
+                                        : finishInfo.categoryScore[1] > 40 && finishInfo.categoryScore[1] <= 60 ? '보통'
+                                            : finishInfo.categoryScore[1] > 60 && finishInfo.categoryScore[1] <= 80 ? '좋아'
+                                                : '최고'
+                                }
+                            </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[1]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>서비스</Text>
-                            <Text style={styles.smallBoxText}>보통</Text>
+                            <Text style={{...styles.smallBoxText, color: finishInfo.categoryScore[2] <= 60 ? '#A4A4A4' : '#18AD00'}}>
+                                {finishInfo.categoryScore[2] >= 0 && finishInfo.categoryScore[2] <= 20 ? '최악'
+                                    : finishInfo.categoryScore[2] > 20 && finishInfo.categoryScore[2] <= 40 ? '별로'
+                                        : finishInfo.categoryScore[2] > 40 && finishInfo.categoryScore[2] <= 60 ? '보통'
+                                            : finishInfo.categoryScore[2] > 60 && finishInfo.categoryScore[2] <= 80 ? '좋아'
+                                                : '최고'
+                                }
+                            </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[2]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>맛</Text>
-                            <Text style={styles.smallBoxText}>보통</Text>
+                            <Text style={{...styles.smallBoxText, color:finishInfo.categoryScore[3] <= 120 ? '#A4A4A4' : '#18AD00'}}>
+                                {finishInfo.categoryScore[3] >= 0 && finishInfo.categoryScore[3] <= 40 ? '최악'
+                                    : finishInfo.categoryScore[3] > 20 && finishInfo.categoryScore[3] <= 80 ? '별로'
+                                        : finishInfo.categoryScore[3] > 40 && finishInfo.categoryScore[3] <= 120 ? '보통'
+                                            : finishInfo.categoryScore[3] > 60 && finishInfo.categoryScore[3] <= 160 ? '좋아'
+                                                : '최고'
+                                }
+                            </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[3]}</Text>
                         </View>
                     </View>
@@ -139,7 +177,7 @@ export default function Scoring_finish({ route, navigation }) {
 
 
                 <TouchableOpacity style={styles.toHome} onPress={goback}>
-                    <Text style={{fontWeight:'bold', fontSize:20}}>홈으로</Text>
+                    <Text style={{ fontWeight: 'bold', fontSize: 20 }}>홈으로</Text>
                 </TouchableOpacity>
             </View>
         );

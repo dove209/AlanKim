@@ -7,6 +7,7 @@ import styles from '../../StyleSheet';
 import config from '../../config';
 import PickerScreen from './picker';
 import StarRating from './StarRating';
+import { colors } from 'react-native-elements';
 
 
 export default function ScoreListHome({ navigation }) {
@@ -219,15 +220,28 @@ export default function ScoreListHome({ navigation }) {
                                 </View>
                                 <View style={{width:"43%"}}> 
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop:20 }}>
-                                        <View style={styles.totalScoreBox}>
-                                            <Text>매우만족</Text>
+                                        <View style={{...styles.totalScoreBox, width:80}}>
+                                            <Text style={{color: item.totalScore <= 40 ? '#BD0000' : item.totalScore > 40 && item.totalScore <= 60 ? '#A4A4A4' : '#169D00'}}>
+                                            { item.totalScore >= 0 && item.totalScore <= 20 ? '매우불만'
+                                                : item.totalScore > 20 && item.totalScore <= 40 ? '불 만'
+                                                    : item.totalScore > 40 && item.totalScore <= 60 ? '보 통'
+                                                        : item.totalScore > 60 && item.totalScore <= 80 ? '만 족'
+                                                            : '매우만족'
+                                            }
+                                            </Text>
                                         </View>
                                         <View style={{...styles.totalScoreBox, marginLeft:5, width:60}}>
                                             <Text>{item.totalScore}</Text>
                                         </View>
                                     </View>
                                     <View style={{marginTop:10}}>
-                                        <StarRating defaultRating={5}></StarRating>
+                                        <StarRating defaultRating={
+                                            item.totalScore >= 0 && item.totalScore <= 20 ? 1
+                                                : item.totalScore > 20 && item.totalScore <= 40 ? 2
+                                                    : item.totalScore > 40 && item.totalScore <= 60 ? 3
+                                                        : item.totalScore > 60 && item.totalScore <= 80 ? 4
+                                                            : 5}>                    
+                                        </StarRating>
                                     </View>
                                 </View>
                                 <View style={{justifyContent:'center'}}>

@@ -222,7 +222,7 @@ export default function Scoring_1({ route, navigation }) {
                         // Assume "photo" is the name of the form field the server expects
                         formData.append('photo', { uri: localUri, name: filename, type });
                         
-                        await fetch(`${config.MAIN_URL}/items/score`, {
+                        await fetch(`${config.MAIN_URL}/items/image`, {
                             method: 'PUT',
                             body: formData,
                             headers: {
@@ -239,7 +239,7 @@ export default function Scoring_1({ route, navigation }) {
                     }
                 }
                 
-                await axios.put(`${config.MAIN_URL}/items/score`,{ _id:_id, QArr:[...QArr, Q16]})
+                await axios.put(`${config.MAIN_URL}/items/score`,{ _id:_id, QArr : TotalQArr })
                 .then(res=>{
                     if(res.data){
                         console.log('최종 제출 완료')

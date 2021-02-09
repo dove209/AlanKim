@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Image, Text, FlatList, Alert, StatusBar, Vibration, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TouchableOpacity, Text, Alert, StatusBar, Vibration, ActivityIndicator } from 'react-native';
 import axios from 'axios';
-import { StackActions } from '@react-navigation/native';
-import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
+
+import { AntDesign } from '@expo/vector-icons';
 import styles from '../../StyleSheet';
 import config from '../../config';
 import StarRating from './StarRating';
-import Plotly from 'react-native-plotly';
+import RadarCahrt from './RadarCahrt';
 
 export default function ScoreDetail({ route, navigation }) {
     const _id = route.params._id
@@ -31,48 +31,11 @@ export default function ScoreDetail({ route, navigation }) {
         navigation.popToTop()
     }
 
-
-    const data = [ // 차트에 들어갈 data를 먼저 지정해주고!
-        {
-        type: 'scatterpolar', // chart type
-        r: [39, 28, 8, 7, 28, 39], // data
-        theta: ['A','B','C', 'D', 'E', 'A'], // data category
-        fill: 'none', // fill option
-        fillcolor:'#000000',
-        name: 'Group A' // data group name
-        }
-      ]
-      
-      const layout = {
-        height: 280, // 원하는 크기로 height를 지정해주었다!
-        margin: { // chart에는 기본값으로 margin이 적용되어 있는데, 우리가 흔히 아는 top, bottom, left와는 좀 다르다. 0으로 모두 초기화 해주었다.
-          l: 0,
-          r: 0,
-          t: 20,
-          d: 0,
-        },
-        polar: {
-          radialaxis: { // 방사축 꾸미기 시작!
-            visible: true,
-            range: [0, 200],
-            color: "rgba(0, 0, 0, 0.2)", // 방사축의 선 색깔
-            showticklabels: false, // @1-1
-            showline: false, // @1-2
-            ticklen: 0, // @1-3
-          },
-          angularaxis: { // 각축 꾸미기 시작!
-            rotation: 110, // 차트 회전율!
-            color: 'rgba(0, 0, 0, 0.2)', // 각축의 선 색깔
-            ticklen: 0, // @2-1
-            tickfont: { // @2-2
-              color: 'rgba(0, 0, 0, 0.6);',
-              size: 13,
-            },
-          },
-          gridshape: 'linear', // @3
-        },
-        showlegend: false, // @4
-      };
+    //상세 내역 페이지로 이동
+    const gotoDetailInfo = (_id) => {
+        Vibration.vibrate(5)
+        Alert.alert(_id)
+    }
 
     if (isLoading) {
         return (
@@ -95,11 +58,24 @@ export default function ScoreDetail({ route, navigation }) {
                         <Text style={{ fontWeight: 'bold' }}>총 점수</Text>
                         <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
                             <View style={{ width: '40%' }}>
-                                <StarRating defaultRating={4} ></StarRating>
+                                <StarRating defaultRating={
+                                    item.totalScore >= 0 && item.totalScore <= 20 ? 1
+                                        : item.totalScore > 20 && item.totalScore <= 40 ? 2
+                                            : item.totalScore > 40 && item.totalScore <= 60 ? 3
+                                                : item.totalScore > 60 && item.totalScore <= 80 ? 4
+                                                    : 5
+                                } ></StarRating>
                             </View>
                             <View style={{ flexDirection: 'row' }}>
-                                <View style={styles.totalScoreBox}>
-                                    <Text>매우만족</Text>
+                                <View style={{...styles.totalScoreBox, width:80}}>
+                                    <Text style={{color: item.totalScore <= 40 ? '#BD0000' : item.totalScore > 40 && item.totalScore <= 60 ? '#A4A4A4' : '#169D00'}}>
+                                        {item.totalScore >= 0 && item.totalScore <= 20 ? '매우불만'
+                                            : item.totalScore > 20 && item.totalScore <= 40 ? '불 만'
+                                                : item.totalScore > 40 && item.totalScore <= 60 ? '보 통'
+                                                    : item.totalScore > 60 && item.totalScore <= 80 ? '만 족'
+                                                        : '매우만족'
+                                        }
+                                    </Text>
                                 </View>
                                 <View style={{ ...styles.totalScoreBox, width: 60, marginLeft: 5 }}>
                                     <Text>{item.totalScore}</Text>
@@ -115,30 +91,66 @@ export default function ScoreDetail({ route, navigation }) {
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%', marginTop: 10, alignSelf: 'center' }}>
                             <View style={styles.scoreSmallBox}>
                                 <Text style={styles.smallBoxTitle}>상권</Text>
-                                <Text style={styles.smallBoxText}>보통</Text>
+                                <Text style={{...styles.smallBoxText, color:item.categoryScore[0] <= 60 ? '#A4A4A4' : '#18AD00'}}>
+                                {item.categoryScore[0] >= 0 && item.categoryScore[0] <= 20 ? '최악'
+                                    : item.categoryScore[0] > 20 && item.categoryScore[0] <= 40 ? '별로'
+                                        : item.categoryScore[0] > 40 && item.categoryScore[0] <= 60 ? '보통'
+                                            : item.categoryScore[0] > 60 && item.categoryScore[0] <= 80 ? '좋아'
+                                                : '최고'
+                                }
+                                </Text>
                                 <Text style={styles.smallBoxScore}>{item.categoryScore[0]}</Text>
                             </View>
                             <View style={styles.scoreSmallBox}>
                                 <Text style={styles.smallBoxTitle}>인테리어</Text>
-                                <Text style={styles.smallBoxText}>보통</Text>
+                                <Text style={{...styles.smallBoxText, color:item.categoryScore[1] <= 60 ? '#A4A4A4' : '#18AD00'}}>
+                                {item.categoryScore[1] >= 0 && item.categoryScore[1] <= 20 ? '최악'
+                                    : item.categoryScore[1] > 20 && item.categoryScore[1] <= 40 ? '별로'
+                                        : item.categoryScore[1] > 40 && item.categoryScore[1] <= 60 ? '보통'
+                                            : item.categoryScore[1] > 60 && item.categoryScore[1] <= 80 ? '좋아'
+                                                : '최고'
+                                }
+                                </Text>
                                 <Text style={styles.smallBoxScore}>{item.categoryScore[1]}</Text>
                             </View>
                             <View style={styles.scoreSmallBox}>
                                 <Text style={styles.smallBoxTitle}>서비스</Text>
-                                <Text style={styles.smallBoxText}>보통</Text>
+                                <Text style={{...styles.smallBoxText, color:item.categoryScore[2] <= 60 ? '#A4A4A4' : '#18AD00'}}>
+                                {item.categoryScore[2] >= 0 && item.categoryScore[2] <= 20 ? '최악'
+                                    : item.categoryScore[2] > 20 && item.categoryScore[2] <= 40 ? '별로'
+                                        : item.categoryScore[2] > 40 && item.categoryScore[2] <= 60 ? '보통'
+                                            : item.categoryScore[2] > 60 && item.categoryScore[2] <= 80 ? '좋아'
+                                                : '최고'
+                                }
+                                </Text>
                                 <Text style={styles.smallBoxScore}>{item.categoryScore[2]}</Text>
                             </View>
                             <View style={styles.scoreSmallBox}>
                                 <Text style={styles.smallBoxTitle}>맛</Text>
-                                <Text style={styles.smallBoxText}>보통</Text>
+                                <Text style={{...styles.smallBoxText, color:item.categoryScore[3] <= 120 ? '#A4A4A4' : '#18AD00'}}>
+                                {item.categoryScore[3] >= 0 && item.categoryScore[3] <= 40 ? '최악'
+                                    : item.categoryScore[3] > 20 && item.categoryScore[3] <= 80 ? '별로'
+                                        : item.categoryScore[3] > 40 && item.categoryScore[3] <= 120 ? '보통'
+                                            : item.categoryScore[3] > 60 && item.categoryScore[3] <= 160 ? '좋아'
+                                                : '최고'
+                                }
+                                </Text>
                                 <Text style={styles.smallBoxScore}>{item.categoryScore[3]}</Text>
                             </View>
                         </View>
-                        <View style={{height:250, marginTop:10}}>
-                            <Plotly data={data} layout={layout} debug enableFullPlotly />
+
+                        {/* 종목별 점수 차트 */}
+                        <View style={{ height: 250, marginTop: 10, }}>     
+                            <RadarCahrt data={item.categoryScore}></RadarCahrt>        
                         </View>
                     </View>
-
+                    
+                    <TouchableOpacity style={{...styles.whiteBox, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}} onPress={()=> gotoDetailInfo(item._id)}>
+                        <Text style={{fontWeight:'bold'}}>
+                            상세내역
+                        </Text>
+                        <AntDesign name="right" size={20} color="rgba(0, 0, 0, 0.2)" />
+                    </TouchableOpacity>
                 </View>
             </View>
         );
