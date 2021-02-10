@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, Keyboard, Platform, ActivityIndicator, StatusBar} from 'react-native';
 import Modal from 'react-native-modal';
-import { StackActions } from '@react-navigation/native';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 import axios from 'axios';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import StarRating from './StarRating';
@@ -126,10 +126,15 @@ export default function Scoring_1({ route, navigation }) {
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
             if (!image.cancelled) {
-                setQ16({
-                    ...Q16,
-                    Q_imges:[...Q16.Q_imges, image.uri]
-                });
+                const manipResult = await ImageManipulator.manipulateAsync(
+                    image.localUri || image.uri,
+                    [{ resize: { width: image.width * 0.3, height: image.height * 0.3 } }],
+                    { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
+                  );
+                  setQ16({
+                      ...Q16,
+                      Q_imges:[...Q16.Q_imges, manipResult.uri]
+                  });
               }
 
         } else {

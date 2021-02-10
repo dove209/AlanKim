@@ -3,7 +3,6 @@ var router = express.Router();
 
 var multer = require('multer');
 
-const path = require('path');
 const upload = multer({
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
@@ -54,6 +53,7 @@ router.get('/:_id', function (req, res, next) {
     .then(item => res.status(200).json(item))
     .catch(err => res.status(500).send(err));
 });
+
 
 /* POST items(item add) */
 router.post('/', function (req, res, next) {

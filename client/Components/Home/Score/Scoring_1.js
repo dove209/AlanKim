@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, Keyboard, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import * as ImagePicker from 'expo-image-picker';
+import * as ImageManipulator from 'expo-image-manipulator';
 import { AntDesign, Feather } from '@expo/vector-icons';
 import StarRating from './StarRating';
 import EditComment from './EditComment';
@@ -112,7 +113,7 @@ export default function Scoring_1({ route, navigation }) {
         setModalVisible(!isModalVisible);
         let option = {
             mediaType: ImagePicker.MediaTypeOptions.Images,
-            maxWidth:500,
+            maxWidth: 500,
             allowsEditing: true,
             aspect: [4, 3],
             quality: 1,
@@ -125,9 +126,14 @@ export default function Scoring_1({ route, navigation }) {
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
             if (!image.cancelled) {
+                const manipResult = await ImageManipulator.manipulateAsync(
+                  image.localUri || image.uri,
+                  [{ resize: { width: image.width * 0.3, height: image.height * 0.3 } }],
+                  { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
+                );
                 setQ1({
                     ...Q1,
-                    Q_imges:[...Q1.Q_imges, image.uri]
+                    Q_imges:[...Q1.Q_imges, manipResult.uri]
                 });
               }
         } else {

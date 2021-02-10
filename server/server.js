@@ -27,6 +27,7 @@ const db = config.get('mongoURI');
 
 // Use Routes
 app.use('/api/items', require('./routes/api/items'));
+app.use('/api/imges', require('./routes/api/imges'));
 
 app.all('/*', function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
