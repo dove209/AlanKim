@@ -198,7 +198,8 @@ export default function AddListScreen({ route, navigation }) {
                                selectedDong === null ? null 
                                : selectedDong === '선택' ? null
                                : selectedDong === '서울특별시' ? config.cityItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})  
-                               : config.cityItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '경기도' ? config.cityItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : config.cityItems_3.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
                             }
                         </Picker>
                     </View>

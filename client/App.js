@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign, MaterialIcons, Entypo } from '@expo/vector-icons';
 
 import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
@@ -46,19 +46,16 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
-
+        tabBarIcon: ({ color, size }) => {
           if (route.name === 'home') {
-            iconName = focused ? 'edit' : 'edit';
+            return <MaterialIcons name='edit' size={size} color={color} />
           } else if (route.name === 'score') {
-            iconName = focused ? 'bars' : 'bars';
+            return <AntDesign name='profile' size={size} color={color} />;
           } else if (route.name === 'picture') {
-            iconName = focused ? 'picture' : 'picture';
+            return <AntDesign name='picture' size={size} color={color} />;
           } else if (route.name === 'etc') {
-            iconName = focused ? 'profile' : 'profile';
+            return <Entypo name='dots-three-horizontal' size={size} color={color} />;
           }
-          return <AntDesign name={iconName} size={size} color={color} />;
         },
       })}
       tabBarOptions={{
