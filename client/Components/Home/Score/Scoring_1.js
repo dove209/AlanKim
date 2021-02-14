@@ -123,7 +123,6 @@ export default function Scoring_1({ route, navigation }) {
             } else if(menu === 'library'){
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
-            console.log("orgin :" + image.width)
             if (!image.cancelled) {
                 const manipResult = await ImageManipulator.manipulateAsync(
                     image.localUri || image.uri,
