@@ -111,7 +111,6 @@ const GridImageView = ({ data }) => {
 const styles = StyleSheet.create({
     background: {
         flex: 1,
-        marginTop:10
     },
     flatlist: {
         flex: 1

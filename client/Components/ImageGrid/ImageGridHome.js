@@ -124,7 +124,7 @@ export default function ImageGridHome() {
                     <Text style={{ color: sortMenu === 3 ? '#00B2FF' : 'rgba(0, 0, 0, 0.2)' }}>업체별</Text>
                 </TouchableOpacity>
             </View>
-            <View style={{ width:'99%', flex : 1 , marginTop:0}}>
+            <View style={{ width:'99%', flex : 1 , marginTop:10}}>
                 <View style={{ opacity: imageGridItem.length === 0 ? 1 : 0, height: imageGridItem.length === 0 ? '100%' : 0, justifyContent: 'center', alignItems: 'center' }}>
                         <Entypo name="add-to-list" size={40} color='rgba(0, 0, 0, 0.2)' />
                         <Text style={styles.listEmptyTitle}>평가를 남겨주세요.</Text>
