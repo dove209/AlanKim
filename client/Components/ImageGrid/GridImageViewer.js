@@ -4,20 +4,15 @@ import Cross from './Cross';
 
 const GridImageView = ({ data }) => {
     const [modal, setModal] = useState({ visible: false, data: 0 });
-    const ref = useRef();
+    const [imageIdx, setImageIdx] = useState(0);
     var key = 0;
 
     const Component = () => {
         return (
             <View>
-                {
-                    data.map((item, key) =>
-                    (
-                        <View key={key}>
-                            <Image style={styles.img_modal} source={{ uri: item.image }} />
-                        </View>
-                    ))
-                }
+                <View key={key}>
+                    <Image style={styles.img_modal} source={{ uri: data[imageIdx].image }} />
+                </View>
             </View>
         );
     };
@@ -61,6 +56,7 @@ const GridImageView = ({ data }) => {
                                 {data.length > index * 3 ?
                                     <TouchableOpacity
                                         onPress={() => {
+                                            setImageIdx(index * 3)
                                             setModal({ visible: true, data: index * 3 });
 
                                         }}
@@ -73,6 +69,7 @@ const GridImageView = ({ data }) => {
                                 {data.length > index * 3 + 1 ?
                                     <TouchableOpacity
                                         onPress={() => {
+                                            setImageIdx( index * 3 + 1)
                                             setModal({ visible: true, data: index * 3 + 1 });
 
                                         }}
@@ -85,6 +82,7 @@ const GridImageView = ({ data }) => {
                                 {data.length > index * 3 + 2 ?
                                     <TouchableOpacity
                                         onPress={() => {
+                                            setImageIdx(index * 3 + 2 )
                                             setModal({ visible: true, data: index * 3 + 2 });
 
                                         }}
@@ -134,9 +132,10 @@ const styles = StyleSheet.create({
     },
     cross: {
         width:'100%',
-        alignItems:'center',
+        paddingRight:10,
+        alignItems:"flex-end",
         position: 'absolute',
-        bottom:'20%',
+        top:'8%',
     },
     move_left_view: {
         position: 'absolute',
