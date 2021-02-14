@@ -16,28 +16,12 @@ import Scoring_3 from './Components/Home/Score/Scoring_3';
 import Scoring_16 from './Components/Home/Score/Scoring_16';
 import Scoring_finish from './Components/Home/Score/Scoring_finish';
 
-
 import ScoreListHome from './Components/ScoreList/ScoreListHome';
 import ScoreDetail from './Components/ScoreList/ScoreDetail';
 import ScoreDetailInfo from './Components/ScoreList/ScoreDetailInfo';
 
+import ImageGridHome from './Components/ImageGrid/ImageGridHome';
 
-
-function PictureScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>picture!</Text>
-    </View>
-  );
-}
-
-function EtcScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Etc!</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -74,8 +58,7 @@ function MainTabs() {
     >
       <Tab.Screen name="home" component={HomeScreen} />
       <Tab.Screen name="score" component={ScoreListHome} />
-      <Tab.Screen name="picture" component={PictureScreen} />
-      <Tab.Screen name="etc" component={EtcScreen} />
+      <Tab.Screen name="picture" component={ImageGridHome} />
     </Tab.Navigator>
   );
 }

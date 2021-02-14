@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Image, Text, FlatList, Alert, StatusBar, Vibration } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, TouchableOpacity, Text, FlatList, Alert, StatusBar, Vibration } from 'react-native';
 import axios from 'axios';
-import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
+import { AntDesign, Entypo } from '@expo/vector-icons';
 import styles from '../../StyleSheet';
 import config from '../../config';
-import PickerScreen from './picker';
+import PickerScreen from '../Home/picker';
 import StarRating from './StarRating';
 
 
@@ -95,7 +95,7 @@ export default function ScoreListHome({ navigation }) {
                 setIsSelectBox(false);
             })
             .catch((error) => console.error(error))
-        } else if(menu === 6) {
+        } else if(menu === 6) {                                                         //점수순
             axios.get(`${config.MAIN_URL}/items?isScore=true&sortMenu=${menu}`)
             .then((res) => {
                 if(res.data.length !== 0 ){

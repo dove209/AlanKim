@@ -115,7 +115,6 @@ export default function Scoring_1({ route, navigation }) {
         let option = {
             mediaType: ImagePicker.MediaTypeOptions.Images,
             allowsEditing: true,
-            aspect: [4, 3],
             quality: 1,
         };
         let image = null;
@@ -128,7 +127,7 @@ export default function Scoring_1({ route, navigation }) {
             if (!image.cancelled) {
                 const manipResult = await ImageManipulator.manipulateAsync(
                     image.localUri || image.uri,
-                    [{ resize: { width: image.width * 0.3, height: image.height * 0.3 } }],
+                    [{ resize: { width: image.width * 0.25, height: image.height * 0.25 } }],
                     { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
                   );
                   setQ16({
@@ -248,12 +247,10 @@ export default function Scoring_1({ route, navigation }) {
                 .then(res=>{
                     if(res.data){
                         console.log('최종 제출 완료')
-                        setIsLoading(false)
                         //최종 점수 페이지로 이동..
                         navigation.navigate("Scoring_finish", {
                             _id: _id
                         })
-         
                     }
                 })   
                 .catch((error) => console.error(error))
@@ -289,9 +286,14 @@ export default function Scoring_1({ route, navigation }) {
     if(isLoading){
         return(
         <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
-             <StatusBar barStyle="default"/>
-            <ActivityIndicator size="large" color="#00bdff" />
-          </View>
+            <StatusBar barStyle="default"/>
+            <Image
+              style={{resizeMode: 'contain', height:100}}
+              source={require('../../../assets/imges/wait.png')}
+            />
+            <Text style={styles.questionsTitle}>로딩중...</Text>
+            <Text style={styles.questionsContent}>조금만 기다려줘요</Text>
+        </View>
         )
     }
     else {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { View, TouchableOpacity, Image, Text, FlatList, Alert, StatusBar, Vibration } from 'react-native';
+import { View, TouchableOpacity,Text, FlatList, Alert, StatusBar, Vibration } from 'react-native';
 import axios from 'axios';
 import { StackActions } from '@react-navigation/native';
 import { AntDesign, Feather, Entypo } from '@expo/vector-icons';

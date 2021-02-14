@@ -113,9 +113,7 @@ export default function Scoring_1({ route, navigation }) {
         setModalVisible(!isModalVisible);
         let option = {
             mediaType: ImagePicker.MediaTypeOptions.Images,
-            maxWidth: 500,
             allowsEditing: true,
-            aspect: [4, 3],
             quality: 1,
         };
         let image = null;
@@ -125,16 +123,17 @@ export default function Scoring_1({ route, navigation }) {
             } else if(menu === 'library'){
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
+            console.log("orgin :" + image.width)
             if (!image.cancelled) {
                 const manipResult = await ImageManipulator.manipulateAsync(
-                  image.localUri || image.uri,
-                  [{ resize: { width: image.width * 0.3, height: image.height * 0.3 } }],
-                  { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
-                );
-                setQ1({
-                    ...Q1,
-                    Q_imges:[...Q1.Q_imges, manipResult.uri]
-                });
+                    image.localUri || image.uri,
+                    [{ resize: { width: image.width * 0.25, height: image.height * 0.25 } }],
+                    { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
+                  );
+                  setQ1({
+                      ...Q1,
+                      Q_imges:[...Q1.Q_imges, manipResult.uri]
+                  });
               }
         } else {
             alert('이미지 추가는 최대 2장입니다.')

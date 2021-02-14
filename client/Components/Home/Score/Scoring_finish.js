@@ -101,10 +101,15 @@ export default function Scoring_finish({ route, navigation }) {
 
     if (isLoading) {
         return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                <StatusBar barStyle="default" />
-                <ActivityIndicator size="large" color="#00bdff" />
-            </View>
+        <View style={{flex:1, justifyContent:"center", alignItems:"center"}}>
+            <StatusBar barStyle="default"/>
+            <Image
+              style={{resizeMode: 'contain', height:100}}
+              source={require('../../../assets/imges/wait.png')}
+            />
+            <Text style={styles.questionsTitle}>로딩중...</Text>
+            <Text style={styles.questionsContent}>조금만 기다려줘요</Text>
+        </View>
         )
     }
     else {

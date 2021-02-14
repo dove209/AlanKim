@@ -11,8 +11,6 @@ export default function StarRaing({defaultRating, onIncrease, onDecrease, update
     const Star = require('../../../assets/imges/star_filled.png');
     const Star_With_Border = require('../../../assets/imges/star_corner.png');
 
-
-
     let RatingBar = [];
 
     for (var i = 1; i <= maxRating; i++) {
