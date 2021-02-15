@@ -47,13 +47,64 @@ router.get('/', function (req, res, next) {
   }
 });
 
+router.get('/grid', function (req, res, next) {
+  let sortMenu =  Number(req.query.sortMenu);
+  if(sortMenu === 1) {                          //이미지 그리드 최신순
+    Item.find({ isScore: true }).sort({ upTime: 'desc' })
+    .then(items => {
+      let imgArr = []
+      items.forEach(element => {
+        element.QArr.forEach(ele => {
+            for(let i=0; i < ele.Q_imges.length; i++){
+                imgArr.push(ele.Q_imges[i])
+            }
+        })
+    });
+      res.status(200).json(imgArr)
+    })
+    .catch(err => res.status(500).send(err));
+  } else if (sortMenu === 2){                   //이미지 그리드 과거순
+    Item.find({ isScore: true }).sort({ upTime: 'asc' })
+      .then(items => {
+      let imgArr = []
+      items.forEach(element => {
+        element.QArr.forEach(ele => {
+            for(let i=0; i < ele.Q_imges.length; i++){
+                imgArr.push(ele.Q_imges[i])
+            }
+        })
+    });
+      res.status(200).json(imgArr)
+    })
+      .catch(err => res.status(500).send(err));
+  } else if (sortMenu === 3){                   //이미지 그리드 업체별
+    Item.find({ isScore: true }).sort({ upTime: 'desc' })
+      .then(items => {
+        let storeImageGridArr = []
+        items.forEach(element => {
+            let storeName = element.storeName;
+            let dong = element.dong;
+            let city = element.city;
+            let imgArr = []
+            element.QArr.forEach(ele => {          
+                for(let i=0; i < ele.Q_imges.length; i++){
+                    imgArr.push(ele.Q_imges[i])
+                }
+            })
+            storeImageGridArr.push({ storeName : storeName, dong: dong, city, city, imgArr : imgArr })
+        });
+      res.status(200).json(storeImageGridArr)
+    })
+      .catch(err => res.status(500).send(err));
+  }
+});
+
 router.get('/:_id', function (req, res, next) {
   let _id = req.params._id;
   Item.find({ _id: _id })
     .then(item => res.status(200).json(item))
     .catch(err => res.status(500).send(err));
 });
-
 
 /* POST items(item add) */
 router.post('/', function (req, res, next) {

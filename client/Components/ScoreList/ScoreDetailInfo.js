@@ -50,7 +50,7 @@ export default function ScoreDetailInfo({ route, navigation }) {
     for (var i = 0; i < imgArr.length; i++) {
         imgSwiper.push(
             <View  key={i}>
-                <Image source={{uri:`${config.MAIN_URL}/imges/${imgArr[i]}&random=${Math.random().toString(36).substring(7)}` }} style={styles.questionImg}></Image>
+                <Image source={{uri:`${config.MAIN_URL}/imges/${imgArr[i]}` }} style={styles.questionImg}></Image>
             </View>
 
         );

@@ -15,16 +15,12 @@ export default function ImageGridHome() {
 
     useEffect(() => {
         const getItems = async () => {
-            await axios.get(`${config.MAIN_URL}/items?isScore=true&sortMenu=1`)
+            await axios.get(`${config.MAIN_URL}/items/grid?sortMenu=1`)
                 .then((res) => {
                     let imgArr = []
                     res.data.forEach(element => {
-                        element.QArr.forEach(ele => {
-                            for(let i=0; i < ele.Q_imges.length; i++){
-                                imgArr.push({ image : `${config.MAIN_URL}/imges/${ele.Q_imges[i]}&random=${Math.random().toString(36).substring(7)}` })
-                            }
-                        })
-                    });
+                        imgArr.push({ image : `${config.MAIN_URL}/imges/${element}` })
+                    })
                     setImageGridItem(imgArr)
                 })
                 .catch((error) => console.error(error))
@@ -38,21 +34,17 @@ export default function ImageGridHome() {
         setSortMenu(menu)
         setSelectVal(null)
         if (menu === 1 || menu === 2) {
-            axios.get(`${config.MAIN_URL}/items?isScore=true&sortMenu=${menu}`)     //최신순 또는 과거순
+            axios.get(`${config.MAIN_URL}/items/grid?sortMenu=${menu}`)     //최신순 또는 과거순
             .then((res) => {
                 let imgArr = []
                 res.data.forEach(element => {
-                    element.QArr.forEach(ele => {
-                        for(let i=0; i < ele.Q_imges.length; i++){
-                            imgArr.push({ image : `${config.MAIN_URL}/imges/${ele.Q_imges[i]}&random=${Math.random().toString(36).substring(7)}` })
-                        }
-                    })
-                });
+                    imgArr.push({ image : `${config.MAIN_URL}/imges/${element}` })
+                })
                 setImageGridItem(imgArr)
             })
             .catch((error) => console.error(error))
         } else if (menu === 3) {                                                    //업체별                              
-            axios.get(`${config.MAIN_URL}/items?isScore=true&sortMenu=1`)
+            axios.get(`${config.MAIN_URL}/items/grid?sortMenu=${menu}`)
             .then((res) => {
                 let storeImageGridArr = []
                 res.data.forEach(element => {
@@ -60,10 +52,8 @@ export default function ImageGridHome() {
                     let dong = element.dong;
                     let city = element.city;
                     let imgArr = []
-                    element.QArr.forEach(ele => {          
-                        for(let i=0; i < ele.Q_imges.length; i++){
-                            imgArr.push({ image : `${config.MAIN_URL}/imges/${ele.Q_imges[i]}&random=${Math.random().toString(36).substring(7)}` })
-                        }
+                    element.imgArr.forEach(ele => {     
+                        imgArr.push({ image : `${config.MAIN_URL}/imges/${ele}` })     
                     })
                     storeImageGridArr.push({ storeName : storeName, dong: dong, city, city, imgArr : imgArr })
                 });
