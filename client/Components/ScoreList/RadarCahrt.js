@@ -9,7 +9,7 @@ export default class RadarCahrt extends React.Component {
     super(props);
     const { data } = props;
     let characterData = [
-      { '          서비스': data[2], '인테리어': data[1], '상권        ': data[0], '맛': data[3]/2 },   //맛(200점 만점)은 나누기 2
+      { '          서비스': data[2], '인테리어': data[1], '상권        ': data[0], '맛': data[3] },
       { '          서비스': 100, '인테리어': 100, '상권        ': 100, '맛': 100 },                     //최고 점수 기준
     ];
     this.state = {

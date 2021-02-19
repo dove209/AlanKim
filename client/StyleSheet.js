@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
-        backgroundColor: '#E5E5E5',
+        backgroundColor: '#f9f9f9',
         paddingTop: 20,
         alignItems: 'center',
     },
@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         paddingTop: 20,
-        backgroundColor: '#E5E5E5'
+        backgroundColor: '#f9f9f9'
     },
     orderNum: {
         color: 'rgba(0, 0, 0, 0.6)',
@@ -218,10 +218,11 @@ const styles = StyleSheet.create({
         width: 90,
         height: 90,
         borderRadius: 10,
-        borderWidth: 2,
+        borderWidth: 1,
         borderStyle: 'dashed',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderColor:'#c4c4c4',
     },
     thumbnail: {
         width: 90,
@@ -316,10 +317,11 @@ const styles = StyleSheet.create({
         fontSize: 12
     },
     smallBoxText: {
-        fontSize: 13,
+        fontSize: 12,
         marginTop: 5
     },
     smallBoxScore: {
+        marginTop:10,
         fontSize: 15
     },
     toHome: {
@@ -378,6 +380,39 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         alignSelf:"center",
     },
+
+    //설정 더보기 화면
+    addProfileImg: {
+        width:'80%',
+        height:"40%",
+        marginTop:50,
+        alignItems:'center',
+        justifyContent:'center',
+        borderColor:'#c4c4c4',
+        borderWidth:1
+    },
+    etcBox: {
+        width:'90%',
+        paddingTop:20,
+        paddingBottom:20,
+        paddingLeft:40,
+        paddingRight:40,
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'space-between',
+        borderWidth:1,
+        borderRadius:10,
+        borderColor:'rgba(0, 0, 0, 0.3)',
+        backgroundColor:'#ffffff'
+    },
+    etcBoxTitle : {
+        fontWeight: "500",
+     },
+     etcBoxCont : {
+         fontWeight:"normal",
+         color:'rgba(0, 0, 0, 0.3)'
+     }
+
 })
 
 

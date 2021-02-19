@@ -17,7 +17,6 @@ export default function ScoreDetailInfo({ route, navigation }) {
 
     const [isImgModalVisible, setImgModalVisible] = useState(false);            //사진 모달창 열림 여부
     const [imgArr, setImgArr] = useState([])                                    //사진 모달창 이미지들
-    const [swiperIndex, setSwiperIndex ] = useState(1)                          //이미지 스와이퍼 인덱스
     
     const goback = () => {
         navigation.navigate("ScoreDetail")
@@ -81,7 +80,6 @@ export default function ScoreDetailInfo({ route, navigation }) {
                     )}
                 />
             </View>
-
       
             <View style={{...styles.modalBg, height : isCommentModalVisible || isImgModalVisible ? "150%" : 0}}></View>
             {/* 코멘트 모달창 */}
@@ -141,15 +139,15 @@ export default function ScoreDetailInfo({ route, navigation }) {
 }
 
 function QuestionItem({ item, showImg, showComment }) {
-    const weightVal = [4, 3, 3, 2, 2, 2, 4, 3, 1, 2, 2, 2, 4, 8, 4, 4]  //질문 점수 가중치
+    const weightVal = [4, 3, 3, 2, 2, 2, 4, 3, 1, 2, 2, 2, 2, 4, 2, 2]  //질문 점수 가중치
     return (
         <View style={{ ...styles.row, paddingTop: 10, paddingBottom: 10, paddingLeft: 5, borderTopColor: "#dedede", borderTopWidth: item.Q_num != 1 ? 1 : 0 }}>
             <View style={{ ...styles.row, justifyContent: 'flex-start', width: '10%' }}>
                 <View style={{
-                    width: 5, height: 20, marginRight: 5, backgroundColor: item.Q_num === 1 || item.Q_num === 2 || item.Q_num === 3 ? '#0070C0'
-                        : item.Q_num === 4 || item.Q_num === 7 || item.Q_num === 11 || item.Q_num === 12 ? '#92D050'
-                            : item.Q_num === 5 || item.Q_num === 6 || item.Q_num === 8 || item.Q_num === 9 || item.Q_num === 10 ? '#FFC000'
-                                : '#F11D00'
+                    width: 5, height: 20, marginRight: 5, backgroundColor: item.Q_num === 1 || item.Q_num === 2 || item.Q_num === 3 ? '#0070C0' //상권 카테고리
+                        : item.Q_num === 4 || item.Q_num === 7 || item.Q_num === 11 || item.Q_num === 12 ? '#92D050'                            //인테리어 카테고리
+                            : item.Q_num === 5 || item.Q_num === 6 || item.Q_num === 8 || item.Q_num === 9 || item.Q_num === 10 ? '#FFC000'     //서비스 카테고리
+                                : '#F11D00'         //맛 카테고리
                 }}>
                 </View>
                 <Text style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{item.Q_num}</Text>
@@ -159,7 +157,7 @@ function QuestionItem({ item, showImg, showComment }) {
             </View>
             <View style={{ width: '15%', alignItems: 'center' }}>
                 <Text style={{ color: item.Q_score <= 4 ? '#BD0000' : item.Q_score <= 6 ? '#A4A4A4' : '#169D00', fontSize: 12, fontWeight: 'bold' }}>
-                    {item.Q_score <= 2 ? '매우불만' : item.Q_score <= 4 ? '불만' : item.Q_score <= 6 ? '보통' : item.Q_score <= 8 ? '만족' : '매우만족'}
+                    {item.Q_score <= 2 ? config.scoreComment[0] : item.Q_score <= 4 ? config.scoreComment[1] : item.Q_score <= 6 ? config.scoreComment[2] : item.Q_score <= 8 ? config.scoreComment[3] : config.scoreComment[4]}
                 </Text>
             </View>
             <View style={{ width: '10%', alignItems: 'center' }}>

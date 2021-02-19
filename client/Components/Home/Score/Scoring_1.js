@@ -9,8 +9,6 @@ import EditComment from './EditComment';
 import styles from '../../../StyleSheet';
 import config from '../../../config';
 
-
-
 export default function Scoring_1({ route, navigation }) {
     const _id = route.params._id;
     const QArr = route.params.QArr;
@@ -18,7 +16,7 @@ export default function Scoring_1({ route, navigation }) {
         Q_num: 1,
         Q_score: 1,
         Q_imges: [],
-        Q_comment:''
+        Q_comment: ''
     })
 
     const maxRating = 10;
@@ -32,35 +30,24 @@ export default function Scoring_1({ route, navigation }) {
         (async () => {
             if (Platform.OS !== 'web') {
                 const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-                if (status !== 'granted' ) {
+                if (status !== 'granted') {
                     alert('카메라 및 앨범 접근을 혀용해 주세요.');
                 }
             }
         })();
 
-        const backAction = () => {
-            Vibration.vibrate(5) 
-            Alert.alert("낙장 불입!",
-            "모든 남기기를 끝내겟습니까?", [
-                {
-                    text: "아니요",
-                    onPress: () => null,
-                    style: "cancel"
-                },
-                { text: "예", onPress: () => navigation.popToTop() }
-            ]);
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+        BackHandler.addEventListener("hardwareBackPress", goback);
 
-        return () => backHandler.remove();
+        return () => 
+            BackHandler.removeEventListener('hardwareBackPress', goback);
 
     }, [])
 
     const goback = () => {
-        Vibration.vibrate(5) 
-        Alert.alert("낙장 불입!",
-        "모든 남기기를 끝내겟습니까?", [
+        Vibration.vibrate(5)
+        Alert.alert("종료하시겠습니까?",
+            "모든 내용은 저장되지 않습니다.",
+        [
             {
                 text: "아니요",
                 onPress: () => null,
@@ -68,7 +55,7 @@ export default function Scoring_1({ route, navigation }) {
             },
             { text: "예", onPress: () => navigation.popToTop() }
         ]);
-       
+        return true
     }
 
     //별점 +1
@@ -84,7 +71,7 @@ export default function Scoring_1({ route, navigation }) {
     //별점 -1
     const onDecrease = () => {
         Vibration.vibrate(5)
-        if(Q1.Q_score > 1) {
+        if (Q1.Q_score > 1) {
             setQ1({
                 ...Q1,
                 Q_score: Q1.Q_score - 1
@@ -97,7 +84,7 @@ export default function Scoring_1({ route, navigation }) {
         Vibration.vibrate(5)
         setQ1({
             ...Q1,
-            Q_score:key
+            Q_score: key
         })
     }
 
@@ -106,7 +93,7 @@ export default function Scoring_1({ route, navigation }) {
         Vibration.vibrate(5)
         setModalVisible(!isModalVisible)
     }
-    
+
     //카메라 또는 앨범 접근
     const imageCameraLibrary = async (menu) => {
         Vibration.vibrate(5);
@@ -117,10 +104,10 @@ export default function Scoring_1({ route, navigation }) {
             quality: 1,
         };
         let image = null;
-        if(Q1.Q_imges.length < 2){
-            if(menu === 'camera'){
+        if (Q1.Q_imges.length < 2) {
+            if (menu === 'camera') {
                 image = await ImagePicker.launchCameraAsync(option);
-            } else if(menu === 'library'){
+            } else if (menu === 'library') {
                 image = await ImagePicker.launchImageLibraryAsync(option);
             }
             if (!image.cancelled) {
@@ -128,12 +115,12 @@ export default function Scoring_1({ route, navigation }) {
                     image.localUri || image.uri,
                     [{ resize: { width: image.width * 0.25, height: image.height * 0.25 } }],
                     { compress: 1, format: ImageManipulator.SaveFormat.JPEG }
-                  );
-                  setQ1({
-                      ...Q1,
-                      Q_imges:[...Q1.Q_imges, manipResult.uri]
-                  });
-              }
+                );
+                setQ1({
+                    ...Q1,
+                    Q_imges: [...Q1.Q_imges, manipResult.uri]
+                });
+            }
         } else {
             alert('이미지 추가는 최대 2장입니다.')
         }
@@ -142,7 +129,7 @@ export default function Scoring_1({ route, navigation }) {
     //이미지 제거
     const deleteImage = () => {
         Vibration.vibrate(5)
-        if(Q1.Q_imges.length > 0) {
+        if (Q1.Q_imges.length > 0) {
             setQ1({
                 ...Q1,
                 Q_imges: Q1.Q_imges.filter(image => image !== Q1.Q_imges[selectImageIdx - 1])
@@ -162,7 +149,7 @@ export default function Scoring_1({ route, navigation }) {
     const changeComment = (val) => {
         setQ1({
             ...Q1,
-            Q_comment : val
+            Q_comment: val
         })
     }
 
@@ -180,7 +167,7 @@ export default function Scoring_1({ route, navigation }) {
         setIsEditComment(false)
         setQ1({
             ...Q1,
-            Q_comment : text
+            Q_comment: text
         })
     }
 
@@ -189,7 +176,7 @@ export default function Scoring_1({ route, navigation }) {
         Vibration.vibrate(5)
         setQ1({
             ...Q1,
-            Q_comment : ''
+            Q_comment: ''
         })
     }
 
@@ -201,10 +188,11 @@ export default function Scoring_1({ route, navigation }) {
         })
     }
 
+    //썸네일 이미지 리스트
     let thumbnail = [];
     for (let i = 0; i < Q1.Q_imges.length; i++) {
         thumbnail.push(
-            <TouchableOpacity key={i} onPress={() => setSelectImageIdx(i + 1)} style={{ marginLeft: 10, borderRadius: 10, borderWidth: 2, borderColor: selectImageIdx === (i + 1) ? '#00B2FF' : '#E5E5E5' }}>
+            <TouchableOpacity key={i} onPress={() => setSelectImageIdx(i + 1)} style={{ marginLeft: 10, borderRadius: 10, borderWidth: 2, borderColor: selectImageIdx === (i + 1) ? '#00B2FF' : '#f9f9f9' }}>
                 <Image style={styles.thumbnail} source={{ uri: Q1.Q_imges[i] }}>
                 </Image>
             </TouchableOpacity>)
@@ -267,21 +255,21 @@ export default function Scoring_1({ route, navigation }) {
                             <View style={styles.modalView}>
                                 <TouchableOpacity
                                     style={{ ...styles.openButton, backgroundColor: "#00B2FF" }}
-                                    onPress={()=> imageCameraLibrary('camera')}
+                                    onPress={() => imageCameraLibrary('camera')}
                                 >
                                     <Text style={styles.textStyle}>카메라</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={{ ...styles.openButton, backgroundColor: "#00B2FF", marginTop: 10 }}
-                                    onPress={()=> imageCameraLibrary('library')}
+                                    onPress={() => imageCameraLibrary('library')}
                                 >
                                     <Text style={styles.textStyle}>앨범</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={{ ...styles.openButton, backgroundColor: "#fff", borderWidth:1, marginTop: 10 }}
-                                    onPress={() => {setModalVisible(!isModalVisible)}}
+                                    style={{ ...styles.openButton, backgroundColor: "#fff", borderWidth: 1, marginTop: 10 }}
+                                    onPress={() => { setModalVisible(!isModalVisible) }}
                                 >
-                                    <Text style={{...styles.textStyle, color:'#000000'}}>취소</Text>
+                                    <Text style={{ ...styles.textStyle, color: '#000000' }}>취소</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>

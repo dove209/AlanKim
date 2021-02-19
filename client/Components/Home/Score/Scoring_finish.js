@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Image, Text, BackHandler, Alert, Vibration, ActivityIndicator, StatusBar } from 'react-native';
 import axios from 'axios';
 import { StackActions } from '@react-navigation/native';
-import { AntDesign, Feather } from '@expo/vector-icons';
 import styles from '../../../StyleSheet';
 import config from '../../../config';
 
@@ -14,11 +13,9 @@ export default function Scoring_finish({ route, navigation }) {
     const [defaultRating, setDefaultRating] = useState(3);
 
     const maxRating = 5
-    const scoreComment = ['너무 너무 최악!', '나빠요..', '보통.그럭저럭이네', '좋아요!!', '펄펙!!!최고야'];
+    const totalScoreComment = ['최악!', '별로', '보통', '좋아요~', '최고야! 아주 멋져'];
     const Star = require('../../../assets/imges/star_filled.png');
     const Star_With_Border = require('../../../assets/imges/star_corner.png');
-
-
 
     useEffect(() => {
         const getScore = async () => {
@@ -41,26 +38,10 @@ export default function Scoring_finish({ route, navigation }) {
         }
         getScore()
 
-        const backAction = () => {
-            Vibration.vibrate(5)
-            Alert.alert("평가 완료!",
-                "홈으로 나가시겠습니까?", [
-                {
-                    text: "아니요",
-                    onPress: () => null,
-                    style: "cancel"
-                },
-                {
-                    text: "예", onPress: () => navigation.dispatch(
-                        StackActions.replace('HomeScreen')
-                    )
-                }
-            ]);
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+        BackHandler.addEventListener("hardwareBackPress", goback);
 
-        return () => backHandler.remove();
+        return () => 
+            BackHandler.removeEventListener('hardwareBackPress', goback);
 
     }, [])
 
@@ -74,9 +55,12 @@ export default function Scoring_finish({ route, navigation }) {
                 style: "cancel"
             },
             {
-                text: "예", onPress: () => navigation.dispatch(
-                    StackActions.replace('HomeScreen')
-                )
+                text: "예", onPress: () => {
+                    navigation.popToTop()
+                    navigation.dispatch(
+                        StackActions.replace('HomeScreen')
+                    )
+                }
             }
         ]);
         return true;
@@ -126,53 +110,53 @@ export default function Scoring_finish({ route, navigation }) {
                     <Text style={{ fontSize: 23, fontWeight: 'bold', marginTop: 20 }}>{finishInfo.storeName}</Text>
                     <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>{finishInfo.dong} {finishInfo.city}</Text>
                     <Text style={{ fontSize: 50, fontWeight: 'bold', marginTop: 20 }}>{finishInfo.totalScore}</Text>
-                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>{scoreComment[defaultRating - 1]}</Text>
+                    <Text style={{ fontSize: 15, color: 'rgba(0,0,0,0.5)' }}>{totalScoreComment[defaultRating - 1]}</Text>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 30 }}>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>상권</Text>
-                            <Text style={{...styles.smallBoxText, color:finishInfo.categoryScore[0] <= 60 ? '#A4A4A4' : '#18AD00'}}>
-                                {finishInfo.categoryScore[0] >= 0 && finishInfo.categoryScore[0] <= 20 ? '최악'
-                                    : finishInfo.categoryScore[0] > 20 && finishInfo.categoryScore[0] <= 40 ? '별로'
-                                        : finishInfo.categoryScore[0] > 40 && finishInfo.categoryScore[0] <= 60 ? '보통'
-                                            : finishInfo.categoryScore[0] > 60 && finishInfo.categoryScore[0] <= 80 ? '좋아'
-                                                : '최고'
+                            <Text style={{...styles.smallBoxText, color: finishInfo.categoryScore[0] <= 40 ? '#BD0000' : finishInfo.categoryScore[0] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {finishInfo.categoryScore[0] >= 0 && finishInfo.categoryScore[0] <= 20 ? config.scoreComment[0]
+                                    : finishInfo.categoryScore[0] > 20 && finishInfo.categoryScore[0] <= 40 ? config.scoreComment[1]
+                                        : finishInfo.categoryScore[0] > 40 && finishInfo.categoryScore[0] <= 60 ? config.scoreComment[2]
+                                            : finishInfo.categoryScore[0] > 60 && finishInfo.categoryScore[0] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[0]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>인테리어</Text>
-                            <Text style={{...styles.smallBoxText, color:finishInfo.categoryScore[1] <= 60 ? '#A4A4A4' : '#18AD00'}}>
-                                {finishInfo.categoryScore[1] >= 0 && finishInfo.categoryScore[1] <= 20 ? '최악'
-                                    : finishInfo.categoryScore[1] > 20 && finishInfo.categoryScore[1] <= 40 ? '별로'
-                                        : finishInfo.categoryScore[1] > 40 && finishInfo.categoryScore[1] <= 60 ? '보통'
-                                            : finishInfo.categoryScore[1] > 60 && finishInfo.categoryScore[1] <= 80 ? '좋아'
-                                                : '최고'
+                            <Text style={{...styles.smallBoxText, color: finishInfo.categoryScore[1] <= 40 ? '#BD0000' : finishInfo.categoryScore[1] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {finishInfo.categoryScore[1] >= 0 && finishInfo.categoryScore[1] <= 20 ? config.scoreComment[0]
+                                    : finishInfo.categoryScore[1] > 20 && finishInfo.categoryScore[1] <= 40 ? config.scoreComment[1]
+                                        : finishInfo.categoryScore[1] > 40 && finishInfo.categoryScore[1] <= 60 ? config.scoreComment[2]
+                                            : finishInfo.categoryScore[1] > 60 && finishInfo.categoryScore[1] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[1]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>서비스</Text>
-                            <Text style={{...styles.smallBoxText, color: finishInfo.categoryScore[2] <= 60 ? '#A4A4A4' : '#18AD00'}}>
-                                {finishInfo.categoryScore[2] >= 0 && finishInfo.categoryScore[2] <= 20 ? '최악'
-                                    : finishInfo.categoryScore[2] > 20 && finishInfo.categoryScore[2] <= 40 ? '별로'
-                                        : finishInfo.categoryScore[2] > 40 && finishInfo.categoryScore[2] <= 60 ? '보통'
-                                            : finishInfo.categoryScore[2] > 60 && finishInfo.categoryScore[2] <= 80 ? '좋아'
-                                                : '최고'
+                            <Text style={{...styles.smallBoxText, color: finishInfo.categoryScore[2] <= 40 ? '#BD0000' : finishInfo.categoryScore[2] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {finishInfo.categoryScore[2] >= 0 && finishInfo.categoryScore[2] <= 20 ? config.scoreComment[0]
+                                    : finishInfo.categoryScore[2] > 20 && finishInfo.categoryScore[2] <= 40 ? config.scoreComment[1]
+                                        : finishInfo.categoryScore[2] > 40 && finishInfo.categoryScore[2] <= 60 ? config.scoreComment[2]
+                                            : finishInfo.categoryScore[2] > 60 && finishInfo.categoryScore[2] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[2]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>맛</Text>
-                            <Text style={{...styles.smallBoxText, color:finishInfo.categoryScore[3] <= 120 ? '#A4A4A4' : '#18AD00'}}>
-                                {finishInfo.categoryScore[3] >= 0 && finishInfo.categoryScore[3] <= 40 ? '최악'
-                                    : finishInfo.categoryScore[3] > 20 && finishInfo.categoryScore[3] <= 80 ? '별로'
-                                        : finishInfo.categoryScore[3] > 40 && finishInfo.categoryScore[3] <= 120 ? '보통'
-                                            : finishInfo.categoryScore[3] > 60 && finishInfo.categoryScore[3] <= 160 ? '좋아'
-                                                : '최고'
+                            <Text style={{...styles.smallBoxText, color: finishInfo.categoryScore[3] <= 40 ? '#BD0000' : finishInfo.categoryScore[3] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {finishInfo.categoryScore[3] >= 0 && finishInfo.categoryScore[3] <= 20 ? config.scoreComment[0]
+                                    : finishInfo.categoryScore[3] > 20 && finishInfo.categoryScore[3] <= 40 ? config.scoreComment[1]
+                                        : finishInfo.categoryScore[3] > 40 && finishInfo.categoryScore[3] <= 60 ? config.scoreComment[2]
+                                            : finishInfo.categoryScore[3] > 60 && finishInfo.categoryScore[3] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{finishInfo.categoryScore[3]}</Text>

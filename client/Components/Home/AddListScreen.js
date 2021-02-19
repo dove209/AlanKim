@@ -30,7 +30,7 @@ export default function AddListScreen({ route, navigation }) {
     const inputsRef = useRef();
 
     useEffect(()=>{
-        const getItem = async() => {
+       (async() => {
             await axios.get(`${config.MAIN_URL}/items/${_id}`)
             .then((res) => {
                 if(res.status === 200){
@@ -53,21 +53,17 @@ export default function AddListScreen({ route, navigation }) {
                     setRole('신규등록');
                 } 
             })
-        }
-        getItem()
+        })();
 
-        const backAction = () => {
-            navigation.popToTop()
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener("hardwareBackPress",backAction);
+        BackHandler.addEventListener("hardwareBackPress", goback);
       
-        return () => backHandler.remove();
-     
+        return () =>
+            BackHandler.removeEventListener("hardwareBackPress", goback);
     },[])
 
     const goback = () => {
         navigation.popToTop()
+        return true
     }
 
     const changeStoreName = (value) => {
@@ -129,6 +125,7 @@ export default function AddListScreen({ route, navigation }) {
                 .then(res=>{
                     if(res.data){
                         console.log('리스트 등록 완료')
+                        navigation.popToTop()
                         navigation.dispatch(
                             StackActions.replace('HomeScreen')
                         );
@@ -140,6 +137,7 @@ export default function AddListScreen({ route, navigation }) {
                 .then(res=>{
                     if(res.data){
                         console.log('리스트 수정 완료')
+                        navigation.popToTop()
                         navigation.dispatch(
                             StackActions.replace('HomeScreen')
                         );

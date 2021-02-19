@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity,Text, FlatList, Alert, StatusBar, Vibration } from 'react-native';
 import axios from 'axios';
-import { StackActions } from '@react-navigation/native';
 import { AntDesign, Feather, Entypo } from '@expo/vector-icons';
 import styles from '../../StyleSheet';
 import config from '../../config';
@@ -10,7 +9,7 @@ import PickerScreen from './picker';
 
 export default function HomeScreen({ navigation }) {
     const [items, setItems] = useState([]);
-    const [sortMenu, setSortMenu] = useState(1);    //1:최신순, 2:과거순, 3:위치별, 4:업종별, 5:가격대별
+    const [sortMenu, setSortMenu] = useState(1);        //1:최신순, 2:과거순, 3:위치별, 4:업종별, 5:가격대별
     const [isSelectBox, setIsSelectBox] = useState(false);
     const [refreshing, setRefresing] = useState(false);
 
@@ -40,6 +39,7 @@ export default function HomeScreen({ navigation }) {
         getItems();
         // return unsubscribe;
     }, [])
+
 
     // 정렬 기준 선택
     const listSort = (menu) => {

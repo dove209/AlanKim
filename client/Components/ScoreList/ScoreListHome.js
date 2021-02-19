@@ -17,7 +17,6 @@ export default function ScoreListHome({ navigation }) {
 
     const [selectVal, setSelectVal] = useState(null);           //위치별 업종별 가격대별 선택 옵션
 
-
     const onValueChange = (val) => {
         Vibration.vibrate(5)
         setSelectVal(val)
@@ -38,7 +37,7 @@ export default function ScoreListHome({ navigation }) {
     }
 
     useEffect(() => {
-        const getItems = async () => {
+        (async () => {
             await axios.get(`${config.MAIN_URL}/items?isScore=true&sortMenu=1`)
                 .then((res) => {
                     if(res.data.length !== 0 ){
@@ -54,8 +53,7 @@ export default function ScoreListHome({ navigation }) {
  
                 })
                 .catch((error) => console.error(error))
-        }
-        getItems();
+        })()
     }, [])
 
     // 정렬 기준 선택
@@ -112,8 +110,6 @@ export default function ScoreListHome({ navigation }) {
             })
         }
     }
-
-
 
     //ScrollView 다운시 새로고침
     const onRefresh = () => {
@@ -220,11 +216,11 @@ export default function ScoreListHome({ navigation }) {
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginTop:20 }}>
                                         <View style={{...styles.totalScoreBox, width:80}}>
                                             <Text style={{color: item.totalScore <= 40 ? '#BD0000' : item.totalScore > 40 && item.totalScore <= 60 ? '#A4A4A4' : '#169D00'}}>
-                                            { item.totalScore >= 0 && item.totalScore <= 20 ? '매우불만'
-                                                : item.totalScore > 20 && item.totalScore <= 40 ? '불 만'
-                                                    : item.totalScore > 40 && item.totalScore <= 60 ? '보 통'
-                                                        : item.totalScore > 60 && item.totalScore <= 80 ? '만 족'
-                                                            : '매우만족'
+                                            { item.totalScore >= 0 && item.totalScore <= 20 ? config.scoreComment[0]
+                                                : item.totalScore > 20 && item.totalScore <= 40 ? config.scoreComment[1]
+                                                    : item.totalScore > 40 && item.totalScore <= 60 ? config.scoreComment[2]
+                                                        : item.totalScore > 60 && item.totalScore <= 80 ? config.scoreComment[3]
+                                                            : config.scoreComment[4]
                                             }
                                             </Text>
                                         </View>

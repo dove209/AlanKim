@@ -18,6 +18,7 @@ const upload = multer({
 // Item Model
 const Item = require('../../models/Item');
 
+
 /* GET items(item select) */
 router.get('/', function (req, res, next) {
   let isScore = req.query.isScore;
@@ -175,16 +176,16 @@ router.put('/score', function (req, res, next) {
         categoryScoreArr[1] += ele.Q_score*2;
         break
       case 13:
-        categoryScoreArr[3] += ele.Q_score*4;
+        categoryScoreArr[3] += ele.Q_score*2;
         break
       case 14:
-        categoryScoreArr[3] += ele.Q_score*8;
+        categoryScoreArr[3] += ele.Q_score*4;
         break
       case 15:
-        categoryScoreArr[3] += ele.Q_score*4;
+        categoryScoreArr[3] += ele.Q_score*2;
         break
       case 16:
-        categoryScoreArr[3] += ele.Q_score*4;
+        categoryScoreArr[3] += ele.Q_score*2;
         break
       default:
         break
@@ -204,6 +205,8 @@ router.delete('/', function (req, res, next) {
     .then(() => { res.status(200).send(true) })
     .catch(err => res.status(500).send(err));
 });
+
+
 
 module.exports = router;
 

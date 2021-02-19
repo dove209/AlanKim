@@ -7,7 +7,7 @@ import styles from '../../../StyleSheet';
 
 export default function StarRaing({defaultRating, onIncrease, onDecrease, updateRating}) {
     const maxRating = 10
-    const scoreComment = ['너무 너무 최악!', '너무 최악!', '최악!', '그럭저럭...', ' 보통. 그럭저럭 괜찮네.', '괜찮네~', '좋아요~~!', '아주 좋아요~!', '최고야!아주 멋져.', '궁극. 완벽! 펄풱!'];
+    const scoreComment = ['너무최악!', '최악!', '별로', '그럭저럭...', ' 보통', '괜찮네', '좋아요~', '아주 좋아요~~', '최고야! 아주 멋져.', '궁극. 완벽. 펄풱!'];
     const Star = require('../../../assets/imges/star_filled.png');
     const Star_With_Border = require('../../../assets/imges/star_corner.png');
 

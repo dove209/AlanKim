@@ -22,6 +22,8 @@ import ScoreDetailInfo from './Components/ScoreList/ScoreDetailInfo';
 
 import ImageGridHome from './Components/ImageGrid/ImageGridHome';
 
+import EtcHome from './Components/Etc/EtcHome';
+
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -59,6 +61,7 @@ function MainTabs() {
       <Tab.Screen name="home" component={HomeScreen} />
       <Tab.Screen name="score" component={ScoreListHome} />
       <Tab.Screen name="picture" component={ImageGridHome} />
+      <Tab.Screen name="etc" component={EtcHome} />
     </Tab.Navigator>
   );
 }

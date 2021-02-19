@@ -10,7 +10,7 @@ export default function EditComment({ comment, cancelEditComment, submitEditComm
     }
 
     return(
-    <View style={{flex:1, backgroundColor:"#E5E5E5", alignItems:"center", width:"100%", height: "100%"}}>
+    <View style={{flex:1, backgroundColor:"#f9f9f9", alignItems:"center", width:"100%", height: "100%"}}>
         <View style={{flexDirection:'row', width:'90%', alignItems:'center', justifyContent:"space-between", paddingTop:30}}>
             <Text style={{fontSize:18}}>코멘트</Text>
             <View style={{flexDirection:'row'}}>
@@ -21,14 +21,14 @@ export default function EditComment({ comment, cancelEditComment, submitEditComm
                     <Text style={{fontSize:18, color:"#1DB9FC"}}>작성</Text>
                 </TouchableOpacity>
             </View>
-
         </View>
+        
         <TextInput
-                style={{marginTop:20, width:"90%", height:"60%"}}
+                style={{marginTop:20, width:"90%", height:"100%"}}
                 value={comment}
                 ref={inputRef}
-                multiline={true}        //여러줄 입력가능
-                textAlignVertical="top" //처음부터 시작 (기본값은 center)
+                multiline={true}            //여러줄 입력가능
+                textAlignVertical="top"     //처음부터 시작 (기본값은 center)
                 onChangeText={(text) => changeComment(text)}
                 autoCapitalize="sentences"
                 autoCorrect

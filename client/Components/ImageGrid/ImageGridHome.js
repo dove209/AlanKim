@@ -14,7 +14,7 @@ export default function ImageGridHome() {
     const [selectVal, setSelectVal] = useState(null);           //위치별 업종별 가격대별 선택 옵션
 
     useEffect(() => {
-        const getItems = async () => {
+        (async () => {
             await axios.get(`${config.MAIN_URL}/items/grid?sortMenu=1`)
                 .then((res) => {
                     let imgArr = []
@@ -24,8 +24,7 @@ export default function ImageGridHome() {
                     setImageGridItem(imgArr)
                 })
                 .catch((error) => console.error(error))
-        }
-        getItems();
+        })();
     }, [])
 
     // 정렬 기준 선택

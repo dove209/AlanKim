@@ -44,11 +44,11 @@ export default function ScoreDetail({ route, navigation }) {
                         <View style={{ flexDirection: 'row' }}>
                             <View style={{ ...styles.totalScoreBox, width: 80 }}>
                                 <Text style={{ color: item.totalScore <= 40 ? '#BD0000' : item.totalScore > 40 && item.totalScore <= 60 ? '#A4A4A4' : '#169D00' }}>
-                                    {item.totalScore >= 0 && item.totalScore <= 20 ? '매우불만'
-                                        : item.totalScore > 20 && item.totalScore <= 40 ? '불 만'
-                                            : item.totalScore > 40 && item.totalScore <= 60 ? '보 통'
-                                                : item.totalScore > 60 && item.totalScore <= 80 ? '만 족'
-                                                    : '매우만족'
+                                    {item.totalScore >= 0 && item.totalScore <= 20 ? config.scoreComment[0]
+                                        : item.totalScore > 20 && item.totalScore <= 40 ? config.scoreComment[1]
+                                            : item.totalScore > 40 && item.totalScore <= 60 ? config.scoreComment[2]
+                                                : item.totalScore > 60 && item.totalScore <= 80 ? config.scoreComment[3]
+                                                    : config.scoreComment[4]
                                     }
                                 </Text>
                             </View>
@@ -63,51 +63,51 @@ export default function ScoreDetail({ route, navigation }) {
                 {/* 항목 별 점수 박스 */}
                 <View style={styles.whiteBox}>
                     <Text style={{ fontWeight: 'bold' }}>항목 별 점수</Text>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '95%', marginTop: 10, alignSelf: 'center' }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginTop: 10, alignSelf: 'center' }}>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>상권</Text>
-                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[0] <= 60 ? '#A4A4A4' : '#18AD00' }}>
-                                {item.categoryScore[0] >= 0 && item.categoryScore[0] <= 20 ? '최악'
-                                    : item.categoryScore[0] > 20 && item.categoryScore[0] <= 40 ? '별로'
-                                        : item.categoryScore[0] > 40 && item.categoryScore[0] <= 60 ? '보통'
-                                            : item.categoryScore[0] > 60 && item.categoryScore[0] <= 80 ? '좋아'
-                                                : '최고'
+                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[0] <= 40 ? '#BD0000' : item.categoryScore[0] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {item.categoryScore[0] >= 0 && item.categoryScore[0] <= 20 ? config.scoreComment[0]
+                                    : item.categoryScore[0] > 20 && item.categoryScore[0] <= 40 ? config.scoreComment[1]
+                                        : item.categoryScore[0] > 40 && item.categoryScore[0] <= 60 ? config.scoreComment[2]
+                                            : item.categoryScore[0] > 60 && item.categoryScore[0] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{item.categoryScore[0]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>인테리어</Text>
-                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[1] <= 60 ? '#A4A4A4' : '#18AD00' }}>
-                                {item.categoryScore[1] >= 0 && item.categoryScore[1] <= 20 ? '최악'
-                                    : item.categoryScore[1] > 20 && item.categoryScore[1] <= 40 ? '별로'
-                                        : item.categoryScore[1] > 40 && item.categoryScore[1] <= 60 ? '보통'
-                                            : item.categoryScore[1] > 60 && item.categoryScore[1] <= 80 ? '좋아'
-                                                : '최고'
+                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[1] <= 40 ? '#BD0000' : item.categoryScore[1] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {item.categoryScore[1] >= 0 && item.categoryScore[1] <= 20 ? config.scoreComment[0]
+                                    : item.categoryScore[1] > 20 && item.categoryScore[1] <= 40 ? config.scoreComment[1]
+                                        : item.categoryScore[1] > 40 && item.categoryScore[1] <= 60 ? config.scoreComment[2]
+                                            : item.categoryScore[1] > 60 && item.categoryScore[1] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{item.categoryScore[1]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>서비스</Text>
-                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[2] <= 60 ? '#A4A4A4' : '#18AD00' }}>
-                                {item.categoryScore[2] >= 0 && item.categoryScore[2] <= 20 ? '최악'
-                                    : item.categoryScore[2] > 20 && item.categoryScore[2] <= 40 ? '별로'
-                                        : item.categoryScore[2] > 40 && item.categoryScore[2] <= 60 ? '보통'
-                                            : item.categoryScore[2] > 60 && item.categoryScore[2] <= 80 ? '좋아'
-                                                : '최고'
+                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[2] <= 40 ? '#BD0000' : item.categoryScore[2] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {item.categoryScore[2] >= 0 && item.categoryScore[2] <= 20 ? config.scoreComment[0]
+                                    : item.categoryScore[2] > 20 && item.categoryScore[2] <= 40 ? config.scoreComment[1]
+                                        : item.categoryScore[2] > 40 && item.categoryScore[2] <= 60 ? config.scoreComment[2]
+                                            : item.categoryScore[2] > 60 && item.categoryScore[2] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{item.categoryScore[2]}</Text>
                         </View>
                         <View style={styles.scoreSmallBox}>
                             <Text style={styles.smallBoxTitle}>맛</Text>
-                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[3] <= 120 ? '#A4A4A4' : '#18AD00' }}>
-                                {item.categoryScore[3] >= 0 && item.categoryScore[3] <= 40 ? '최악'
-                                    : item.categoryScore[3] > 20 && item.categoryScore[3] <= 80 ? '별로'
-                                        : item.categoryScore[3] > 40 && item.categoryScore[3] <= 120 ? '보통'
-                                            : item.categoryScore[3] > 60 && item.categoryScore[3] <= 160 ? '좋아'
-                                                : '최고'
+                            <Text style={{ ...styles.smallBoxText, color: item.categoryScore[3] <= 40 ? '#BD0000' : item.categoryScore[3] <= 60 ? '#A4A4A4' : '#169D00' }}>
+                                {item.categoryScore[3] >= 0 && item.categoryScore[3] <= 20 ? config.scoreComment[0]
+                                    : item.categoryScore[3] > 20 && item.categoryScore[3] <= 40 ? config.scoreComment[1]
+                                        : item.categoryScore[3] > 40 && item.categoryScore[3] <= 60 ? config.scoreComment[2]
+                                            : item.categoryScore[3] > 60 && item.categoryScore[3] <= 80 ? config.scoreComment[3]
+                                                : config.scoreComment[4]
                                 }
                             </Text>
                             <Text style={styles.smallBoxScore}>{item.categoryScore[3]}</Text>

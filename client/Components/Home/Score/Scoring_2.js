@@ -39,23 +39,10 @@ export default function Scoring_2({ route, navigation }) {
             }
         })();
 
-        const backAction = () => {
-            Vibration.vibrate(5) 
-            Alert.alert("낙장 불입!",
-            "모든 남기기를 끝내겟습니까?", [
-                {
-                    text: "아니요",
-                    onPress: () => null,
-                    style: "cancel"
-                },
-                { text: "예", onPress: () => navigation.popToTop() }
-            ]);
-            return true;
-        };
-        const backHandler = BackHandler.addEventListener("hardwareBackPress", backAction);
+        BackHandler.addEventListener("hardwareBackPress", goback);
 
-        return () => backHandler.remove();
-
+        return () => 
+            BackHandler.removeEventListener('hardwareBackPress', goback);
     }, [])
 
     const goback = () => {
@@ -69,6 +56,7 @@ export default function Scoring_2({ route, navigation }) {
             },
             { text: "예", onPress: () => navigation.popToTop() }
         ]);
+        return true;
     }
 
     //별점 +1
@@ -218,7 +206,7 @@ export default function Scoring_2({ route, navigation }) {
     let thumbnail = [];
     for (let i = 0; i < Q2.Q_imges.length; i++) {
         thumbnail.push(
-            <TouchableOpacity key={i} onPress={() => setSelectImageIdx(i + 1)} style={{ marginLeft: 10, borderRadius: 10, borderWidth: 2, borderColor: selectImageIdx === (i + 1) ? '#00B2FF' : '#E5E5E5' }}>
+            <TouchableOpacity key={i} onPress={() => setSelectImageIdx(i + 1)} style={{ marginLeft: 10, borderRadius: 10, borderWidth: 2, borderColor: selectImageIdx === (i + 1) ? '#00B2FF' : '#f9f9f9' }}>
                 <Image style={styles.thumbnail} source={{ uri: Q2.Q_imges[i] }}>
                 </Image>
             </TouchableOpacity>)
