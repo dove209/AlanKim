@@ -30,7 +30,6 @@ export default function ScoreDetailInfo({ route, navigation }) {
             setQuestionNum(Q_num)                                   //질문 번호
             setQuestion(config.question[Number(Q_num) - 1])         //질문 내용
             setImgArr(Q_imges)
-
         } 
     }
 
@@ -51,7 +50,6 @@ export default function ScoreDetailInfo({ route, navigation }) {
             <View  key={i}>
                 <Image source={{uri:`${config.MAIN_URL}/imges/${imgArr[i]}` }} style={styles.questionImg}></Image>
             </View>
-
         );
       } 
 
@@ -73,7 +71,7 @@ export default function ScoreDetailInfo({ route, navigation }) {
                 </View>
                 <FlatList
                     data={item.QArr}
-                    style={{ height: "100%" }}
+                    style={{ height: "95%" }}
                     keyExtractor={(item, index) => index.toString()}
                     renderItem={({ item, index }) => (
                         <QuestionItem key={index} item={item} showImg={showImg} showComment={showComment}> </QuestionItem>
@@ -144,10 +142,10 @@ function QuestionItem({ item, showImg, showComment }) {
         <View style={{ ...styles.row, paddingTop: 10, paddingBottom: 10, paddingLeft: 5, borderTopColor: "#dedede", borderTopWidth: item.Q_num != 1 ? 1 : 0 }}>
             <View style={{ ...styles.row, justifyContent: 'flex-start', width: '10%' }}>
                 <View style={{
-                    width: 5, height: 20, marginRight: 5, backgroundColor: item.Q_num === 1 || item.Q_num === 2 || item.Q_num === 3 ? '#0070C0' //상권 카테고리
-                        : item.Q_num === 4 || item.Q_num === 7 || item.Q_num === 11 || item.Q_num === 12 ? '#92D050'                            //인테리어 카테고리
-                            : item.Q_num === 5 || item.Q_num === 6 || item.Q_num === 8 || item.Q_num === 9 || item.Q_num === 10 ? '#FFC000'     //서비스 카테고리
-                                : '#F11D00'         //맛 카테고리
+                    width: 5, height: 20, marginRight: 5, backgroundColor: item.Q_num === 1 || item.Q_num === 2 || item.Q_num === 3 ? config.categoryColor[0] //상권 카테고리
+                        : item.Q_num === 4 || item.Q_num === 7 || item.Q_num === 11 || item.Q_num === 12 ? config.categoryColor[1]                            //인테리어 카테고리
+                            : item.Q_num === 5 || item.Q_num === 6 || item.Q_num === 8 || item.Q_num === 9 || item.Q_num === 10 ? config.categoryColor[2]     //서비스 카테고리
+                                : config.categoryColor[3]         //맛 카테고리
                 }}>
                 </View>
                 <Text style={{ color: 'rgba(0, 0, 0, 0.6)' }}>{item.Q_num}</Text>
@@ -169,6 +167,7 @@ function QuestionItem({ item, showImg, showComment }) {
             <TouchableOpacity onPress={()=> showComment(item.Q_num, item.Q_comment)} style={{ width: '15%', alignItems: 'center' }}>
                 <MaterialCommunityIcons name="message-text" size={24} color={item.Q_comment != '' ? '#00B2FF' : 'rgba(0, 0, 0, 0.05)'} />
             </TouchableOpacity>
-        </View>
+        </View>   
+
     )
 }

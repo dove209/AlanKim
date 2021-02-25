@@ -231,10 +231,10 @@ export default function Scoring_2({ route, navigation }) {
                     <View>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <Text style={styles.orderNum}>{`${Q2.Q_num}/16`}</Text>
-                            <Text style={{ color: '#0094FF', fontWeight: 'bold' }}>상권</Text>
+                            <Text style={{ color: config.categoryColor[0], fontWeight: 'bold' }}>상권</Text>
                         </View>
                         <Text style={styles.questionsTitle}>{config.question[1]}</Text>
-                        <Text style={styles.questionsContent}>크기 / 위치 / 구조 / 차량수</Text>
+                        <Text style={styles.questionsContent}>{config.questionSub[1]}</Text>
                     </View>
 
                     {/* 별점 */}

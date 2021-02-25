@@ -12,7 +12,7 @@ import styles from '../../../StyleSheet';
 import config from '../../../config';
 
 
-export default function Scoring_1({ route, navigation }) {
+export default function Scoring_16({ route, navigation }) {
     const _id = route.params._id;
     const QArr = route.params.QArr;
 
@@ -260,7 +260,7 @@ export default function Scoring_1({ route, navigation }) {
                 onPress: () => null,
                 style: "cancel"
             },
-            { text: "예", onPress: () => navigation.navigate("Scoring_3") }
+            { text: "예", onPress: () => navigation.navigate("Scoring_15") }
         ]);
     }
 
@@ -306,10 +306,10 @@ export default function Scoring_1({ route, navigation }) {
                         <View>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <Text style={styles.orderNum}>{`${Q16.Q_num}/16`}</Text>
-                                <Text style={{ color: '#F11D00', fontWeight: 'bold' }}>맛</Text>
+                                <Text style={{ color: config.categoryColor[3], fontWeight: 'bold' }}>맛</Text>
                             </View>
                             <Text style={styles.questionsTitle}>{config.question[15]}</Text>
-                            <Text style={styles.questionsContent}>객관적인 양</Text>
+                            <Text style={styles.questionsContent}>{config.questionSub[15]}</Text>
                         </View>
 
                         {/* 별점 */}

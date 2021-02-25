@@ -13,6 +13,18 @@ import AddListScreen from './Components/Home/AddListScreen';
 import Scoring_1 from './Components/Home/Score/Scoring_1';
 import Scoring_2 from './Components/Home/Score/Scoring_2';
 import Scoring_3 from './Components/Home/Score/Scoring_3';
+import Scoring_4 from './Components/Home/Score/Scoring_4';
+import Scoring_5 from './Components/Home/Score/Scoring_5';
+import Scoring_6 from './Components/Home/Score/Scoring_6';
+import Scoring_7 from './Components/Home/Score/Scoring_7';
+import Scoring_8 from './Components/Home/Score/Scoring_8';
+import Scoring_9 from './Components/Home/Score/Scoring_9';
+import Scoring_10 from './Components/Home/Score/Scoring_10';
+import Scoring_11 from './Components/Home/Score/Scoring_11';
+import Scoring_12 from './Components/Home/Score/Scoring_12';
+import Scoring_13 from './Components/Home/Score/Scoring_13';
+import Scoring_14 from './Components/Home/Score/Scoring_14';
+import Scoring_15 from './Components/Home/Score/Scoring_15';
 import Scoring_16 from './Components/Home/Score/Scoring_16';
 import Scoring_finish from './Components/Home/Score/Scoring_finish';
 
@@ -75,6 +87,18 @@ function MainStack() {
       <Stack.Screen name="Scoring_1" component={Scoring_1} />
       <Stack.Screen name="Scoring_2" component={Scoring_2} />
       <Stack.Screen name="Scoring_3" component={Scoring_3} />
+      <Stack.Screen name="Scoring_4" component={Scoring_4} />
+      <Stack.Screen name="Scoring_5" component={Scoring_5} />
+      <Stack.Screen name="Scoring_6" component={Scoring_6} />
+      <Stack.Screen name="Scoring_7" component={Scoring_7} />
+      <Stack.Screen name="Scoring_8" component={Scoring_8} />
+      <Stack.Screen name="Scoring_9" component={Scoring_9} />
+      <Stack.Screen name="Scoring_10" component={Scoring_10} />
+      <Stack.Screen name="Scoring_11" component={Scoring_11} />
+      <Stack.Screen name="Scoring_12" component={Scoring_12} />
+      <Stack.Screen name="Scoring_13" component={Scoring_13} />
+      <Stack.Screen name="Scoring_14" component={Scoring_14} />
+      <Stack.Screen name="Scoring_15" component={Scoring_15} />
       <Stack.Screen name="Scoring_16" component={Scoring_16} />
       <Stack.Screen name="Scoring_finish" component={Scoring_finish} />
       <Stack.Screen name="ScoreListHome" component={ScoreListHome} />
