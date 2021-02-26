@@ -17,20 +17,20 @@ export default function EtcHome() {
     const [ isModalVisible, setModalVisible] = useState(false);  //모달창 열림 여부
 
     useEffect(()=> {
-        const getProfileImg = async () => {
+        (async () => {
             let token = await Notifications.getExpoPushTokenAsync();
             let regExpression = /\[(.*?)\]/g;                   //ExponentPushToken[tokenVal]에서 괄호안 값 추출
             let tokenReg =  regExpression.exec(token.data)[1];
             await axios.get(`${config.MAIN_URL}/imges/profile/${tokenReg}`)
             .then((res) => {
-                if(res != null){
+                if(res.data != false){
                     setProfileImg(`${res.config.url}&randon=${Math.random().toString(36).substring(7)}`)
                 }
                 setIsLoading(false)
             })
             .catch((err) => console.log(err))
-        }
-        getProfileImg()
+        })()
+        
     
     },[])
 
