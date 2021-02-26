@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "my-app",
+    "name": "남길랭",
     "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,8 +20,9 @@
       "supportsTablet": true
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#FFFFFF"
       },
       "package": "com.alta.myapp"

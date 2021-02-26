@@ -18,9 +18,9 @@ export default function EtcHome() {
 
     useEffect(()=> {
         (async () => {
-            let token = await Notifications.getExpoPushTokenAsync();
+            let token = (await Notifications.getExpoPushTokenAsync()).data;
             let regExpression = /\[(.*?)\]/g;                   //ExponentPushToken[tokenVal]에서 괄호안 값 추출
-            let tokenReg =  regExpression.exec(token.data)[1];
+            let tokenReg =  regExpression.exec(token)[1];
             await axios.get(`${config.MAIN_URL}/imges/profile/${tokenReg}`)
             .then((res) => {
                 if(res.data != false){
@@ -29,13 +29,7 @@ export default function EtcHome() {
                 setIsLoading(false)
             })
             .catch((err) => console.log(err))
-<<<<<<< Updated upstream
         })()
-        
-    
-=======
-        })()    
->>>>>>> Stashed changes
     },[])
 
     //프로필 사진 추가
