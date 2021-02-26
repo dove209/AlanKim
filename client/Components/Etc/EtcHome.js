@@ -29,9 +29,13 @@ export default function EtcHome() {
                 setIsLoading(false)
             })
             .catch((err) => console.log(err))
+<<<<<<< Updated upstream
         })()
         
     
+=======
+        })()    
+>>>>>>> Stashed changes
     },[])
 
     //프로필 사진 추가
