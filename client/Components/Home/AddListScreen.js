@@ -13,7 +13,7 @@ export default function AddListScreen({ route, navigation }) {
 
     const [role, setRole] = useState(null); //컴포넌트 역할, 신규등록 or 내용수정
     const [addListItem, setAddListItem] = useState({
-        upTime: moment().format("YYYY-MM-DD hh:mm:ss"),
+        upTime: moment().format("YYYY-MM-DD HH:mm:ss"),
         storeName: null,
         dong: null,
         city: null,

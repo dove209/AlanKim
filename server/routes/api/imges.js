@@ -45,10 +45,11 @@ router.put('/profile', upload.single("photo"), function (req, res, next) {
   }
 });
 
+
 /* 프로필 이미지 가져오기 */
 router.get('/profile/:token', function(req, res, next) {
   let token = req.params.token.split('&')[0];
-  Profile.find({ token: token }).sort({ upTime:'desc'})
+  Profile.find({ token: token }).sort({ upTime: -1})
     .then(profle => {
       if(profle.length != 0){
         //프로필 이미지 보내기
@@ -56,7 +57,9 @@ router.get('/profile/:token', function(req, res, next) {
           res.writeHead(200, { 'Content-Type': 'image/jpg' });
           res.end(data);
         })
-      } 
+      }else {
+         res.send(false);
+      }
     })
     .catch(err => res.status(500).send(err));
 })

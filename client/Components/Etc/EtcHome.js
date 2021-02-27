@@ -23,7 +23,7 @@ export default function EtcHome() {
             let tokenReg =  regExpression.exec(token)[1];
             await axios.get(`${config.MAIN_URL}/imges/profile/${tokenReg}`)
             .then((res) => {
-                if(res.data != false){
+                if(res.data !== false){
                     setProfileImg(`${res.config.url}&randon=${Math.random().toString(36).substring(7)}`)
                 }
                 setIsLoading(false)
@@ -72,7 +72,7 @@ export default function EtcHome() {
             formData.append('photo', { uri: localUri, name: filename, type });
 
             //프로필 정보 저장
-            await axios.post(`${config.MAIN_URL}/imges/profile`, {token: tokenReg, fileName:filename, upTime: moment().format("YYYY-MM-DD hh:mm:ss") })
+            await axios.post(`${config.MAIN_URL}/imges/profile`, {token: tokenReg, fileName:filename, upTime: moment().format("YYYY-MM-DD HH:mm:ss") })
             .then(res => {
                 if (res.data) {
                     console.log('프로필 정보 제출 완료')
