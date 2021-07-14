@@ -196,10 +196,22 @@ export default function AddListScreen({ route, navigation }) {
                                selectedDong === null ? null 
                                : selectedDong === '선택' ? null
                                : selectedDong === '서울특별시' ? config.cityItems_1.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})  
-                               : selectedDong === '경기도' ? config.cityItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
-                               : selectedDong === '인천광역시' ? config.cityItems_3.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
-                               : selectedDong === '전라북도' ? config.cityItems_4.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
-                               : config.cityItems_5.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '부산광역시' ? config.cityItems_2.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '대구광역시' ? config.cityItems_3.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '인천광역시' ? config.cityItems_4.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '광주광역시' ? config.cityItems_5.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '대전광역시' ? config.cityItems_6.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '울산광역시' ? config.cityItems_7.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '세종특별자치시' ? config.cityItems_8.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '경기도' ? config.cityItems_9.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '강원도' ? config.cityItems_10.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '충청북도' ? config.cityItems_11.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '충청남도' ? config.cityItems_12.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '전라북도' ? config.cityItems_13.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '전라남도' ? config.cityItems_14.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '경상북도' ? config.cityItems_15.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : selectedDong === '경상남도' ? config.cityItems_16.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
+                               : config.cityItems_17.map((item, idx) => { return <Picker.Item label={item} value={item} key={idx} />})
                             }
                         </Picker>
                     </View>
