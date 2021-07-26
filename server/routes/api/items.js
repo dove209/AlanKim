@@ -191,7 +191,7 @@ router.put('/score', function (req, res, next) {
         break
     }
   });
-  totalScore = (categoryScoreArr[0] + categoryScoreArr[1] + categoryScoreArr[2] + categoryScoreArr[3]) / 5
+  totalScore = (categoryScoreArr[0] + categoryScoreArr[1] + categoryScoreArr[2] + (categoryScoreArr[3] * 2) ) / 5
 
   Item.updateMany({ _id: req.body._id }, { $set: { QArr: QArr, isScore: true, totalScore: totalScore, categoryScore: categoryScoreArr } })
     .then(() => { res.status(200).send(true) })
